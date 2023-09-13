@@ -48,8 +48,13 @@
           var e = document.createElement("p");
           e.innerHTML = data;
           document.getElementById("msgs").prepend(e);
-          beep();
+          peer = new Peer(username)
         });
+      });
+      peer.on('disconnected', function() {
+        var e = document.createElement("p");
+          e.innerHTML = "Disconnected, Trying to recconect";
+          document.getElementById("msgs").prepend(e);
       });
       function rng(min, max) {
         // min and max included
