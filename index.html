@@ -16,9 +16,20 @@
 </head>
 <body>
     <div class="content">
-        <h1>
-            Hello world
-        </h1>
+        <h3>Currently it is</h3>
+        <h1 id="time"></h1>
+        <h2>You have to wait until</h2>
+        <h2 id="StartingAt"></h2>
     </div>
+    <script>
+        const queryString = window.location.search;
+        console.log(queryString);
+        const urlParams = new URLSearchParams(queryString);
+        document.getElementById("StartingAt").innerHTML = urlParams.get("startingAt")
+        setInterval(() =>{
+            var date = new Date()
+            document.getElementById("time").innerHTML = date.getHours() + ":" + date.getMinutes()
+        },1000)
+    </script>
 </body>
 </html>
