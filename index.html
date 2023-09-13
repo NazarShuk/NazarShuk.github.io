@@ -55,6 +55,7 @@
         var e = document.createElement("p");
           e.innerHTML = "Disconnected, Trying to recconect";
           document.getElementById("msgs").prepend(e);
+          peer.destroy()
           peer = new Peer(username)
       });
       function rng(min, max) {
