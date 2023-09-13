@@ -72,7 +72,13 @@
     <button type="submit" id="send-btn" onclick="Connect()">Send</button>
     <div id="msgs"></div>
     <script>
-      var username = rng(1111, 9999);
+      var username;
+      if(localStorage.name == null){
+        username = rng(1111, 9999)
+      }
+      else{
+        username = localStorage.name;
+      }
       var peer = new Peer(username);
       peer.on("open", (p) => {
         document.getElementById("id-text").innerHTML = peer.id;
