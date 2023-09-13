@@ -74,7 +74,8 @@
     <script>
       var username;
       if(localStorage.name == null){
-        username = rng(1111, 9999)
+        localStorage.name = rng(1111, 9999);
+        username = localStorage.name
       }
       else{
         username = localStorage.name;
