@@ -3,64 +3,63 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"rel="stylesheet"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
     <style>
-        body {
-            font-family: 'Jetbrains Mono';
-            background-color: rgb(35, 39, 42);
-            color: white;
-            padding: 0;
-            margin: 0;
-        }
+      body {
+          font-family: 'Jetbrains Mono';
+          background-color: rgb(35, 39, 42);
+          color: white;
+          padding: 0;
+          margin: 0;
+      }
 
-        #clients {
-            display: contents;
-        }
+      #clients {
+          display: contents;
+      }
 
-        .calldiv {
-            z-index: 1000;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            -webkit-transform: translate(-50%, -50%);
-            transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background-color: rgb(44, 47, 51);
-            color: white;
+      .calldiv {
+          z-index: 1000;
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+          width: 300px;
+          height: 300px;
+          background-color: rgb(44, 47, 51);
+          color: white;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
 
-        #calldivheader {
+      #calldivheader {
 
-            cursor: move;
-            z-index: 10;
-            background-color: rgb(73, 77, 82);
-            color: #fff;
-        }
+          cursor: move;
+          z-index: 10;
+          background-color: rgb(73, 77, 82);
+          color: #fff;
+      }
 
-        button {
-            background-color: rgb(88 101 242);
-            color: white;
-            font-family: 'JetBrains Mono';
-            font-size: larger;
-        }
+      button {
+          background-color: rgb(88 101 242);
+          color: white;
+          font-family: 'JetBrains Mono';
+          font-size: larger;
+      }
 
-        input {
-            font-size: larger;
-        }
+      input {
+          font-size: larger;
+      }
 
-        p {
-            font-size: larger;
-        }
+      p {
+          font-size: larger;
+      }
     </style>
     <title>Peer js chat</title>
   </head>
@@ -73,11 +72,10 @@
     <div id="msgs"></div>
     <script>
       var username;
-      if(localStorage.name == null){
+      if (localStorage.name == null) {
         localStorage.name = rng(1111, 9999);
-        username = localStorage.name
-      }
-      else{
+        username = localStorage.name;
+      } else {
         username = localStorage.name;
       }
       var peer = new Peer(username);
@@ -91,13 +89,13 @@
         var conn = peer.connect(document.getElementById("input-id").value);
         // on open will be launch when you successfully connect to PeerServer
         conn.on("open", function () {
-            conn.send(
-              peer.id + ": " + document.getElementById("msg-input").value
-            );
-            var e = document.createElement("p");
-            e.innerHTML = document.getElementById("msg-input").value;
-            document.getElementById("msgs").prepend(e);
-            document.getElementById("msg-input").value = "";
+          conn.send(
+            peer.id + ": " + document.getElementById("msg-input").value
+          );
+          var e = document.createElement("p");
+          e.innerHTML = document.getElementById("msg-input").value;
+          document.getElementById("msgs").prepend(e);
+          document.getElementById("msg-input").value = "";
         });
       }
       peer.on("connection", function (conn) {
@@ -107,14 +105,14 @@
           var e = document.createElement("p");
           e.innerHTML = data;
           document.getElementById("msgs").prepend(e);
-          conn.close()
+          conn.close();
         });
       });
-      peer.on('disconnected', function() {
+      peer.on("disconnected", function () {
         var e = document.createElement("p");
-          e.innerHTML = "Disconnected, Trying to recconect";
-          document.getElementById("msgs").prepend(e);
-          peer.reconnect()
+        e.innerHTML = "Disconnected, Trying to recconect";
+        document.getElementById("msgs").prepend(e);
+        peer.reconnect();
       });
       function rng(min, max) {
         // min and max included
@@ -126,7 +124,6 @@
         );
         snd.play();
       }
-      
     </script>
   </body>
 </html>
