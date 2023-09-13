@@ -67,11 +67,11 @@
   <body>
     <h2 id="id-text">Connecting</h2>
     <h3>Open source chat, made with love by NshIS</h3>
+    <form>
     <input type="text" placeholder="Id" id="input-id" />
-    <button onclick="Connect()">Connect</button>
     <input type="text" placeholder="Message" id="msg-input" />
-    <button id="send-btn">Send</button>
-    <p></p>
+    <button type="submit" id="send-btn" onclick="Connect()">Send</button>
+</form>
     <div id="msgs"></div>
     <script>
       var username = rng(1111, 9999);
@@ -86,7 +86,6 @@
         var conn = peer.connect(document.getElementById("input-id").value);
         // on open will be launch when you successfully connect to PeerServer
         conn.on("open", function () {
-          document.getElementById("send-btn").addEventListener("click", () => {
             conn.send(
               peer.id + ": " + document.getElementById("msg-input").value
             );
@@ -94,8 +93,6 @@
             e.innerHTML = document.getElementById("msg-input").value;
             document.getElementById("msgs").prepend(e);
             document.getElementById("msg-input").value = "";
-          });
-          conn.send("Please connect to " + peer.id + " to chat");
         });
       }
       peer.on("connection", function (conn) {
@@ -105,7 +102,7 @@
           var e = document.createElement("p");
           e.innerHTML = data;
           document.getElementById("msgs").prepend(e);
-          
+          conn.close()
         });
       });
       peer.on('disconnected', function() {
