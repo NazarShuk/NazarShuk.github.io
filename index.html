@@ -92,6 +92,10 @@
         e.style.color = "green"
         e.innerHTML = "Connected";
         document.getElementById("msgs").prepend(e);
+        Notification.requestPermission().then(function (permission) {
+    console.log(permission);
+});
+
       });
       function Connect() {
         var conn = peer.connect(document.getElementById("input-id").value);
@@ -110,6 +114,7 @@
           console.log(data);
           Print(data)
           conn.close();
+          new Notification("New message!",{body:data})
         });
       });
       peer.on("disconnected", function () {
