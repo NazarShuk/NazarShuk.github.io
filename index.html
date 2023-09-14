@@ -70,6 +70,8 @@
     <h2 id="id-text">Connecting</h2>
     <h3>Open source chat, made with love by NshIS</h3>
     <hr>
+    <button onclick="ChangeUsername()">Change Username</button>
+    <hr>
     <div class="footer">
         <input type="text" placeholder="Id" id="input-id" />
     <input type="text" placeholder="Message" id="msg-input" />
@@ -114,6 +116,17 @@
           // Will print 'hi!'
           console.log(data);
           Print(data)
+          if(localStorage.msgs != null){
+            var msgs = JSON.parse(localStorage.msgs)
+            msgs.push(data)
+            localStorage.msgs = JSON.stringify(msgs)
+          }
+          else{
+            localStorage.msgs = "[]"
+            var msgs = JSON.parse(localStorage.msgs)
+            msgs.push(data)
+            localStorage.msgs = JSON.stringify(msgs)
+          }
           conn.close();
           new Notification("New message!",{body:data})
         });
@@ -157,6 +170,13 @@
                 ee.innerHTML += letter;
             }, i *5)
         })
+      }
+      function ChangeUsername(){
+        var name = prompt("Enter your new username")
+        if(name !=null){
+            localStorage.name = name;
+            location.reload()
+        }
       }
     </script>
   </body>
