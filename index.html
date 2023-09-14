@@ -87,9 +87,10 @@
       var peer = new Peer(username);
       peer.on("open", (p) => {
         document.getElementById("id-text").innerHTML = peer.id;
-        var e = document.createElement("h6");
+        var e = document.createElement("p");
         e.style.fontStyle = "italic"
         e.style.color = "green"
+        e.style.textAlign ="center"
         e.innerHTML = "Connected";
         document.getElementById("msgs").prepend(e);
         Notification.requestPermission().then(function (permission) {
@@ -118,17 +119,19 @@
         });
       });
       peer.on("disconnected", function () {
-        var e = document.createElement("h6");
+        var e = document.createElement("p");
         e.style.fontStyle = "italic"
         e.style.color = "red"
+        e.style.textAlign ="center"
         e.innerHTML = "Disconnected, Trying to recconect";
         document.getElementById("msgs").prepend(e);
         peer.reconnect();
       });
       peer.on("peer-unavailable",()=>{
-        var e = document.createElement("h6");
+        var e = document.createElement("p");
         e.style.fontStyle = "italic"
         e.style.color = "red"
+        e.style.textAlign ="center"
         e.innerHTML = "User you are trying to message is offline or does not exist!";
         document.getElementById("msgs").prepend(e);
       })
