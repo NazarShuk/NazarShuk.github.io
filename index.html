@@ -102,7 +102,7 @@
     <title>Peer js chat</title>
   </head>
   <body>
-    <div class="sidenav">
+    <div class="sidenav" id="sidenav">
         <a onclick="AddContact()">Add Contact</a>
       </div>      
     <div class="main">
@@ -136,6 +136,7 @@
             var c = document.createElement("a")
             c.innerHTML = element.username
             c.addEventListener("click",ChooseContact(element.id))
+            document.getElementById("sidenav").append(c)
         });
       });
       function Connect() {
@@ -200,6 +201,7 @@
                 var c = document.createElement("a")
                 c.innerHTML = username
                 c.addEventListener("click",ChooseContact(id))
+                document.getElementById("sidenav").append(c)
             }
         }
         else{
