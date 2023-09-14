@@ -139,14 +139,15 @@
       }
       function Print(data){
         var e = document.createElement("p");
-        e.innerHTML = data;
+        e.innerHTML = "asdasd"
         e.id = data;
         document.getElementById("msgs").prepend(e);
         var ee = document.getElementById(data);
-        data.split("").forEach(letter=>{
+        ee.innerHTML = ""
+        data.split("").forEach((letter,i)=>{
             setTimeout(function(){
-                ee.innerHTML = ee.innerHTML + letter
-            },100)
+                ee.innerHTML += letter;
+            }, i *50)
         })
       }
     </script>
