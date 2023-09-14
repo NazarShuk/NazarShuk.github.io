@@ -103,7 +103,7 @@
           conn.send(
             peer.id + ": " + document.getElementById("msg-input").value
           );
-          Print(peer.id +": " + document.getElementById("msg-input").value)
+          Print(peer.id + "->" + document.getElementById("input-id").value +": " + document.getElementById("msg-input").value)
           document.getElementById("msg-input").value = "";
         });
       }
