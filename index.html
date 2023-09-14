@@ -112,17 +112,6 @@
           // Will print 'hi!'
           console.log(data);
           Print(data)
-          if(localStorage.msgs != null){
-            var msgs = JSON.parse(localStorage.msgs)
-            msgs.push(data)
-            localStorage.msgs = JSON.stringify(msgs)
-          }
-          else{
-            localStorage.msgs = "[]"
-            var msgs = JSON.parse(localStorage.msgs)
-            msgs.push(data)
-            localStorage.msgs = JSON.stringify(msgs)
-          }
           conn.close();
           new Notification("New message!",{body:data})
         });
