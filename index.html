@@ -87,7 +87,7 @@
       var peer = new Peer(username);
       peer.on("open", (p) => {
         document.getElementById("id-text").innerHTML = peer.id;
-        var e = document.createElement("p");
+        var e = document.createElement("h6");
         e.style.fontStyle = "italic"
         e.style.color = "green"
         e.innerHTML = "Connected";
@@ -118,7 +118,7 @@
         });
       });
       peer.on("disconnected", function () {
-        var e = document.createElement("p");
+        var e = document.createElement("h6");
         e.style.fontStyle = "italic"
         e.style.color = "red"
         e.innerHTML = "Disconnected, Trying to recconect";
@@ -126,7 +126,7 @@
         peer.reconnect();
       });
       peer.on("peer-unavailable",()=>{
-        var e = document.createElement("p");
+        var e = document.createElement("h6");
         e.style.fontStyle = "italic"
         e.style.color = "red"
         e.innerHTML = "User you are trying to message is offline or does not exist!";
