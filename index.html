@@ -20,6 +20,11 @@
       #clients {
           display: contents;
       }
+      .footer {
+    position: fixed;
+    bottom: 30px;
+    width: 100%;
+}
 
       .calldiv {
           z-index: 1000;
@@ -32,14 +37,12 @@
           height: 300px;
           background-color: rgb(44, 47, 51);
           color: white;
-
           display: flex;
           align-items: center;
           justify-content: center;
       }
 
       #calldivheader {
-
           cursor: move;
           z-index: 10;
           background-color: rgb(73, 77, 82);
@@ -66,9 +69,12 @@
   <body>
     <h2 id="id-text">Connecting</h2>
     <h3>Open source chat, made with love by NshIS</h3>
-    <input type="text" placeholder="Id" id="input-id" />
+    <hr>
+    <div class="footer">
+        <input type="text" placeholder="Id" id="input-id" />
     <input type="text" placeholder="Message" id="msg-input" />
     <button type="submit" id="send-btn" onclick="Connect()">Send</button>
+    </div>
     <div id="msgs"></div>
     <script>
       var username;
@@ -94,7 +100,7 @@
             peer.id + ": " + document.getElementById("msg-input").value
           );
           var e = document.createElement("p");
-          e.innerHTML = document.getElementById("msg-input").value;
+          e.innerHTML = peer.id +": " + document.getElementById("msg-input").value;
           document.getElementById("msgs").prepend(e);
           document.getElementById("msg-input").value = "";
         });
