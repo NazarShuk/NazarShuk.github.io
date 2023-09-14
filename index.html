@@ -67,8 +67,8 @@
     <title>Peer js chat</title>
   </head>
   <body>
-    <h2 id="id-text">Connecting</h2>
-    <h3>Open source chat, made with love by NshIS</h3>
+    <h2 id="ConnectionText">...</h2>
+    <h3 id="id-text">Open source chat, made with love by NshIS</h3>
     <hr>
     <button onclick="ChangeUsername()">Change Username</button>
     <hr>
@@ -88,13 +88,9 @@
       }
       var peer = new Peer(username);
       peer.on("open", (p) => {
-        document.getElementById("id-text").innerHTML = peer.id;
-        var e = document.createElement("p");
-        e.style.fontStyle = "italic"
-        e.style.color = "green"
-        e.style.textAlign ="center"
-        e.innerHTML = "Connected";
-        document.getElementById("msgs").prepend(e);
+        document.getElementById("id-text").innerHTML = "Your username: " + peer.id;
+        document.getElementById("ConnectionText").innerHTML = "Connected"
+        document.getElementById("ConnectionText").style.color = "green"
         Notification.requestPermission().then(function (permission) {
     console.log(permission);
 });
@@ -132,22 +128,10 @@
         });
       });
       peer.on("disconnected", function () {
-        var e = document.createElement("p");
-        e.style.fontStyle = "italic"
-        e.style.color = "red"
-        e.style.textAlign ="center"
-        e.innerHTML = "Disconnected, Trying to recconect";
-        document.getElementById("msgs").prepend(e);
+        document.getElementById("ConnectionText").innerHTML = "Disconnected"
+        document.getElementById("ConnectionText").style.color = "red"
         peer.reconnect();
       });
-      peer.on("peer-unavailable",()=>{
-        var e = document.createElement("p");
-        e.style.fontStyle = "italic"
-        e.style.color = "red"
-        e.style.textAlign ="center"
-        e.innerHTML = "User you are trying to message is offline or does not exist!";
-        document.getElementById("msgs").prepend(e);
-      })
       function rng(min, max) {
         // min and max included
         return Math.floor(Math.random() * (max - min + 1) + min);
