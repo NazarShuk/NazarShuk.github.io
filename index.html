@@ -142,6 +142,17 @@
             location.reload()
         }
       }
+      const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/posts/1");
+xhr.send();
+xhr.responseType = "text";
+xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    document.getElementById("dynMsg").innerHTML = xhr.response;
+  } else {
+    console.log(`Error: ${xhr.status}`);
+  }
+}
       setInterval(function(){
         const xhr = new XMLHttpRequest();
 xhr.open("GET", "https://jsonplaceholder.typicode.com/posts/1");
@@ -154,7 +165,7 @@ xhr.onload = () => {
     console.log(`Error: ${xhr.status}`);
   }
 };
-      },)
+      },300)
     </script>
   </body>
 </html>
