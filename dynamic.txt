@@ -1,1 +1,1 @@
-Also check out the <a href="https://ncord.vercel.app/">original Ncord!</a>
+Also check out the <a href="https://ncord.vercel.app/">original Ncord</a>
