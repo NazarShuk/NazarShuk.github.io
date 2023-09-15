@@ -115,7 +115,9 @@
           console.log(data);
           Print(data)
           conn.close();
+          if(document.hidden){
           new Notification("New message!",{body:data})
+          }
         });
       });
       peer.on("disconnected", function () {
