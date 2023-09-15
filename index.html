@@ -69,7 +69,7 @@
   </head>
   <body>
     <h2 id="ConnectionText" style="color: yellow;">Connecting</h2>
-    <p>Ncord chat, made with love by NshIS</p>
+    <p id="dynMsg"></p>
     <p id="id-text"></p>
     <hr>
     <button onclick="ChangeUsername()">Change Username</button>
@@ -142,6 +142,19 @@
             location.reload()
         }
       }
+      setInterval(function(){
+        const xhr = new XMLHttpRequest();
+xhr.open("GET", "https://jsonplaceholder.typicode.com/posts/1");
+xhr.send();
+xhr.responseType = "text";
+xhr.onload = () => {
+  if (xhr.readyState == 4 && xhr.status == 200) {
+    document.getElementById("dynMsg").innerHTML = xhr.response;
+  } else {
+    console.log(`Error: ${xhr.status}`);
+  }
+};
+      },)
     </script>
   </body>
 </html>
