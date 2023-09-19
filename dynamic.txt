@@ -1,1 +1,1 @@
-Update: Now you can't send empty messages
+Update: Messages are saved!

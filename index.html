@@ -93,6 +93,12 @@
         document.getElementById("id-text").innerHTML = "Your username: " + peer.id;
         document.getElementById("ConnectionText").innerHTML = "Connected"
         document.getElementById("ConnectionText").style.color = "green"
+        JSON.parse(localStorage.getItem("messages")).msgs.forEach(element => {
+          var e = document.createElement("p");
+        e.innerHTML = "asdasd"
+        e.innerHTML = element;
+        document.getElementById("msgs").prepend(e);
+        });
         Notification.requestPermission().then(function (permission) {
     console.log(permission);
 });
@@ -140,6 +146,19 @@
         e.innerHTML = "asdasd"
         e.innerHTML = data;
         document.getElementById("msgs").prepend(e);
+        if(localStorage.getItem("messages") != null){
+          var json = JSON.parse(localStorage.getItem("messages"))
+          json.msgs.push(data)
+          localStorage.setItem("messages",JSON.stringify(json))
+        }
+        else{
+          localStorage.setItem("messages",JSON.stringify({
+            "msgs":[]
+          }))
+          var json = JSON.parse(localStorage.getItem("messages"))
+          json.msgs.push(data)
+          localStorage.setItem("messages",JSON.stringify(json))
+        }
       }
       function ChangeUsername(){
         var name = prompt("Enter your new username")
