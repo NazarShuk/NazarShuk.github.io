@@ -82,6 +82,13 @@
     <div id="msgs"></div>
     <script>
       var username;
+      JSON.parse(localStorage.getItem("messages")).msgs.forEach(element => {
+          var e = document.createElement("p");
+        e.innerHTML = "asdasd"
+        e.innerHTML = element;
+        
+        document.getElementById("msgs").prepend(e);
+        });
       if (localStorage.name == null) {
         localStorage.name = rng(1111, 9999);
         username = localStorage.name;
@@ -93,13 +100,7 @@
         document.getElementById("id-text").innerHTML = "Your username: " + peer.id;
         document.getElementById("ConnectionText").innerHTML = "Connected"
         document.getElementById("ConnectionText").style.color = "green"
-        JSON.parse(localStorage.getItem("messages")).msgs.forEach(element => {
-          var e = document.createElement("p");
-        e.innerHTML = "asdasd"
-        e.innerHTML = element;
         
-        document.getElementById("msgs").prepend(e);
-        });
         Notification.requestPermission().then(function (permission) {
     console.log(permission);
 });
