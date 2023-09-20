@@ -24,15 +24,18 @@
     </center>
     <div id="osm-map"></div>
     <script>
+        var setted;
         function randomIntFromInterval(min, max) { // min and max included 
   return Math.floor(Math.random() * (max - min + 1) + min)
 }
         var msgs = ["Preparing rockets","Opening free robux generator","Preparing troops", "Getting William to read this", "Preparing da planes", "Connecting to p***hub.com","Getting rockets back","Asking Chat gpt","OOps, dropped the rocket","Praying that it works","nani?","F***ing with horses","Playing Minecraft","error: status not found","<button>Click me!</button>"];
         function strike(){
-            updateStatus()
+            if(setted){
+                updateStatus()
             setInterval(function(){
                 document.getElementById("prg").value+=1
             })
+            }
         }
         function updateStatus(){
             document.getElementById("status").innerHTML = "Status: Connecting to North Korean Servers"
@@ -63,7 +66,10 @@
       // Place a marker on the same location.
       //L.marker(target).addTo(map);
       map.on("click", function (e) {
-        var newMarker = new L.marker(e.latlng).addTo(map);
+        if(!setted){
+           var newMarker = new L.marker(e.latlng).addTo(map);
+        setted= true; 
+        }
       });
     </script>
   </body>
