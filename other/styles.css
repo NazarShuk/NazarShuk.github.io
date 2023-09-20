@@ -31,7 +31,16 @@ align-items: center;
     align-items: center;
     justify-content: center;
 }
-
+.center{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 #calldivheader {
     cursor: move;
     z-index: 10;
