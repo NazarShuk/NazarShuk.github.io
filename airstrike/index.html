@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <link
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+      rel="stylesheet"
+    />
+    <title>Air strike</title>
+  </head>
+  <body>
+    <center>
+      <h1>Order an air strike</h1>
+      <h2>Choose the position on the map and press strike</h2>
+    </center>
+    <center>
+        <progress id="prg" style="width: 100%;" max="100000"></progress>
+        <h3 id="status">Status: Not launched</h3>
+    </center>
+    <center>
+    <button onclick="strike()">STRIKE</button>
+    </center>
+    <div id="osm-map"></div>
+    <script>
+        function randomIntFromInterval(min, max) { // min and max included 
+  return Math.floor(Math.random() * (max - min + 1) + min)
+}
+        var msgs = ["Preparing rockets","Opening free robux generator","Preparing troops", "Getting William to read this", "Preparing da planes", "Connecting to p***hub.com","Getting rockets back","Asking Chat gpt","OOps, dropped the rocket","Praying that it works","nani?","F***ing with horses","Playing Minecraft","error: status not found","<button>Click me!</button>"];
+        function strike(){
+            updateStatus()
+            setInterval(function(){
+                document.getElementById("prg").value+=1
+            })
+        }
+        function updateStatus(){
+            document.getElementById("status").innerHTML = "Status: Connecting to North Korean Servers"
+            setInterval(function(){
+                document.getElementById("status").innerHTML = "Status: " + msgs[randomIntFromInterval(0,msgs.length)];
+            },5000)
+        }
+      // Where you want to render the map.
+      var element = document.getElementById("osm-map");
+
+      // Height has to be set. You can do this in CSS too.
+      element.style = "height:300px;";
+
+      // Create Leaflet map on map element.
+      var map = L.map(element);
+
+      // Add OSM tile layer to the Leaflet map.
+      L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+
+      // Target's GPS coordinates.
+      var target = L.latLng("0", "0");
+
+      // Set map's center to target with zoom 14.
+      map.setView(target, 4);
+      // Place a marker on the same location.
+      //L.marker(target).addTo(map);
+      map.on("click", function (e) {
+        var newMarker = new L.marker(e.latlng).addTo(map);
+      });
+    </script>
+  </body>
+</html>
