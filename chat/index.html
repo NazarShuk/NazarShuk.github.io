@@ -27,13 +27,15 @@
     <div id="msgs"></div>
     <script>
       var username;
-      JSON.parse(localStorage.getItem("messages")).msgs.forEach(element => {
+      if(localStorage.getItem("messages") !=null){
+        JSON.parse(localStorage.getItem("messages")).msgs.forEach(element => {
           var e = document.createElement("p");
         e.innerHTML = "asdasd"
         e.innerHTML = element;
         
         document.getElementById("msgs").prepend(e);
         });
+      }
       if (localStorage.name == null) {
         localStorage.name = rng(1111, 9999);
         username = localStorage.name;
