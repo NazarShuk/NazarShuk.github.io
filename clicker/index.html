@@ -9,15 +9,21 @@ Cost:
 <h2 id="cost">0</h2>
 <button onclick="money+=1">Click</button>
 <button id="buy" onclick="BuyClicker()">Buy AutoClicker</button>
-<p id="msg"></p>
 <script>
 var money = 0;
 var cps = 0;
 var cost = 10;
-if(localStorage.money !=null){
+if(localStorage.fst !=1){
     money = localStorage.getItem("money")
     cps = localStorage.getItem("cps")
     cost = localStorage.getItem("cost")
+}
+else{
+    localStorage.fst = 1
+    money = 0;cps = 0;cost = 10;
+    localStorage.money = money;
+    localStorage.cps = cps;
+    localStorage.cost = cost;
 }
 function BuyClicker(){
 	money-=cost;
