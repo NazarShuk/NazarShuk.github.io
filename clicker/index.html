@@ -14,14 +14,22 @@ Cost:
 var money = 0;
 var cps = 0;
 var cost = 10;
-
+if(localStorage.money !=null){
+    money = localStorage.getItem("money")
+    cps = localStorage.getItem("cps")
+    cost = localStorage.getItem("cost")
+}
 function BuyClicker(){
 	money-=cost;
     cost += (cost*0.5)
     cps += (cost*0.05)
+    localStorage.money = money;
+    localStorage.cps = cps;
+    localStorage.cost = cost;
 }
 setInterval(function(){
 	money+=cps;
+    localStorage.money = money;
 },1000)
 setInterval(function(){
 	
