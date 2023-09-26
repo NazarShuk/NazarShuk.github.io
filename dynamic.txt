@@ -1,1 +1,1 @@
-Update: Messages are saved
+Update: Text doesn't go off the screen

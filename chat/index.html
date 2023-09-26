@@ -32,7 +32,7 @@
           var e = document.createElement("p");
         e.innerHTML = "asdasd"
         e.innerHTML = element;
-        
+        e.style.wordWrap = "break-word"
         document.getElementById("msgs").prepend(e);
         });
       }
@@ -94,6 +94,7 @@
         var e = document.createElement("p");
         e.innerHTML = "asdasd"
         e.innerHTML = data;
+        e.style.wordWrap = "break-word"
         document.getElementById("msgs").prepend(e);
         if(localStorage.getItem("messages") != null){
           var json = JSON.parse(localStorage.getItem("messages"))
