@@ -10,7 +10,9 @@
     <script>
         var x = 0;
         setInterval(function(){
-            document.getElementById("t").innerHTML = document.getElementById("t").innerHTML + " " + x
+            var e = document.createElement("h1")
+            e.innerHTML = x;
+            document.body.append(e)
             window.scrollTo(0, document.body.scrollHeight);
             x+=1;
         })
