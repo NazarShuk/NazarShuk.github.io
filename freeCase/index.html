@@ -6,6 +6,11 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>ААХХАХАХАХА ТЫ ЛОХ ПОВЕЛСЯ!!!</h1>
+    <h1 style="word-wrap: break-word;" id="t">ААХХАХАХАХА ТЫ ЛОХ ПОВЕЛСЯ!!!</h1>
+    <script>
+        setInterval(function(){
+            document.getElementById("t").innerHTML = document.getElementById("t").innerHTML + " ЛОХ!"
+        })
+    </script>
 </body>
 </html>
