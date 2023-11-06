@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="peerjs.min.js"></script>
+    <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
+    <title>Nvoice</title>
+</head>
+
+<body>
+    <h1 style="opacity: 10%; z-index: -1000;position: absolute;left: 90%;top: 90%;transform: translate(-50%, -50%);padding: 10px;">
+    1.4.2.2</h1>
+
+    <h1 id="id">Connecting to server...</h1>
+    <div id="clients">
+        <audio id="Mvideo"></audio>
+        <h1 id="call_name" style="margin-top: 10px;">Empty call</h1>
+        <button style="font-size: 25px;" id="hangup">Hang up</button>
+    </div>
+    <div id="friends">
+        <h2>Contacts</h2>
+        <button id="connect">Call</button><input type="text" id="socketsId"></br></br>
+        <button onclick="addFriend()">Add contact</button><input type="text" id="frInput">
+        </br>
+    </div>
+    </br>
+    <script src="index.js" defer></script>
+
+    <audio id="ringtone" src="nvoice_call.mp3" loop></audio>
+    <audio id="calling" src="nvoice_RIng.mp3" loop></audio>
+</body>
+
+</html>
