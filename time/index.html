@@ -7,16 +7,17 @@
     <title>TIME</title>
 </head>
 <body>
-    <h1 id="id" class="center">
-
-    </h1>
+    <h1 id="id" class="center"></h1>
+    <progress class="center" min=0 max=1000 id="prog"></progress>
     <script>
         setInterval(function(){
+        	
             var d = new Date()
             var seconds = d.getSeconds()
             var minutes = d.getMinutes()
             var hours = d.getHours()
-
+            var mill = d.getMilliseconds()
+			document.getElementById("prog").value = mill
             if(seconds < 10){
                 seconds = (0).toString() + seconds.toString()
             }
@@ -28,7 +29,7 @@
             }
 
             document.getElementById("id").innerHTML = hours+":"+minutes+":"+seconds
-        },1000)
+        })
     </script>
 </body>
 </html>
