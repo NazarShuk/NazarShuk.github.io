@@ -8,14 +8,12 @@
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"rel="stylesheet"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
     <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
-    <script src="https://nshis.vercel.app/other/auth.js"></script>
     <title>Home</title>
 </head>
 <body>
     <center>
         <h1>NshIS</h1>
         <h2>This is the new website</h2>
-        <input onchange="SetCookie('auth',document.getElementById('auth').value,-1)" type="text" placeholder="Your Auth Name" id="auth">
     </center>
     <center>
         <hr>
@@ -59,9 +57,6 @@
             </p>
         </div>
     </center>
-    <script>
-        document.getElementById("auth").value = GetCookie("auth")
-    </script>
     <h6>Hi!</h6>
 </body>
 </html>
