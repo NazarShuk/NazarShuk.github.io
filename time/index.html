@@ -8,20 +8,16 @@
 </head>
 <body>
     <h1 id="id" class="center"></h1>
-    <progress class="center" min=0 max=60000 id="prog"></progress>
+    <progress class="center" min=0 max=1000 id="prog"></progress>
     <script>
-        var mill;
         setInterval(function(){
         	
             var d = new Date()
             var seconds = d.getSeconds()
             var minutes = d.getMinutes()
             var hours = d.getHours()
-            mill = mill +1;
+            var mill = d.getMilliseconds()
 			document.getElementById("prog").value = mill
-            if(mill == 60000){
-                mill = 0
-            }
             if(seconds < 10){
                 seconds = (0).toString() + seconds.toString()
             }
