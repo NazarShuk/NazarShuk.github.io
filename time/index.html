@@ -13,7 +13,21 @@
     <script>
         setInterval(function(){
             var d = new Date()
-            document.getElementById("id").innerHTML = d.getHours()+":"+d.getMinutes()+":"+d.getSeconds()
+            var seconds = d.getSeconds()
+            var minutes = d.getMinutes()
+            var hours = d.getHours()
+
+            if(seconds < 10){
+                seconds = (0).toString() + seconds.toString()
+            }
+            if(hours < 10){
+                hours = (0).toString() + hours.toString()
+            }
+            if(minutes < 10){
+                minutes = (0).toString() + minutes.toString()
+            }
+
+            document.getElementById("id").innerHTML = hours+":"+minutes+":"+seconds
         },1000)
     </script>
 </body>
