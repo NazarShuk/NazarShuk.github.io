@@ -23,8 +23,10 @@
         let att;
         let cur;
         while(cur != document.getElementById("wanted").value){
-            att = att + 1;
+            setTimeout(function(){
+                att = att + 1;
             cur = getRandomInt(document.getElementById("min").value,document.getElementById("min").value)
+            },100)
         }
     }
     </script>
