@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test</title>
+</head>
+<body>
+    <h1 id="att"></h1>
+    <h2 id="cur"></h2>
+    <input type="number" id="min" placeholder="min">
+    <input type="number" id="max" placeholder="max">
+    <input type="number" id="wanted" placeholder="wanted">
+    
+    <script>
+        function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+    function trying(){
+        let att;
+        let cur;
+        while(cur != document.getElementById("wanted").value){
+            att = att + 1;
+            cur = getRandomInt(document.getElementById("min").value,document.getElementById("min").value)
+        }
+    }
+    </script>
+
+</body>
+</html>
