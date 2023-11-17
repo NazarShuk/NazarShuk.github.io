@@ -13,12 +13,27 @@
         <center>
             <h1 id="demo"></h1>
             <h2>Until the next event</h2>
+            <p id="nextmissions"></p>
         </center>
     </div>
     <script>
+        var nextMissions = [
+        {
+                name:"End of school day",
+                date:"Nov 17, 2023 09:05:00"
+            },
+            {
+                name:"End of school day",
+                date:"Nov 17, 2023 15:00:00"
+            },
+            {
+                name:"End of the day",
+                date:"Nov 18, 2023 00:00:00"
+            }
+        ]
         // Set the date we're counting down to
-        var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
-
+        //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
+        var countDownDate = new Date(nextMissions[0].date).getTime()
         // Update the count down every 1 second
         var x = setInterval(function () {
 
@@ -40,8 +55,9 @@
 
             // If the count down is finished, write some text
             if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("demo").innerHTML = "EXPIRED";
+                nextMissions.pop(nextMissions[0])
+                countDownDate = new Date(nextMissions[0].date).getTime()
+                //document.getElementById("demo").innerHTML = "EXPIRED";
             }
         }, 1000);
     </script>
