@@ -17,10 +17,13 @@
         </center>
     </div>
     <script>
+        var month = new Date().getMonth()
+        var day = new Date().getDay()
+        var year = new Date().getFullYear()
         var nextMissions = [
             {
                 name:"End of school",
-                date:"11/17, 2023 15:00:00"
+                date: month + "/" + day +", " +year + " 15:00:00"
             },
             {
                 name:"End of the day",
