@@ -31,6 +31,9 @@
                 date:"Nov 18, 2023 00:00:00"
             }
         ]
+        nextMissions.forEach(element =>{
+            document.getElementById("nextmissions").innerHTML += "\n" + element.name + "\n" + element.date + "\n"
+        })
         // Set the date we're counting down to
         //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
         var countDownDate = new Date(nextMissions[0].date).getTime()
