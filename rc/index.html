@@ -55,7 +55,7 @@
 
             // If the count down is finished, write some text
             if (distance < 0) {
-                nextMissions.pop(nextMissions[0])
+                nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
                 //document.getElementById("demo").innerHTML = "EXPIRED";
             }
