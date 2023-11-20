@@ -22,14 +22,47 @@
         month = month + 1;
         var day = date.getDate()
         var year = date.getFullYear()
+        var today = month + "/" + day +", " +year
         var nextMissions = [
             {
+                name:"Period 1",
+                date: today + " 08:15:00"
+            },
+            {
+                name:"Period 2",
+                date: today + " 09:16:00"
+            },
+            {
+                name:"Period 3",
+                date: today + " 09:54:00"
+            },
+            {
+                name:"Period 4",
+                date: today + " 10:56:00"
+            },
+            {
+                name:"Period 5",
+                date: today + " 11:30:00"
+            },
+            {
+                name:"Period 6",
+                date: today + " 12:18:00"
+            },
+            {
+                name:"Period 7",
+                date: today + " 13:06:00"
+            },
+            {
+                name:"Period 8",
+                date: today + " 14:04:00"
+            },
+            {
                 name:"End of school",
-                date: month + "/" + day +", " +year + " 15:00:00"
+                date: today + " 15:00:00"
             },
             {
                 name:"End of the day",
-                date:"Nov 18, 2023 00:00:00"
+                date: today +" 00:00:00"
             }
         ]
         nextMissions.forEach(element =>{
