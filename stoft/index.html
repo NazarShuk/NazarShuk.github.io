@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="other/styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>SkibdiToiletOhioFanumTax</h1>
+    <h2>The Generator</h2>
+
+    <input type="number" id="amount" placeholder="Amount of words">
+    <button>GENERATE</button>
+
+    <textarea id="out" placeholder="output"></textarea>
+
+    <script>
+        function generate(){
+            var amount = document.getElementById("amount").value
+            var words = ["skibidi","fanum","ohio","in","tax","rizz","alpha"]
+            var generated = "";
+            for (let index = 0; index < amount; index++) {
+                generated += " " + words[Math.floor(Math.random() * words.length)]
+            }
+        }
+    </script>
+</body>
+</html>
