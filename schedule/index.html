@@ -61,7 +61,9 @@
             },
         ]
         nextMissions.forEach(element =>{
-            document.getElementById("nextmissions").innerHTML += "<br>" + element.name + "<br>" + element.date
+            var e = document.createElement("p")
+            e.id = element.name
+            e.innerHTML = "<br>" + element.name + "<br>" + element.date
         })
         // Set the date we're counting down to
         //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
@@ -87,6 +89,7 @@
 
             // If the count down is finished, write some text
             if (distance < 0) {
+                document.getElementById(nextMissions[0].name).innerHTML = ""
                 nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
                 //document.getElementById("demo").innerHTML = "EXPIRED";
