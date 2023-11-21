@@ -28,29 +28,57 @@
                 name:"Period 1",
                 date: today + " 08:15:00"
             },
+                        {
+                name:"[HIDE]",
+                date: today + " 09:13:00"
+            },
             {
                 name:"Period 2",
                 date: today + " 09:16:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 09:51:00"
             },
             {
                 name:"Period 3",
                 date: today + " 09:54:00"
             },
             {
+                name:"[HIDE]",
+                date: today + " 10:53:00"
+            },
+            {
                 name:"Period 4",
                 date: today + " 10:56:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 11:26:00"
             },
             {
                 name:"Period 5",
                 date: today + " 11:30:00"
             },
             {
+                name:"[HIDE]",
+                date: today + " 12:15:00"
+            },
+            {
                 name:"Period 6",
                 date: today + " 12:18:00"
             },
             {
+                name:"[HIDE]",
+                date: today + " 13:03:00"
+            },
+            {
                 name:"Period 7",
                 date: today + " 13:06:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 14:02:00"
             },
             {
                 name:"Period 8",
@@ -62,12 +90,15 @@
             },
         ]
         nextMissions.forEach(element =>{
-            var e = document.createElement("p")
-            e.id = element.name
-            e.style.marginTop = "0"
-            e.style.marginBottom = "0"
-            e.innerHTML = element.name + "<br>" + element.date
-            document.body.append(e)
+            if(!element.name.startsWith("[HIDE]")){
+                var e = document.createElement("p")
+                e.id = element.name
+                e.style.marginTop = "0"
+                e.style.marginBottom = "0"
+                e.innerHTML = element.name + "<br>" + element.date
+                document.body.append(e)
+            }
+           
         })
         // Set the date we're counting down to
         //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
