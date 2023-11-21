@@ -124,7 +124,9 @@
 
             // If the count down is finished, write some text
             if (distance < 0) {
+                if(!nextMissions[0].name.startsWith("[HIDE]")){
                 document.getElementById(nextMissions[0].name).innerHTML = ""
+                }
                 nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
                 //document.getElementById("demo").innerHTML = "EXPIRED";
