@@ -121,7 +121,9 @@
             // Display the result in the element with id="demo"
             document.getElementById("demo").innerHTML = hours + "h "
                 + minutes + "m " + seconds + "s ";
-
+                if(!nextMissions[0].name.startsWith("[HIDE]")){
+                    document.getElementById("demo").innerHTML = "TRANSITION TIME!!!<br>" + hours + "h " + minutes + "m " + seconds + "s ";
+                }
             // If the count down is finished, write some text
             if (distance < 0) {
                 if(!nextMissions[0].name.startsWith("[HIDE]")){
