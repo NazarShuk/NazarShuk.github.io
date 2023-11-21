@@ -23,6 +23,7 @@
         var day = date.getDate()
         var year = date.getFullYear()
         var today = month + "/" + day +", " +year
+        var previousMisson;
         var nextMissions = [
             {
                 name:"Period 1",
@@ -120,7 +121,7 @@
 
             // Display the result in the element with id="demo"
 
-                if(nextMissions[0].name.startsWith("[HIDE]")){
+                if(previousMisson.name.startsWith("[HIDE]")){
                     document.getElementById("demo").innerHTML = "TRANSITION TIME!!!<br>" + hours + "h " + minutes + "m " + seconds + "s ";
                 }
                 else{
@@ -132,6 +133,7 @@
                 if(!nextMissions[0].name.startsWith("[HIDE]")){
                 document.getElementById(nextMissions[0].name).innerHTML = ""
                 }
+                previousMisson = nextMissions[0]
                 nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
                 //document.getElementById("demo").innerHTML = "EXPIRED";
