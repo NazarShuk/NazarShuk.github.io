@@ -133,7 +133,9 @@
             // Display the result in the element with id="demo"
             if(previousMisson != null){
                 if(previousMisson.name.startsWith("[HIDE]")){
-                    document.getElementById("demo").innerHTML = "..."
+                    document.getElementById("demo").innerHTML = hours + "h "
+                + minutes + "m " + seconds + "s ";
+                    document.getElementById("subtitle").innerHTML = "transition"
                 }
                 else{
                     document.getElementById("demo").innerHTML = hours + "h "
