@@ -22,7 +22,7 @@
     <div class="center" style="display: inline; font-size: xx-large;">
         <center>
             <h1 id="demo"></h1>
-            <p id="nextmissions" style="opacity: 0%;" onhover="showPeriods()"></p>
+            <p id="nextmissions"></p>
         </center>
     </div>
     <h2>Up next:</h2>
@@ -34,27 +34,6 @@
         var year = date.getFullYear()
         var today = month + "/" + day +", " +year
         var previousMisson;
-        var opacityNow = 0;
-        
-        function showPeriods(){
-            if(opacityNow == 0){
-                document.getElementById("nextmissions").style.animationName = "slide"
-            document.getElementById("nextmissions").style.animationDuration = "1s"
-            setTimeout(function(){
-                opacityNow = 1;
-                document.getElementById("nextmissions").style.opacity = "100%"
-            },1000)
-            }
-            if(opacityNow == 1){
-                document.getElementById("nextmissions").style.animationName = "slide"
-            document.getElementById("nextmissions").style.animationDuration = "1s"
-            document.getElementById("nextmissions").style.animationDirection = "reverse"
-            setTimeout(function(){
-                opacityNow = 0;
-                document.getElementById("nextmissions").style.opacity = "0%"
-            },1000)
-            }
-        }
         
         var nextMissions = [
             {
@@ -128,6 +107,7 @@
                 e.id = element.name
                 e.style.marginTop = "0"
                 e.style.marginBottom = "0"
+                e.style.opacity="25%"
                 e.innerHTML = element.name + "<br>" + element.date
                 document.body.append(e)
             }
