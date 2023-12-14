@@ -5,6 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
+    <style>
+        @keyframes slide{
+            from {
+                opacity:0%;
+            }
+            to{
+                opacity:100%;
+            }
+        }
+    </style>
     <title>RC</title>
 </head>
 
@@ -12,7 +22,7 @@
     <div class="center" style="display: inline; font-size: xx-large;">
         <center>
             <h1 id="demo"></h1>
-            <p id="nextmissions"></p>
+            <p id="nextmissions" style="opacity: 0%;" onhover="showPeriods()"></p>
         </center>
     </div>
     <h2>Up next:</h2>
@@ -24,6 +34,28 @@
         var year = date.getFullYear()
         var today = month + "/" + day +", " +year
         var previousMisson;
+        var opacityNow = 0;
+        
+        function showPeriods(){
+            if(opacityNow == 0){
+                document.getElementById("nextmissions").style.animationName = "slide"
+            document.getElementById("nextmissions").style.animationDuration = "1s"
+            setTimeout(function(){
+                opacityNow = 1;
+                document.getElementById("nextmissions").style.opacity = "100%"
+            },1000)
+            }
+            if(opacityNow == 1){
+                document.getElementById("nextmissions").style.animationName = "slide"
+            document.getElementById("nextmissions").style.animationDuration = "1s"
+            document.getElementById("nextmissions").style.animationDirection = "reverse"
+            setTimeout(function(){
+                opacityNow = 0;
+                document.getElementById("nextmissions").style.opacity = "0%"
+            },1000)
+            }
+        }
+        
         var nextMissions = [
             {
                 name:"Period 1",
@@ -129,7 +161,6 @@
                 + minutes + "m " + seconds + "s ";
                 }
             }
-                
             // If the count down is finished, write some text
             if (distance < 0) {
                 if(!nextMissions[0].name.startsWith("[HIDE]")){
