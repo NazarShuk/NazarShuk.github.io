@@ -17,6 +17,10 @@
                 opacity:100%;
             }
         }
+        body {
+   height: 100%;
+   overflow-y: hidden;
+}
       .odometer.odometer-animating-up .odometer-ribbon-inner, .odometer.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
     -webkit-transition-duration: 1s !important;
     -moz-transition-duration: 1s !important;
@@ -111,7 +115,7 @@
                 date: today + " 14:04:00"
             },
             {
-                name:"End of school",
+                name:"The End ",
                 date: today + " 15:00:00"
             },
         ]
@@ -122,7 +126,7 @@
                 e.style.marginTop = "0"
                 e.style.marginBottom = "0"
                 e.style.opacity="25%"
-                e.innerHTML = element.name + "<br>" + element.date
+                e.innerHTML = element.name + "<br>" + (element.date).replace(today,"") + "<br>--------"
                 document.body.append(e)
             }
            
