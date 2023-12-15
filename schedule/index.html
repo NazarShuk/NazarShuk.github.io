@@ -52,7 +52,7 @@
         var year = date.getFullYear()
         var today = month + "/" + day +", " +year
         var previousMisson;
-        
+        var toggle;
         var nextMissions = [
             {
                 name:"Period 1",
@@ -152,8 +152,9 @@
             // Display the result in the element with id="demo"
             if(previousMisson != null){
                 if(previousMisson.name.startsWith("[HIDE]")){
-                    document.getElementById("demo").innerHTML = hours + "h "
-                + minutes + "m " + seconds + "s ";
+                    document.getElementById("demo").innerHTML = hours
+                    document.getElementById("demo1").innerHTML = minutes
+                    document.getElementById("demo2").innerHTML = seconds
                     document.getElementById("subtitle").innerHTML = "transition"
                 }
                 else{
@@ -175,6 +176,17 @@
                 //document.getElementById("demo").innerHTML = "EXPIRED";
             }
         }, 50);
+
+        document.onkeydown(event =>{
+            if(toggle == 0){
+                previousMisson =nextMissions[nextMissions.length - 1]
+                document.getElementById("subtitle").innerHTML = "Until the end"
+            }
+            else if(toggle == 1){
+                previousMisson =nextMissions[0]
+                document.getElementById("subtitle").innerHTML = "Until the next period"
+            }
+        })
     </script>
 </body>
 
