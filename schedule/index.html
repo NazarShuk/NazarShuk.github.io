@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
     <style>
         @keyframes slide{
-            from {
-                opacity:0%;
-            }
-            to{
-                opacity:100%;
-            }
-        }
+            from {opacity:0%;}
+            to{opacity:100%;}}
     </style>
     <title>RC</title>
 </head>
-
 <body>
     <div class="center" style="display: inline; font-size: xx-large;">
         <center>
@@ -33,7 +26,6 @@
         var year = date.getFullYear()
         var today = month + "/" + day +", " +year
         var previousMisson;
-        
         var nextMissions = [
             {
                 name:"Period 1",
@@ -146,8 +138,7 @@
             // If the count down is finished, write some text
             if (distance < 0) {
                 if(!nextMissions[0].name.startsWith("[HIDE]")){
-                document.getElementById(nextMissions[0].name).innerHTML = ""
-                }
+                document.getElementById(nextMissions[0].name).innerHTML = ""}
                 previousMisson = nextMissions[0]
                 nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
@@ -156,5 +147,4 @@
         }, 50);
     </script>
 </body>
-
 </html>
