@@ -33,7 +33,7 @@
 </head>
 
 <body>
-    <div class="center" style="display: inline; font-size: xx-large;">
+    <div class="center" style="display: inline; font-size: xx-large;" id="CenterTime">
         <center>
             <h1 id="demo1" style="margin:0;" class="odometer"></h1>
             m
@@ -115,16 +115,17 @@
             {
                 name:"The End ",
                 date: today + " 15:00:00"
-            },
+            }
         ]
         nextMissions.forEach(element =>{
             if(!element.name.startsWith("[HIDE]")){
                 var e = document.createElement("p")
                 e.id = element.name
+                e.className = "scheduleItemsClass"
                 e.style.marginTop = "0"
                 e.style.marginBottom = "0"
                 e.style.opacity="25%"
-                e.innerHTML = element.name + "<br>" + (element.date).replace(today,"") + "<br>--------"
+                e.innerHTML = element.name + "<br>" + (element.date).replace(today,"") + "<br>------------"
                 document.body.append(e)
             }
            
