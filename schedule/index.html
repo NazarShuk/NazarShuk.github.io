@@ -163,7 +163,7 @@
                 }
             }
             // If the count down is finished, write some text
-            if (distance < 0) {
+            if (distance == 0) {
                 if(!nextMissions[0].name.startsWith("[HIDE]")){
                 document.getElementById(nextMissions[0].name).innerHTML = ""
                 }
@@ -173,6 +173,9 @@
                 //document.getElementById("demo").innerHTML = "EXPIRED";
             }
         }, 50);
+        if(distance < -1){
+            document.getElementById("subtitle").innerHTML = "Timeline finished"
+        }
     </script>
 </body>
 
