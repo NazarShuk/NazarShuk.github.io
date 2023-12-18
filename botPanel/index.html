@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
+  <!-- Styles -->
+<link href="https://github.hubspot.com/odometer/themes/odometer-theme-default.css" rel="stylesheet">
+<script src="https://github.hubspot.com/odometer/odometer.js"></script>
+    <style>
+        @keyframes slide{
+            from {
+                opacity:0%;
+            }
+            to{
+                opacity:100%;
+            }
+        }
+        body {
+   height: 100%;
+   overflow-y: hidden;
+}
+      .odometer.odometer-animating-up .odometer-ribbon-inner, .odometer.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
+    -webkit-transition-duration: 1s !important;
+    -moz-transition-duration: 1s !important;
+    -ms-transition-duration: 1s !important;
+    -o-transition-duration: 1s !important;
+    transition-duration: 1s !important
+}
+    </style>
+    <title>RC</title>
+</head>
+
+<body>
+    <div class="center" style="display: inline; font-size: 48px;" id="CenterTime">
+        <center>
+          <p style="opacity:50%; margin:0; font-size:x-large;">The bot made</p>
+            <h1 id="demo1" style="margin:0;" class="odometer"></h1>
+            <p style="opacity:50%; margin:0;">Msgs</p>
+            <h1 id="demo2" style="margin:0;" class="odometer"></h1>
+            <p style="opacity:50%; margin:0;">Errs</p>
+            <p id="subtitle" style="opacity:50%; margin:0; font-size:x-large;">In ?? minutes</p>
+        </center>
+    </div>
+    <script>
+      var url = 'https://outrageoustemporalcodes.nazarshukhardin.repl.co/';
+
+fetch(url)
+  .then(function(response) {
+    if (!response.ok) {
+      // Handle error or other status codes
+      throw new Error('Network response was not ok');
+    }
+    return response.json(); // assuming response is JSON; use text(), blob(), etc. based on your needs
+  })
+  .then(function(data) {
+    // Handle the data
+    console.log(data);
+  })
+  .catch(function(error) {
+    // Handle errors during the fetch
+    console.error('Fetch Error:', error);
+  });
+    </script>
+</body>
+
+</html>
