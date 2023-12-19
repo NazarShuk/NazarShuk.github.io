@@ -20,6 +20,17 @@
                 color:rgb(255,255,255);
             }
         }
+        @keyframes sub{
+        	0%{
+            	opacity:50%
+            }
+        	50%{
+            	opacity:25%
+            }
+        	100%{
+            	opacity:50%
+            }
+        }
         body {
    height: 100%;
    overflow-y: hidden;
@@ -42,7 +53,7 @@
             m
             <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
-            <p id="subtitle" style="opacity:50%; margin:0;"></p>
+            <p id="subtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
         </center>
     </div>
     <script>
@@ -133,6 +144,7 @@
             }
            
         })
+        var isloading = false;
         // Set the date we're counting down to
         //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
         var countDownDate = new Date(nextMissions[0].date).getTime()
@@ -154,7 +166,7 @@
             // Display the result in the element with id="demo"
             if(previousMisson != null){
             if(distance > 0){
-            
+                
                 if(previousMisson.name.startsWith("[HIDE]")){
                     document.getElementById("demo1").innerHTML = minutes
                     document.getElementById("demo2").innerHTML = seconds
@@ -177,7 +189,7 @@
                 nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
                 document.getElementById("subtitle").innerHTML = "loading"
-
+                isloading = true;
             }
         }, 1000);
         
