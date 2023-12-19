@@ -176,7 +176,7 @@
                 previousMisson = nextMissions[0]
                 nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
-
+                document.getElementById("subtitle").innerHTML = "loading"
 
             }
         }, 1000);
