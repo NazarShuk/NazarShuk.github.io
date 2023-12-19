@@ -50,7 +50,7 @@
     <div class="center" style="display: inline; font-size: 48px;" id="CenterTime">
         <center>
             <h1 id="demo1" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
-            m
+            <abraham id="demo11">m</abraham>
             <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
             <p id="subtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
@@ -120,11 +120,11 @@
             },
             {
                 name:"[HIDE]",
-                date: today + " 14:02:00"
+                date: today + " 14:00:00"
             },
             {
                 name:"Period 8",
-                date: today + " 14:04:00"
+                date: today + " 14:53:00"
             },
             {
                 name:"The End ",
@@ -162,9 +162,20 @@
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            var miliseconds = Math.floor((distance % (1000)) / 1000);
 
             // Display the result in the element with id="demo"
             if(previousMisson != null){
+            if(minutes == 0 ){
+            	document.getElementById("demo1").style.display = "none"
+            	document.getElementById("demo11").style.display = "none"
+                
+            }
+            else{
+            	document.getElementById("demo1").style.display="inline-block"
+            	document.getElementById("demo11").style.display="inline-block"
+                
+            }
             if(distance > 0){
                 
                 if(previousMisson.name.startsWith("[HIDE]")){
