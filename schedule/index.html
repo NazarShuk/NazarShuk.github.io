@@ -10,11 +10,14 @@
 <script src="https://github.hubspot.com/odometer/odometer.js"></script>
     <style>
         @keyframes slide{
-            from {
-                opacity:0%;
+            0% {
+                color:rgb(255,255,255);
             }
-            to{
-                opacity:100%;
+            50%{
+            	color:rgb(200,200,255);
+            }
+            100%{
+                color:rgb(255,255,255);
             }
         }
         body {
@@ -35,11 +38,11 @@
 <body>
     <div class="center" style="display: inline; font-size: 48px;" id="CenterTime">
         <center>
-            <h1 id="demo1" style="margin:0;" class="odometer"></h1>
+            <h1 id="demo1" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             m
-            <h1 id="demo2" style="margin:0;" class="odometer"></h1>
+            <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
-            <p id="subtitle" style="opacity:50%; margin:0;">Until the next</p>
+            <p id="subtitle" style="opacity:50%; margin:0;"></p>
         </center>
     </div>
     <script>
@@ -141,7 +144,7 @@
 
             // Find the distance between now and the count down date
             var distance = countDownDate - now;
-
+			
             // Time calculations for days, hours, minutes and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -150,6 +153,8 @@
 
             // Display the result in the element with id="demo"
             if(previousMisson != null){
+            if(distance > 0){
+            
                 if(previousMisson.name.startsWith("[HIDE]")){
                     document.getElementById("demo1").innerHTML = minutes
                     document.getElementById("demo2").innerHTML = seconds
@@ -162,6 +167,7 @@
                 document.getElementById("subtitle").innerHTML = ""
                 }
             }
+            }
             // If the count down is finished, write some text
             if (distance < 0) {
                 if(!nextMissions[0].name.startsWith("[HIDE]")){
@@ -170,9 +176,10 @@
                 previousMisson = nextMissions[0]
                 nextMissions.splice(0,1)
                 countDownDate = new Date(nextMissions[0].date).getTime()
-                //document.getElementById("demo").innerHTML = "EXPIRED";
+
+
             }
-        }, 50);
+        }, 1000);
         
     </script>
 </body>
