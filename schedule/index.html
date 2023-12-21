@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
-  <!-- Styles -->
 <link href="https://github.hubspot.com/odometer/themes/odometer-theme-default.css" rel="stylesheet">
 <script src="https://github.hubspot.com/odometer/odometer.js"></script>
     <style>
@@ -45,7 +43,6 @@
     </style>
     <title>RC</title>
 </head>
-
 <body>
     <div class="center" style="display: inline; font-size: 48px;" id="CenterTime">
         <center>
@@ -150,13 +147,10 @@
         var countDownDate = new Date(nextMissions[0].date).getTime()
         // Update the count down every 1 second
         var x = setInterval(function () {
-
             // Get today's date and time
             var now = new Date().getTime();
-
             // Find the distance between now and the count down date
             var distance = countDownDate - now;
-			
             // Time calculations for days, hours, minutes and seconds
             var days = Math.floor(distance / (1000 * 60 * 60 * 24));
             var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -174,10 +168,8 @@
             else{
             	document.getElementById("demo1").style.display="inline-block"
             	document.getElementById("demo11").style.display="inline-block"
-                
             }
             if(distance > 0){
-                
                 if(previousMisson.name.startsWith("[HIDE]")){
                     document.getElementById("demo1").innerHTML = minutes
                     document.getElementById("demo2").innerHTML = seconds
@@ -203,8 +195,6 @@
                 isloading = true;
             }
         }, 1000);
-        
     </script>
 </body>
-
 </html>
