@@ -29,12 +29,34 @@
         function Generate() {
             var x = document.getElementById("x").value
             var y = document.getElementById("y").value
+            var Downloaded = {}
+            const data = null;
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === this.DONE) {
+                    console.log(this.responseText);
+                    Downloaded = JSON.parse(this.responseText);
+                }
+            });
+
+            xhr.open("GET", "https://shukhardin.000webhostapp.com/place.json");
+            xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
+
+            xhr.send(data);
             for (let index = 0; index < x; index++) {
                 var tr = document.createElement('tr')
                 for (let indexx = 0; indexx < y; indexx++) {
                     var th = document.createElement('th')
                     var a = document.createElement('button')
-                    var color = "White"
+                    var color = ""
+                    Downloaded["objects"].forEach(element => {
+                        if(element.x == index && element.y == indexx){
+                            color = element.color
+                        }
+                    });
                     a.style.backgroundColor = color
                     a.style.color = color
                     a.innerHTML = "P"
