@@ -35,14 +35,14 @@
                 if (this.readyState === this.DONE) {
                     console.log(this.responseText);
                     Downloaded = JSON.parse(this.responseText);
-                    Downloaded["objects"].forEach(element => {
+                    Downloaded.forEach(element => {
                             document.getElementById(element.x+";"+element.y).style.color = element.color
                             document.getElementById(element.x+";"+element.y).style.backgroundColor = element.color
                     });
                 }
             });
 
-            xhr.open("GET", "https://shukhardin.000webhostapp.com/getjsonplace.php");
+            xhr.open("GET", "https://shukhardin.000webhostapp.com/newGetPlace.inc.php");
             xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
 
             xhr.send(data);
@@ -68,7 +68,7 @@
                             var a = document.createElement('button')
                             a.innerHTML = "P"
                             var color = ""
-                            Downloaded["objects"].forEach(element => {
+                            Downloaded.forEach(element => {
                                 if (element.x == index && element.y == indexx) {
                                     color = element.color
                                     a.innerHTML = "F"
@@ -100,7 +100,7 @@
                                             if (this.readyState === this.DONE) {
                                                 console.log(this.responseText);
                                                 var dDownloaded = JSON.parse(this.responseText);
-                                                dDownloaded["objects"].forEach(element => {
+                                                dDownloaded.forEach(element => {
                                                     if (element.x == index && element.y == indexx) {
                                                         var coloor = element.color
                                                         document.getElementById(index + ";" + indexx).style.color = coloor
@@ -111,13 +111,13 @@
                                             }
                                         });
 
-                                        xhr.open("GET", "https://shukhardin.000webhostapp.com/getjsonplace.php");
+                                        xhr.open("GET", "https://shukhardin.000webhostapp.com/newGetPlace.inc.php");
 
                                         xhr.send(data);
                                     }
                                 });
 
-                                xhr.open("POST", "https://shukhardin.000webhostapp.com/place.php");
+                                xhr.open("POST", "https://shukhardin.000webhostapp.com/newPlace.inc.php");
 
                                 xhr.send(data);
                             }
@@ -138,7 +138,7 @@
                 }
             });
 
-            xhr.open("GET", "https://shukhardin.000webhostapp.com/getjsonplace.php");
+            xhr.open("GET", "https://shukhardin.000webhostapp.com/newGetPlace.inc.php");
 
             xhr.send(data);
 
