@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="other/styles.css">
     <title>Document</title>
-    
+
     <style>
-        table, th, td {
-  border: 0px solid black;
-}
+        table,
+        th,
+        td {
+            border: 0px solid black;
+        }
     </style>
 </head>
+
 <body>
-    <center><input style="position: fixed; z-index: 999; width: 100px; height: 100px;" type="color" value="#f6f82" id="colorPicker"></center>
+    <center><input style="position: fixed; z-index: 999; width: 100px; height: 100px;" type="color" value="#f6f82"
+            id="colorPicker"></center>
     <input type="text" id="x" placeholder="RADIUSSSSSX">
     <input type="text" id="y" placeholder="RADIUSSSSSY">
     <button onclick="Generate()">Generate</button>
     <table id="table">
-        
+
     </table>
     <script>
-        function Generate(){
+        function Generate() {
             var x = document.getElementById("x").value
             var y = document.getElementById("y").value
             for (let index = 0; index < x; index++) {
@@ -34,23 +39,41 @@
                     a.style.color = color
                     a.innerHTML = "P"
                     a.id = index + ";" + indexx
-                    a.onclick = function() {
+                    a.onclick = function () {
                         var coloor = document.getElementById("colorPicker").value
                         document.getElementById(index + ";" + indexx).style.color = coloor
                         document.getElementById(index + ";" + indexx).style.backgroundColor = coloor
-                        
+                        const data = new FormData();
+                        data.append("x", index);
+                        data.append("y", indexx);
+                        data.append("color", coloor);
+
+                        const xhr = new XMLHttpRequest();
+                        xhr.withCredentials = true;
+
+                        xhr.addEventListener("readystatechange", function () {
+                            if (this.readyState === this.DONE) {
+                                console.log(this.responseText);
+                            }
+                        });
+
+                        xhr.open("POST", "https://shukhardin.000webhostapp.com/place.php");
+                        xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
+
+                        xhr.send(data);
                     }
                     th.append(a)
                     tr.append(th)
-                    
+
                 }
                 document.getElementById("table").append(tr)
             }
         }
         function randomNumber(min, max) {
-    return Math.floor(Math.random() * (max - min) + min);
-}
+            return Math.floor(Math.random() * (max - min) + min);
+        }
     </script>
 
 </body>
+
 </html>
