@@ -39,57 +39,77 @@
                 if (this.readyState === this.DONE) {
                     console.log(this.responseText);
                     Downloaded = JSON.parse(this.responseText);
+                    for (let index = 0; index < x; index++) {
+                        var tr = document.createElement('tr')
+                        for (let indexx = 0; indexx < y; indexx++) {
+                            var th = document.createElement('th')
+                            var a = document.createElement('button')
+                            var color = ""
+                            Downloaded["objects"].forEach(element => {
+                                if (element.x == index && element.y == indexx) {
+                                    color = element.color
+                                }
+                            });
+                            a.style.backgroundColor = color
+                            a.style.color = color
+                            a.innerHTML = "P"
+                            a.id = index + ";" + indexx
+                            a.onclick = function () {
+                                var coloor = document.getElementById("colorPicker").value
+                                const data = new FormData();
+                                data.append("x", index);
+                                data.append("y", indexx);
+                                data.append("color", coloor);
+
+                                const xhr = new XMLHttpRequest();
+                                xhr.withCredentials = true;
+
+                                xhr.addEventListener("readystatechange", function () {
+                                    if (this.readyState === this.DONE) {
+                                        console.log(this.responseText);
+                                        const data = null;
+
+                                        const xhr = new XMLHttpRequest();
+                                        xhr.withCredentials = true;
+
+                                        xhr.addEventListener("readystatechange", function () {
+                                            if (this.readyState === this.DONE) {
+                                                console.log(this.responseText);
+                                                var dDownloaded = JSON.parse(this.responseText);
+                                                dDownloaded["objects"].forEach(element => {
+                                if (element.x == index && element.y == indexx) {
+                                    var coloor = element.color
+                                    document.getElementById(index + ";" + indexx).style.color = coloor
+                                document.getElementById(index + ";" + indexx).style.backgroundColor = coloor
+                                }
+                            });
+                                
+                                            }
+                                        });
+
+                                        xhr.open("GET", "https://shukhardin.000webhostapp.com/getjsonplace.php");
+
+                                        xhr.send(data);
+                                    }
+                                });
+
+                                xhr.open("POST", "https://shukhardin.000webhostapp.com/place.php");
+
+                                xhr.send(data);
+                            }
+                            th.append(a)
+                            tr.append(th)
+
+                        }
+                        document.getElementById("table").append(tr)
+                    }
                 }
             });
 
-            xhr.open("GET", "https://shukhardin.000webhostapp.com/place.json");
-            xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
+            xhr.open("GET", "https://shukhardin.000webhostapp.com/getjsonplace.php");
 
             xhr.send(data);
-            for (let index = 0; index < x; index++) {
-                var tr = document.createElement('tr')
-                for (let indexx = 0; indexx < y; indexx++) {
-                    var th = document.createElement('th')
-                    var a = document.createElement('button')
-                    var color = ""
-                    Downloaded["objects"].forEach(element => {
-                        if(element.x == index && element.y == indexx){
-                            color = element.color
-                        }
-                    });
-                    a.style.backgroundColor = color
-                    a.style.color = color
-                    a.innerHTML = "P"
-                    a.id = index + ";" + indexx
-                    a.onclick = function () {
-                        var coloor = document.getElementById("colorPicker").value
-                        document.getElementById(index + ";" + indexx).style.color = coloor
-                        document.getElementById(index + ";" + indexx).style.backgroundColor = coloor
-                        const data = new FormData();
-                        data.append("x", index);
-                        data.append("y", indexx);
-                        data.append("color", coloor);
 
-                        const xhr = new XMLHttpRequest();
-                        xhr.withCredentials = true;
-
-                        xhr.addEventListener("readystatechange", function () {
-                            if (this.readyState === this.DONE) {
-                                console.log(this.responseText);
-                            }
-                        });
-
-                        xhr.open("POST", "https://shukhardin.000webhostapp.com/place.php");
-                        xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
-
-                        xhr.send(data);
-                    }
-                    th.append(a)
-                    tr.append(th)
-
-                }
-                document.getElementById("table").append(tr)
-            }
         }
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
