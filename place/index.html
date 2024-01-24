@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="other/styles.css">
+    <title>Document</title>
+    
+    <style>
+        table, th, td {
+  border: 0px solid black;
+}
+    </style>
+</head>
+<body>
+    <center><input style="position: fixed; z-index: 999; width: 100px; height: 100px;" type="color" value="#f6f82" id="colorPicker"></center>
+    <input type="text" id="x" placeholder="RADIUSSSSSX">
+    <input type="text" id="y" placeholder="RADIUSSSSSY">
+    <button onclick="Generate()">Generate</button>
+    <table id="table">
+        
+    </table>
+    <script>
+        function Generate(){
+            var x = document.getElementById("x").value
+            var y = document.getElementById("y").value
+            for (let index = 0; index < x; index++) {
+                var tr = document.createElement('tr')
+                for (let indexx = 0; indexx < y; indexx++) {
+                    var th = document.createElement('th')
+                    var a = document.createElement('button')
+                    var color = "White"
+                    a.style.backgroundColor = color
+                    a.style.color = color
+                    a.innerHTML = "P"
+                    a.id = index + ";" + indexx
+                    a.onclick = function() {
+                        var coloor = document.getElementById("colorPicker").value
+                        document.getElementById(index + ";" + indexx).style.color = coloor
+                        document.getElementById(index + ";" + indexx).style.backgroundColor = coloor
+                        
+                    }
+                    th.append(a)
+                    tr.append(th)
+                    
+                }
+                document.getElementById("table").append(tr)
+            }
+        }
+        function randomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+}
+    </script>
+
+</body>
+</html>
