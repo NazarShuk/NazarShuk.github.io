@@ -25,6 +25,29 @@
     </table>
     <script>
         Generate()
+        function updateCanvas() {
+            const data = null;
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === this.DONE) {
+                    console.log(this.responseText);
+                    Downloaded = JSON.parse(this.responseText);
+                    Downloaded["objects"].forEach(element => {
+                            document.getElementById(element.x+";"+element.y).style.color = element.color
+                            document.getElementById(element.x+";"+element.y).style.backgroundColor = element.color
+                    });
+                }
+            });
+
+            xhr.open("GET", "https://shukhardin.000webhostapp.com/getjsonplace.php");
+            xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
+
+            xhr.send(data);
+
+        }
         function Generate() {
             var x = 50 //document.getElementById("x").value
             var y = 50 //document.getElementById("y").value
@@ -43,15 +66,17 @@
                         for (let indexx = 0; indexx < y; indexx++) {
                             var th = document.createElement('th')
                             var a = document.createElement('button')
+                            a.innerHTML = "P"
                             var color = ""
                             Downloaded["objects"].forEach(element => {
                                 if (element.x == index && element.y == indexx) {
                                     color = element.color
+                                    a.innerHTML = "F"
                                 }
                             });
                             a.style.backgroundColor = color
                             a.style.color = color
-                            a.innerHTML = "P"
+
                             a.id = index + ";" + indexx
                             a.onclick = function () {
                                 var coloor = document.getElementById("colorPicker").value
@@ -76,13 +101,13 @@
                                                 console.log(this.responseText);
                                                 var dDownloaded = JSON.parse(this.responseText);
                                                 dDownloaded["objects"].forEach(element => {
-                                if (element.x == index && element.y == indexx) {
-                                    var coloor = element.color
-                                    document.getElementById(index + ";" + indexx).style.color = coloor
-                                document.getElementById(index + ";" + indexx).style.backgroundColor = coloor
-                                }
-                            });
-                                
+                                                    if (element.x == index && element.y == indexx) {
+                                                        var coloor = element.color
+                                                        document.getElementById(index + ";" + indexx).style.color = coloor
+                                                        document.getElementById(index + ";" + indexx).style.backgroundColor = coloor
+                                                    }
+                                                });
+
                                             }
                                         });
 
@@ -102,6 +127,14 @@
                         }
                         document.getElementById("table").append(tr)
                     }
+                    for (var i = 0; i < x; i++) {
+                        for (var ii = 0; ii < y; ii++) {
+                            if (document.getElementById(i + ";" + ii).innerHTML == "P") {
+                                document.getElementById(i + ";" + ii).style.color = "white"
+                                document.getElementById(i + ";" + ii).style.backgroundColor = "white"
+                            }
+                        }
+                    }
                 }
             });
 
@@ -113,6 +146,7 @@
         function randomNumber(min, max) {
             return Math.floor(Math.random() * (max - min) + min);
         }
+        setInterval(updateCanvas,5000)
     </script>
 
 </body>
