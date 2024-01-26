@@ -203,11 +203,10 @@ function countdownToWeekend() {
   const currentDay = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
   const daysUntilWeekend = currentDay === 5 ? 0 : 5 - currentDay + (currentDay > 5 ? 7 : 0);
 
-  const hours = 24 - today.getHours() - 1;
+  const hours = 24 - today.getHours() - 9;
   const minutes = 60 - today.getMinutes() - 1;
-  const seconds = 60 - today.getSeconds();
 
-  return `You will be free in ${daysUntilWeekend} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`
+  return `You will be free in ${daysUntilWeekend} days, ${hours} hours, ${minutes} minutes`
 }
 
 // Call the function to start the countdown
