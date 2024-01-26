@@ -123,7 +123,7 @@
                 date: today + " 14:12:00"
             },
             {
-                name:"Elective",
+                name:"Elective  ",
                 date: today + " 14:15:00"
             },
             {
@@ -206,9 +206,8 @@ function countdownToWeekend() {
   const daysUntilWeekend = currentDay === 5 ? 0 : 5 - currentDay + (currentDay > 5 ? 7 : 0);
 
   const hours = 24 - today.getHours() - 10;
-  const minutes = 60 - today.getMinutes() - 1;
 
-  return `You will be free in ${daysUntilWeekend} days, ${hours} hours, ${minutes} minutes`
+  return `You will be free in ${daysUntilWeekend} days, ${hours} hours`
 }
 
 // Call the function to start the countdown
