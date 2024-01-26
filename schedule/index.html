@@ -51,7 +51,7 @@
             <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
             <p id="subtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
-            <p id="weekend" style="opacity:50%; margin:0;">Until weekend </p>
+            <p id="weekend" style="opacity:50%; margin:0; font-size: 18px;">Until weekend </p>
         </center>
     </div>
     <script>
@@ -207,7 +207,7 @@ function countdownToWeekend() {
   const minutes = 60 - today.getMinutes() - 1;
   const seconds = 60 - today.getSeconds();
 
-  return `Weekend is in ${daysUntilWeekend} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`
+  return `You will be free in ${daysUntilWeekend} days, ${hours} hours, ${minutes} minutes, and ${seconds} seconds.`
 }
 
 // Call the function to start the countdown
