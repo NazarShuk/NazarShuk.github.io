@@ -51,8 +51,11 @@
             <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
             <p id="subtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
+            
         </center>
     </div>
+    <center><p id="weekend" style="position: absolute;bottom: 0;right: 0; opacity:50%; margin:0; font-size: 18px;"></p></center>
+    
     <script>
         var date = new Date()
         var month = date.getMonth()
@@ -147,6 +150,7 @@
         var countDownDate = new Date(nextMissions[0].date).getTime()
         // Update the count down every 1 second
         var x = setInterval(function () {
+            document.getElementById("weekend").innerHTML = countdownToWeekend()
             // Get today's date and time
             var now = new Date().getTime();
             // Find the distance between now and the count down date
@@ -195,6 +199,21 @@
                 isloading = true;
             }
         }, 1000);
+        // Function to calculate the time remaining until the weekend
+function countdownToWeekend() {
+  const today = new Date();
+  const currentDay = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
+  const daysUntilWeekend = currentDay === 5 ? 0 : 5 - currentDay + (currentDay > 5 ? 7 : 0);
+
+  const hours = 24 - today.getHours() - 10;
+  const minutes = 60 - today.getMinutes() - 1;
+
+  return `You will be free in ${daysUntilWeekend} days, ${hours} hours, ${minutes} minutes`
+}
+
+// Call the function to start the countdown
+countdownToWeekend();
+
     </script>
 </body>
 </html>
