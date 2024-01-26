@@ -51,9 +51,11 @@
             <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
             <p id="subtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
-            <p id="weekend" style="opacity:50%; margin:0; font-size: 18px;">Until weekend </p>
+            
         </center>
     </div>
+    <center><p id="weekend" style="opacity:50%; margin:0; font-size: 18px;"></p></center>
+    
     <script>
         var date = new Date()
         var month = date.getMonth()
@@ -203,7 +205,7 @@ function countdownToWeekend() {
   const currentDay = today.getDay(); // 0 for Sunday, 1 for Monday, ..., 6 for Saturday
   const daysUntilWeekend = currentDay === 5 ? 0 : 5 - currentDay + (currentDay > 5 ? 7 : 0);
 
-  const hours = 24 - today.getHours() - 9;
+  const hours = 24 - today.getHours() - 10;
   const minutes = 60 - today.getMinutes() - 1;
 
   return `You will be free in ${daysUntilWeekend} days, ${hours} hours, ${minutes} minutes`
