@@ -142,7 +142,7 @@
                 date: today + " 15:00:00"
             }
         ]
-        var nextMissions = localStorage.schedule
+        var nextMissions = JSON.parse(localStorage.schedule)
         nextMissions.forEach(element =>{
             if(!element.name.startsWith("[HIDE]")){
                 var e = document.createElement("p")
