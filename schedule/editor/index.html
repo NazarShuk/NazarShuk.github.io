@@ -37,10 +37,11 @@
             temptext += element.name + "<br>" + (element.date) + "<br>------------"
         })
       E_schedule.innerHTML = temptext
-      localStorage.schedule = schedule
+      localStorage.schedule = JSON.stringify(schedule)
     }
     var ttemptext = ""
-      localStorage.schedule.forEach(element =>{
+    var what = JSON.parse(localStorage.schedule)
+    what.forEach(element =>{
             
             ttemptext += element.name + "<br>" + (element.date) + "<br>------------"
         })
