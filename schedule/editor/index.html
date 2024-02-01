@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="other/styles.css">
+    <title>Schedule Editor</title>
+</head>
+<body>
+    <h1>Schedule Editor</h1>
+    <button>Use default</button>
+    <hr>
+    <h2>Add an item</h2>
+    <p>Time:</p>
+    <input type="time" id="time">
+    <p>Name:</p>
+    <input type="text" placeholder="Name" id="name">
+    <br>
+    <br>
+    <button onclick="addToSchedule()">Add to the schedule</button>
+    <hr>
+    <h2>Current Schedule</h2>
+    <p id="schedulePrinted"></p>
+  <script>
+    var E_time = document.getElementById("time")
+    var E_name = document.getElementById("name")
+    var E_schedule = document.getElementById("schedulePrinted")
+    var schedule = []
+    function addToSchedule(){
+      schedule.push({
+        name:E_name.value,
+        date:E_time.value
+      })
+      var temptext = ""
+      schedule.forEach(element =>{
+            
+            temptext += element.name + "<br>" + (element.date) + "<br>------------"
+        })
+      E_schedule.innerHTML = temptext
+      localStorage.schedule = schedule
+    }
+  </script>
+</body>
+</html>
