@@ -53,11 +53,13 @@ button {
     background-color: rgb(88 101 242);
     color: white;
     font-family: 'JetBrains Mono';
+    font-weight:bold;
     font-size: larger;
 }
 
 input {
     font-size: larger;
+    font-weight:bold;
 }
 
 p {
