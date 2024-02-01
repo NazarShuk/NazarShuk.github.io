@@ -39,6 +39,12 @@
       E_schedule.innerHTML = temptext
       localStorage.schedule = schedule
     }
+    var ttemptext = ""
+      localStorage.schedule.forEach(element =>{
+            
+            ttemptext += element.name + "<br>" + (element.date) + "<br>------------"
+        })
+      E_schedule.innerHTML = ttemptext
   </script>
 </body>
 </html>
