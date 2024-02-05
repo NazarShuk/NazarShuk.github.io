@@ -54,6 +54,7 @@ function appendElements() {
             if (index > -1) {
                 schedule.splice(index, 1);
                 // Re-render elements
+                localStorage.schedule = JSON.stringify(schedule)
                 appendElements();
             }
         });
