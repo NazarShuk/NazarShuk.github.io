@@ -8,7 +8,8 @@
 </head>
 <body>
     <h1>Schedule Editor</h1>
-    <button onclick="localStorage.schedule = defaultSchedule; window.location.reload()">Use default</button>
+    <button onclick="localStorage.schedule = '[]'; window.location.reload()">Clear</button>
+    <button onclick="toDefault(); window.location.reload()">Default</button>
     <hr>
     <h2>Add an item</h2>
     <p>Time:</p>
@@ -91,6 +92,9 @@
                 date: today + " 15:00:00"
             }
         ]
+    function toDefault(){
+        localStorage.schedule = JSON.stringify(defaultSchedule)
+    }
     function addToSchedule(){
       schedule.push({
         name:E_name.value,
