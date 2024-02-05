@@ -31,7 +31,7 @@
         name:E_name.value,
         date:E_time.value
       })
-      for(var i; i<schedule.length-1;i++){
+      for(var i; i<schedule.length;i++){
             var div = document.createElement('div')
             div.className = "ScheduleDisplayItem"
             var p = document.createElement('p')
@@ -52,7 +52,25 @@
         }
       localStorage.schedule = JSON.stringify(schedule)
     }
-    
+    for(var i; i<schedule.length;i++){
+            var div = document.createElement('div')
+            div.className = "ScheduleDisplayItem"
+            var p = document.createElement('p')
+            var RemoveBtn = document.createElement('button')
+            var ChangeBtn = document.createElement('button')
+            var br = document.createElement('br')
+            p.innerHTML = schedule[i].name + ": " + schedule[i].date
+            RemoveBtn.innerHTML = "Remove"
+            RemoveBtn.addEventListener('click',function(){
+                schedule.splice(i,1)
+            })
+            ChangeBtn.innerHTML = "Change"
+            div.append(p)
+            div.append(RemoveBtn)
+            div.append(ChangeBtn)
+            div.append(br)
+            document.body.append(div)
+        }
   </script>
 </body>
 </html>
