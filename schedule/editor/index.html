@@ -129,7 +129,17 @@ function appendElements() {
             }
         });
         var changeButton = document.createElement("button")
-        
+        changeButton.innerHTML = "Change"
+        changeButton.addEventListener('click',function(){
+            var index = schedule.indexOf(obj);
+            if (index > -1) {
+                schedule[index].name = E_name.value
+                schedule[index].date = E_time.value
+                // Re-render elements
+                localStorage.schedule = JSON.stringify(schedule)
+                appendElements();
+            }
+        })
         // Append paragraph and button to the container
         container.appendChild(paragraph);
         container.appendChild(removeButton);
