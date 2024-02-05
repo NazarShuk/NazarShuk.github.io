@@ -31,17 +31,7 @@
         name:E_name.value,
         date:E_time.value
       })
-      var temptext = ""
-      E_schedule.innerHTML = temptext
-      localStorage.schedule = JSON.stringify(schedule)
-      UpdateDisplay()
-    }
-    function UpdateDisplay(){
-        var displayitems = document.getElementsByClassName("ScheduleDisplayItem")
-        displayitems.forEach(element=>{
-            element.innerHTML = ""
-        })
-        schedule.forEach(element =>{
+      schedule.forEach((element,index) =>{
             var div = document.createElement('div')
             div.className = "ScheduleDisplayItem"
             var p = document.createElement('p')
@@ -51,7 +41,7 @@
             p.innerHTML = element.name + ": " + element.date
             RemoveBtn.innerHTML = "Remove"
             RemoveBtn.onclick = function(){
-                
+                schedule.splice(index,1)
             }
             ChangeBtn.innerHTML = "Change"
             div.append(p)
@@ -60,14 +50,8 @@
             div.append(br)
             document.body.append(div)
         })
+      localStorage.schedule = JSON.stringify(schedule)
     }
-    var ttemptext = ""
-    var what = JSON.parse(localStorage.schedule)
-    what.forEach(element =>{
-            
-            ttemptext += element.name + ": " + (element.date) + "; "
-        })
-      E_schedule.innerHTML = ttemptext
   </script>
 </body>
 </html>
