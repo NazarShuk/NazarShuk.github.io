@@ -43,7 +43,7 @@ function appendElements() {
     // Loop through the array and create elements
     schedule.forEach(function(obj) {
         var paragraph = document.createElement("p");
-        paragraph.innerHTML = obj.name + " - " + obj.time;
+        paragraph.innerHTML = obj.name + " - " + obj.date;
         
         var removeButton = document.createElement("button");
         removeButton.innerHTML = "Remove";
