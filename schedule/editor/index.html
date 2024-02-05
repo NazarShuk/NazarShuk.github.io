@@ -40,9 +40,9 @@
             var br = document.createElement('br')
             p.innerHTML = element.name + ": " + element.date
             RemoveBtn.innerHTML = "Remove"
-            RemoveBtn.onclick = function(){
+            RemoveBtn.addEventListener('click',function(){
                 schedule.splice(index,1)
-            }
+            })
             ChangeBtn.innerHTML = "Change"
             div.append(p)
             div.append(RemoveBtn)
@@ -61,9 +61,9 @@
             var br = document.createElement('br')
             p.innerHTML = element.name + ": " + element.date
             RemoveBtn.innerHTML = "Remove"
-            RemoveBtn.onclick = function(){
+            RemoveBtn.addEventListener('click',function(){
                 schedule.splice(index,1)
-            }
+            })
             ChangeBtn.innerHTML = "Change"
             div.append(p)
             div.append(RemoveBtn)
