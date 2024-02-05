@@ -8,7 +8,7 @@
 </head>
 <body>
     <h1>Schedule Editor</h1>
-    <button>Use default</button>
+    <button onclick="schedule=defaultSchedule; window.location.reload()">Use default</button>
     <hr>
     <h2>Add an item</h2>
     <p>Time:</p>
@@ -25,6 +25,72 @@
     var E_time = document.getElementById("time")
     var E_name = document.getElementById("name")
     var schedule = JSON.parse(localStorage.schedule)
+    var defaultSchedule = [
+            {
+                name:"Core 1",
+                date: today + " 08:15:00"
+            },
+                        {
+                name:"[HIDE]",
+                date: today + " 09:13:00"
+            },
+            {
+                name:"Ridge time",
+                date: today + " 09:16:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 09:51:00"
+            },
+            {
+                name:"Core 4",
+                date: today + " 09:54:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 10:52:00"
+            },
+            {
+                name:"Core 3",
+                date: today + " 10:54:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 11:52:00"
+            },
+            {
+                name:"Lunch",
+                date: today + " 11:54:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 12:24:00"
+            },
+            {
+                name:"Core 2",
+                date: today + " 12:26:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 13:23:00"
+            },
+            {
+                name:"Elective",
+                date: today + " 13:27:00"
+            },
+            {
+                name:"[HIDE]",
+                date: today + " 14:12:00"
+            },
+            {
+                name:"Elective  ",
+                date: today + " 14:15:00"
+            },
+            {
+                name:"The End ",
+                date: today + " 15:00:00"
+            }
+        ]
     function addToSchedule(){
       schedule.push({
         name:E_name.value,
@@ -58,6 +124,7 @@ function appendElements() {
                 appendElements();
             }
         });
+        var changeButton = document.createElement("button")
         
         // Append paragraph and button to the container
         container.appendChild(paragraph);
