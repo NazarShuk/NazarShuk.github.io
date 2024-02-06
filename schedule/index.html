@@ -78,72 +78,7 @@
         var today = month + "/" + day +", " +year
         var previousMisson;
         var toggle;
-        var nextMissions = [
-            {
-                name:"Core 1",
-                date: today + " 08:15:00"
-            },
-                        {
-                name:"[HIDE]",
-                date: today + " 09:13:00"
-            },
-            {
-                name:"Ridge time",
-                date: today + " 09:16:00"
-            },
-            {
-                name:"[HIDE]",
-                date: today + " 09:51:00"
-            },
-            {
-                name:"Core 4",
-                date: today + " 09:54:00"
-            },
-            {
-                name:"[HIDE]",
-                date: today + " 10:52:00"
-            },
-            {
-                name:"Core 3",
-                date: today + " 10:54:00"
-            },
-            {
-                name:"[HIDE]",
-                date: today + " 11:52:00"
-            },
-            {
-                name:"Lunch",
-                date: today + " 11:54:00"
-            },
-            {
-                name:"[HIDE]",
-                date: today + " 12:24:00"
-            },
-            {
-                name:"Core 2",
-                date: today + " 12:26:00"
-            },
-            {
-                name:"[HIDE]",
-                date: today + " 13:23:00"
-            },
-            {
-                name:"Elective",
-                date: today + " 13:27:00"
-            },
-            {
-                name:"[HIDE]",
-                date: today + " 14:12:00"
-            },
-            {
-                name:"Elective  ",
-                date: today + " 14:15:00"
-            },
-            {
-                name:"The End ",
-                date: today + " 15:00:00"
-            }
-        ]
+
         var nextMissions = JSON.parse(localStorage.schedule)
         nextMissions.forEach(item=>{
             item.date = today + " " + item.date
@@ -199,7 +134,7 @@
             }
             // If the count down is finished, write some text
             if (distance < 0) {
-                if(!nextMissions[0].name.startsWith("[HIDE]")){
+                if(!nextMissions[0].name.startsWith("!h ")){
                 document.getElementById(nextMissions[0].name).innerHTML = ""
                 }
                 previousMisson = nextMissions[0]
