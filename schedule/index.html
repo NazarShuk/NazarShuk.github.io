@@ -64,6 +64,7 @@
             <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
             <p id="subtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
+            <p id="subsubtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
             
         </center>
     </div>
@@ -79,7 +80,9 @@
         var today = month + "/" + day +", " +year
         var previousMisson;
         var toggle;
-
+        if(localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null){
+            document.getElementById("subsubtitle").innerHTML = "No schedule found!"
+        }
         var nextMissions = JSON.parse(localStorage.schedule)
         nextMissions.forEach(item=>{
             item.date = today + " " + item.date
