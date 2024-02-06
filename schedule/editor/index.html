@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/other/styles.css">
+    <title>Schedule Editor</title>
+</head>
+<body>
+    <h1>Schedule Editor</h1>
+    <button onclick="localStorage.schedule = '[]'; window.location.reload()">Clear</button>
+    <button onclick="toDefault(); window.location.reload()">Default</button>
+    <button onclick="window.location.pathname = 'schedule'">Go back to schedule</button>
+    <hr>
+    <h2>Edit</h2>
+    <p>Time:</p>
+    <input type="time" id="time">
+    <p>Name:</p>
+    <input type="text" placeholder="Name" id="name">
+    <br>
+    <p>To change an item, set the values here, and click change next to the item.</p>
+    <p>Cool Prefixes:
+        !h - Hide the item
+    </p>
+    <button onclick="addToSchedule()">Add</button>
+    <hr>
+    <h2>Current Schedule</h2>
+    <p id="container"></p>
+  <script>
+    var E_time = document.getElementById("time")
+    var E_name = document.getElementById("name")
+    var schedule = JSON.parse(localStorage.schedule)
+    var defaultSchedule = [
+            {
+                name:"Core 1",
+                date: " 08:15:00"
+            },
+                        {
+                name:"!h Transition",
+                date: " 09:13:00"
+            },
+            {
+                name:"Ridge time",
+                date: " 09:16:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 09:51:00"
+            },
+            {
+                name:"Core 4",
+                date: " 09:54:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 10:52:00"
+            },
+            {
+                name:"Core 3",
+                date: " 10:54:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 11:52:00"
+            },
+            {
+                name:"Lunch",
+                date: " 11:54:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 12:24:00"
+            },
+            {
+                name:"Core 2",
+                date: " 12:26:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 13:23:00"
+            },
+            {
+                name:"Elective",
+                date: " 13:27:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 14:12:00"
+            },
+            {
+                name:"Elective  ",
+                date: " 14:15:00"
+            },
+            {
+                name:"The End ",
+                date: " 15:00:00"
+            }
+        ]
+    function toDefault(){
+        localStorage.schedule = JSON.stringify(defaultSchedule)
+    }
+    function addToSchedule(){
+      schedule.push({
+        name:E_name.value,
+        date:E_time.value
+      })
+      appendElements()
+      localStorage.schedule = JSON.stringify(schedule)
+    }
+    // Function to append elements to the body
+function appendElements() {
+    var container = document.getElementById("container");
+    
+    // Clear previous content
+    container.innerHTML = "";
+    
+    // Loop through the array and create elements
+    schedule.forEach(function(obj) {
+        var paragraph = document.createElement("p");
+        paragraph.innerHTML = obj.name + " - " + obj.date;
+        
+        var removeButton = document.createElement("button");
+        removeButton.innerHTML = "Remove";
+        // Add event listener to remove the element when the button is clicked
+        removeButton.addEventListener("click", function() {
+            // Remove the corresponding object from the array
+            var index = schedule.indexOf(obj);
+            if (index > -1) {
+                schedule.splice(index, 1);
+                // Re-render elements
+                localStorage.schedule = JSON.stringify(schedule)
+                appendElements();
+            }
+        });
+        var changeButton = document.createElement("button")
+        changeButton.innerHTML = "Change"
+        changeButton.addEventListener('click',function(){
+            var index = schedule.indexOf(obj);
+            if (index > -1) {
+                schedule[index].name = E_name.value
+                schedule[index].date = E_time.value
+                // Re-render elements
+                localStorage.schedule = JSON.stringify(schedule)
+                appendElements();
+            }
+        })
+        var moveUp = document.createElement("button")
+        moveUp.innerHTML="↑"
+        moveUp.addEventListener("click",function(){
+            var index = schedule.indexOf(obj);
+            if (index > -1) {
+                schedule = array_move(schedule,index,index-1)
+                localStorage.schedule = JSON.stringify(schedule)
+                appendElements();
+            }
+        })
+        var moveDown = document.createElement("button")
+        moveDown.innerHTML="↓"
+        moveDown.addEventListener("click",function(){
+            var index = schedule.indexOf(obj);
+            if (index > -1) {
+                schedule = array_move(schedule,index,index+1)
+                localStorage.schedule = JSON.stringify(schedule)
+                appendElements();
+            }
+        })
+        // Append paragraph and button to the container
+        container.appendChild(paragraph);
+        container.appendChild(removeButton);
+        container.appendChild(changeButton);
+        container.appendChild(moveUp);
+        container.appendChild(moveDown)
+        container.appendChild(document.createElement("br")); // Add line break
+    });
+}
+function array_move(arr, old_index, new_index) {
+    if (new_index >= arr.length) {
+        var k = new_index - arr.length + 1;
+        while (k--) {
+            arr.push(undefined);
+        }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr; // for testing
+};
+appendElements()
+  </script>
+</body>
+</html>
