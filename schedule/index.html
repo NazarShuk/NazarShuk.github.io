@@ -40,10 +40,21 @@
     -o-transition-duration: 1s !important;
     transition-duration: 1s !important
 }
+#slideButton {
+  position: fixed;
+  top: -200px; /* Initially hide the button above the viewport */
+  right: 20px;
+  transition: top 0.3s ease;
+  z-index: 999; /* Ensure the button stays on top */
+}
     </style>
     <title>Schedule</title>
 </head>
 <body>
+    <div id="slideButton">
+        <h1>Menu</h1>
+        <button onclick="window.location.pathname='schedule/editor'">Editor</button>
+    </div>
     <div class="center" style="display: inline; font-size: 48px;" id="CenterTime">
         <center>
             <h1 id="demo3" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
@@ -53,26 +64,14 @@
             <h1 id="demo2" style="margin:0; animation: slide 1s infinite" class="odometer"></h1>
             s
             <p id="subtitle" style="opacity:50%; margin:0; animation: sub 0.5s infinite"></p>
+            <p id="subsubtitle" style="font-size: x-large; margin:0;"></p>
             
         </center>
     </div>
     <center><p id="weekend" style="position: absolute;bottom: 0;right: 0; opacity:50%; margin:0; font-size: 18px;"></p></center>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5274494671146434"
      crossorigin="anonymous"></script>
-<!-- bottom -->
-<ins class="adsbygoogle"
-     style="position: absolute;bottom: 0;right: 50%;margin:0; width: fit-content;"
-     data-ad-client="ca-pub-5274494671146434"
-     data-ad-slot="6033681415"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
     <script>
-        if(localStorage.schedule == undefined ||localStorage.schedule == null || localStorage.schedule == "[]"){
-            window.location.pathname = "schedule/editor"
-        }
         var date = new Date()
         var month = date.getMonth()
         month = month + 1;
@@ -81,7 +80,10 @@
         var today = month + "/" + day +", " +year
         var previousMisson;
         var toggle;
-
+        if(localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null){
+            document.getElementById("subsubtitle").innerHTML = "No schedule found!<br><button onclick=\"window.location.pathname='schedule/editor'\">Editor</button>"
+            
+        }
         var nextMissions = JSON.parse(localStorage.schedule)
         nextMissions.forEach(item=>{
             item.date = today + " " + item.date
@@ -124,7 +126,7 @@
                     document.getElementById("demo1").innerHTML = minutes
                     document.getElementById("demo2").innerHTML = seconds
                     document.getElementById("demo3").innerHTML = hours
-                    document.getElementById("subtitle").innerHTML = "transition"
+                    document.getElementById("subtitle").innerHTML = (nextMissions[0].name).replace("!h ", "")
                 }
                 else{
                     document.getElementById("demo1").innerHTML = minutes
@@ -160,7 +162,15 @@ function countdownToWeekend() {
 
 // Call the function to start the countdown
 countdownToWeekend();
-
+window.addEventListener('mousemove', function(event) {
+  var slideButton = document.getElementById('slideButton');
+  var mouseY = event.clientY;
+  if (mouseY < 150) { // Adjust this value as needed to determine how close to the top the mouse needs to be
+    slideButton.style.top = '5px'; // Slide the button into view
+  } else {
+    slideButton.style.top = '-200px'; // Hide the button when the mouse is not near the top
+  }
+});
     </script>
 </body>
 </html>
