@@ -84,6 +84,7 @@
             document.getElementById("subsubtitle").innerHTML = "No schedule found!"
         }
         var nextMissions = JSON.parse(localStorage.schedule)
+        if(nextMissions != null){
         nextMissions.forEach(item=>{
             item.date = today + " " + item.date
         })
@@ -161,6 +162,7 @@ function countdownToWeekend() {
 
 // Call the function to start the countdown
 countdownToWeekend();
+}
 window.addEventListener('mousemove', function(event) {
   var slideButton = document.getElementById('slideButton');
   var mouseY = event.clientY;
