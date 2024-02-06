@@ -84,7 +84,7 @@
             item.date = today + " " + item.date
         })
         nextMissions.forEach(element =>{
-            if(!element.name.startsWith("[HIDE]")){
+            if(!element.name.startsWith("!h ")){
                 var e = document.createElement("p")
                 e.id = element.name
                 e.className = "scheduleItemsClass"
@@ -117,7 +117,7 @@
             // Display the result in the element with id="demo"
             if(previousMisson != null){
             if(distance > 0){
-                if(previousMisson.name.startsWith("[HIDE]")){
+                if(previousMisson.name.startsWith("!h ")){
                     document.getElementById("demo1").innerHTML = minutes
                     document.getElementById("demo2").innerHTML = seconds
                     document.getElementById("demo3").innerHTML = hours
