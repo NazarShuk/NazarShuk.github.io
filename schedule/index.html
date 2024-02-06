@@ -52,6 +52,7 @@
 </head>
 <body>
     <div id="slideButton">
+        <h1>Menu</h1>
         <button onclick="window.location.pathname='schedule/editor'">Editor</button>
     </div>
     <div class="center" style="display: inline; font-size: 48px;" id="CenterTime">
@@ -160,7 +161,7 @@ countdownToWeekend();
 window.addEventListener('mousemove', function(event) {
   var slideButton = document.getElementById('slideButton');
   var mouseY = event.clientY;
-  if (mouseY < 50) { // Adjust this value as needed to determine how close to the top the mouse needs to be
+  if (mouseY < 150) { // Adjust this value as needed to determine how close to the top the mouse needs to be
     slideButton.style.top = '20px'; // Slide the button into view
   } else {
     slideButton.style.top = '-50px'; // Hide the button when the mouse is not near the top
