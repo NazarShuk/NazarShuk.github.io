@@ -81,10 +81,12 @@
         var previousMisson;
         var toggle;
         if(localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null){
-            document.getElementById("subsubtitle").innerHTML = "No schedule found!"
+            document.getElementById("subsubtitle").innerHTML = "No schedule found!<br>Open editor?"
+            document.getElementById("subsubtitle").addEventListener('click',function(){
+                window.location.pathname = "schedule/editor"
+            })
         }
         var nextMissions = JSON.parse(localStorage.schedule)
-        if(nextMissions != null){
         nextMissions.forEach(item=>{
             item.date = today + " " + item.date
         })
@@ -162,7 +164,6 @@ function countdownToWeekend() {
 
 // Call the function to start the countdown
 countdownToWeekend();
-}
 window.addEventListener('mousemove', function(event) {
   var slideButton = document.getElementById('slideButton');
   var mouseY = event.clientY;
