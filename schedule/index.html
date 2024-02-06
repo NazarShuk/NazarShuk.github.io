@@ -81,7 +81,7 @@
         var previousMisson;
         var toggle;
         if(localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null){
-            document.getElementById("subsubtitle").innerHTML = "No schedule found!<br>Open editor?"
+            document.getElementById("subsubtitle").innerHTML = "No schedule found!<br>click me to open editor"
             document.getElementById("subsubtitle").addEventListener('click',function(){
                 window.location.pathname = "schedule/editor"
             })
