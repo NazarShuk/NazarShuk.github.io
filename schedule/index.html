@@ -42,7 +42,7 @@
 }
 #slideButton {
   position: fixed;
-  top: -50px; /* Initially hide the button above the viewport */
+  top: -200px; /* Initially hide the button above the viewport */
   right: 20px;
   transition: top 0.3s ease;
   z-index: 999; /* Ensure the button stays on top */
@@ -162,7 +162,7 @@ window.addEventListener('mousemove', function(event) {
   var slideButton = document.getElementById('slideButton');
   var mouseY = event.clientY;
   if (mouseY < 150) { // Adjust this value as needed to determine how close to the top the mouse needs to be
-    slideButton.style.top = '20px'; // Slide the button into view
+    slideButton.style.top = '5px'; // Slide the button into view
   } else {
     slideButton.style.top = '-200px'; // Hide the button when the mouse is not near the top
   }
