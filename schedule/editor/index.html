@@ -140,13 +140,45 @@ function appendElements() {
                 appendElements();
             }
         })
+        var moveUp = document.createElement("button")
+        moveUp.innerHTML="↑"
+        moveUp.addEventListener("click",function(){
+            var index = schedule.indexOf(obj);
+            if (index > -1) {
+                schedule = array_move(schedule,index,index-1)
+                localStorage.schedule = JSON.stringify(schedule)
+                appendElements();
+            }
+        })
+        var moveDown = document.createElement("button")
+        moveDown.innerHTML="↓"
+        moveDown.addEventListener("click",function(){
+            var index = schedule.indexOf(obj);
+            if (index > -1) {
+                schedule = array_move(schedule,index,index+1)
+                localStorage.schedule = JSON.stringify(schedule)
+                appendElements();
+            }
+        })
         // Append paragraph and button to the container
         container.appendChild(paragraph);
         container.appendChild(removeButton);
-        container.appendChild(changeButton)
+        container.appendChild(changeButton);
+        container.appendChild(moveUp);
+        container.appendChild(moveDown)
         container.appendChild(document.createElement("br")); // Add line break
     });
 }
+function array_move(arr, old_index, new_index) {
+    if (new_index >= arr.length) {
+        var k = new_index - arr.length + 1;
+        while (k--) {
+            arr.push(undefined);
+        }
+    }
+    arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
+    return arr; // for testing
+};
 appendElements()
   </script>
 </body>
