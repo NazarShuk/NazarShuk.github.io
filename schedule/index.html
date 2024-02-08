@@ -72,6 +72,76 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5274494671146434"
      crossorigin="anonymous"></script>
     <script>
+        if(!localStorage.bugfixreset1){
+            localStorage.schedule = JSON.stringify([
+            {
+                name:"Core 1",
+                date: " 08:15:00"
+            },
+                        {
+                name:"!h Transition",
+                date: " 09:13:00"
+            },
+            {
+                name:"Ridge time",
+                date: " 09:16:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 09:51:00"
+            },
+            {
+                name:"Core 4",
+                date: " 09:54:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 10:52:00"
+            },
+            {
+                name:"Core 3",
+                date: " 10:54:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 11:52:00"
+            },
+            {
+                name:"Lunch",
+                date: " 11:54:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 12:24:00"
+            },
+            {
+                name:"Core 2",
+                date: " 12:26:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 13:23:00"
+            },
+            {
+                name:"Elective",
+                date: " 13:27:00"
+            },
+            {
+                name:"!h Transition",
+                date: " 14:12:00"
+            },
+            {
+                name:"Elective  ",
+                date: " 14:15:00"
+            },
+            {
+                name:"The End ",
+                date: " 15:00:00"
+            }
+        ])
+        localStorage.bugfixreset1 = 1
+            alert("Because of bugs with schedule not loading for a lot of people, doing this reset. Your existing schedule will be set to default.")
+        }
         var date = new Date()
         var month = date.getMonth()
         month = month + 1;
