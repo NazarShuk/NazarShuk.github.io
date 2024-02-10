@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="other/styles.css">
+    <link rel="stylesheet" href="../other/styles.css">
 <link href="https://github.hubspot.com/odometer/themes/odometer-theme-default.css" rel="stylesheet">
 <script src="https://github.hubspot.com/odometer/odometer.js"></script>
     <style>
@@ -40,6 +40,7 @@
     -o-transition-duration: 1s !important;
     transition-duration: 1s !important
 }
+
 #slideButton {
   position: fixed;
   top: -200px; /* Initially hide the button above the viewport */
@@ -51,9 +52,24 @@
     <title>Schedule</title>
 </head>
 <body>
+    <div id="menuPage" >
+        <div class="center" style="flex-direction: column; font-size: larger;">
+            <center>
+            <h1 class="bigLabel">Schedule</h1>
+            <h2>Project i made for my school. You can also edit the schedule yourself</h2>
+            <button onclick="document.getElementById('menuPage').style.display='none';document.getElementById('main').style.display='inline'">Open the schedule</button>
+            <button onclick="window.location.pathname='schedule/editor';">Open the editor</button>
+            <h2>Additional tools</h2>
+            <h4>*You might wanna use them if the schedule is not loading</h4>
+            <button onclick="resetToDefault();window.location.reload()">Reset to default</button>
+            <button onclick="localStorage.schedule = '[]';window.location.reload()">Clear schedule</button>
+        </center>
+        </div>
+        
+    </div>
+    <div id="main" style="display: none;">
     <div id="slideButton">
-        <h1>Menu</h1>
-        <button onclick="window.location.pathname='schedule/editor'">Editor</button>
+        <button onclick="document.getElementById('menuPage').style.display='inline';document.getElementById('main').style.display='none'" style="font-size: 48px;">Menu</button>
     </div>
     <div class="center" style="display: inline; font-size: 48px;" id="CenterTime">
         <center>
@@ -69,10 +85,9 @@
         </center>
     </div>
     <center><p id="weekend" style="position: absolute;bottom: 0;right: 0; opacity:50%; margin:0; font-size: 18px;"></p></center>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5274494671146434"
-     crossorigin="anonymous"></script>
+</div>
     <script>
-        if(!localStorage.bugfixreset1){
+        function resetToDefault(){
             localStorage.schedule = JSON.stringify([
             {
                 name:"Core 1",
@@ -139,8 +154,11 @@
                 date: " 15:00:00"
             }
         ])
+        }
+        if(!localStorage.bugfixreset1){
+            resetToDefault()
         localStorage.bugfixreset1 = 1
-            alert("Because of bugs with schedule not loading for a lot of people, doing this reset. Your existing schedule will be set to default.")
+            //alert("Because of bugs with schedule not loading for a lot of people, doing this reset. Your existing schedule will be set to default.")
         }
         var date = new Date()
         var month = date.getMonth()
@@ -158,6 +176,7 @@
         nextMissions.forEach(item=>{
             item.date = today + " " + item.date
         })
+
         nextMissions.forEach(element =>{
             if(!element.name.startsWith("!h ")){
                 var e = document.createElement("p")
@@ -167,10 +186,11 @@
                 e.style.marginBottom = "0"
                 e.style.opacity="25%"
                 e.innerHTML = element.name + "<br>" + (element.date).replace(today,"") + "<br>------------"
-                document.body.append(e)
+                document.getElementById("main").append(e)
             }
            
         })
+        
         var isloading = false;
         // Set the date we're counting down to
         //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
@@ -196,7 +216,7 @@
                     document.getElementById("demo1").innerHTML = minutes
                     document.getElementById("demo2").innerHTML = seconds
                     document.getElementById("demo3").innerHTML = hours
-                    document.getElementById("subtitle").innerHTML = (nextMissions[0].name).replace("!h ", "")
+                    document.getElementById("subtitle").innerHTML = (previousMisson.name).replace("!h ", "")
                 }
                 else{
                     document.getElementById("demo1").innerHTML = minutes

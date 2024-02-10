@@ -65,3 +65,8 @@ input {
 p {
     font-size: larger;
 }
+
+.bigLabel{
+    font-size: 128px;
+    margin: 0;
+}
