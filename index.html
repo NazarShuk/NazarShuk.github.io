@@ -7,24 +7,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"rel="stylesheet"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"/>
-    <link rel="stylesheet" href="other/styles.css">
+    <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
     <title>Home</title>
 </head>
 <body>
     <center>
-        <div class="center" style="flex-flow: column;">
-            <h2>Hi! i am</h2>
             <h1 class="bigLabel">NshIS</h1>
+            <h2 id="quote" style="font-style: italic;"></h2>
             <div style="font-size: larger;">
             <center>
-                <h2>Upcoming projects:</h2>
-                <h3>Full version of Ncord</h3>
-            </center>
-            <center>
-                <h2>Ncord(s)</h2>
-                <button onclick="window.location.href = '/nvoice'">Ncord</button>
-                <button onclick="window.location.href = '/chat'">Ncord chat</button>
-                
+                <h2>Ncord</h2>
+                <p>Currently in active development</p>
+                <button>Coming soon</button>
             </center>
             <center>
                 <h2>Maintained</h2>
@@ -35,9 +29,25 @@
                 <h2>Other projects</h2>
                 <button onclick="window.location.href = '/redirects/bankR'">Bebra bank (on russian)</button>
             </center>
-        </div>
+        
         </div>
     </center>
-    
+    <script>
+        var quote = document.getElementById("quote")
+        var quotes = [
+            "and you dont want to know what that means",
+            "are you here for the schedule?",
+            "how does this work help",
+            "hlep",
+            "dead uncle darel is here"
+        ]
+        var chosen = quotes[Math.floor(Math.random()*quotes.length)]
+        chosen.split("").forEach((char,index)=>{
+            setTimeout(function(){
+quote.innerHTML += char
+            },index * 250)
+            
+        })
+    </script>
 </body>
 </html>
