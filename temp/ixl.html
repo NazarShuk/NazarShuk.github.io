@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
+    <title>Percentage Difference Calculator</title>
+</head>
+<body>
+    <h1>Percentage Difference Calculator</h1>
+    <form id="percentageForm">
+        <label for="ogInput">Original Value:</label>
+        <input type="number" id="ogInput" required step="any"><br>
+        <label for="newInput">New Value:</label>
+        <input type="number" id="newInput" required step="any"><br>
+        <button type="submit">Calculate</button>
+    </form>
+    <div id="result"></div>
+
+    <script>
+        document.getElementById('percentageForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var og = parseFloat(document.getElementById('ogInput').value);
+            var new_val = parseFloat(document.getElementById('newInput').value);
+            var resultDiv = document.getElementById('result');
+            var diff;
+            if (og < new_val) {
+                diff = new_val - og;
+                resultDiv.innerHTML = ((diff / og) * 100) + "%<br>-------------<br>";
+            } else if (og > new_val) {
+                diff = og - new_val;
+                resultDiv.innerHTML = ((diff / og) * 100) + "%<br>-------------<br>";
+            }
+        });
+    </script>
+</body>
+</html>
