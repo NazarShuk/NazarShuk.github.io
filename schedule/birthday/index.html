@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/../../other/styles.css">
+    <title>Add your birthday</title>
+</head>
+
+<body>
+    <center>
+        <h1>Add your birthday to the schedule</h1>
+        <p>Your name</p>
+        <input type="text" placeholder="Name" id="name">
+        <p>Your birthday</p>
+        <input type="date" id="birthday">
+        <h2>You can only submit your birthday once. Be careful</h2>
+        <button onclick="send()">Submit</button>
+    </center>
+    <script>
+        var isSent = false;
+        function send() {
+            if(!isSent && localStorage.birthdaySent === undefined){
+            var confirmation = confirm("Are you sure")
+            if(confirmation){
+            const data = new FormData();
+            data.append("name", document.getElementById("name").value);
+            data.append("birthday", document.getElementById("birthday").value);
+
+            const xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+
+            xhr.addEventListener("readystatechange", function () {
+                if (this.readyState === this.DONE) {
+                    console.log(this.responseText);
+                    alert("Succesfully submitted")
+                    window.location.pathname="/schedule"
+                }
+            });
+
+            xhr.open("POST", "https://shukhardin.000webhostapp.com/scheduleBirthday.inc.php");
+            xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
+
+            xhr.send(data);
+            document.getElementById("name").disabled = true
+            document.getElementById("birthday").disabled = true
+            isSent = true
+            localStorage.birthdaySent = 1
+        }}
+        }
+    </script>
+</body>
+
+</html>
