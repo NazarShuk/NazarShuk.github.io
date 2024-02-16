@@ -20,6 +20,8 @@
             id="colorPicker">
             <button onclick="cellSize+=5; drawCells(data)">+</button>
             <button onclick="cellSize-=5; drawCells(data)">-</button>
+            <br>
+            <p id="coordinates"></p>
     </div>
 </center>
     
@@ -55,6 +57,7 @@
                 ctx.fillRect(element.x * cellSize, element.y * cellSize, cellSize, cellSize);
             });
             highlightCell(); // redraw the highlight after cells are drawn
+            document.getElementById("coordinates").innerHTML = highlightedCell.x + ", " + highlightedCell.y
         }
 
         function highlightCell() {
