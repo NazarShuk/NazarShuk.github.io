@@ -6,20 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../other/styles.css">
     <title>N/Place</title>
-
-    <style>
-        canvas {
-            border: 1px solid black;
-        }
-    </style>
 </head>
 
 <body>
     <center><input style="position: fixed; z-index: 999; width: 100px; height: 100px;" type="color" value="#f6f82"
             id="colorPicker"></center>
-    <h2>Current canvas size: 100x100</h2>
-  <button onclick="cellSize+=5; drawCells(data)">Zoom in</button>
-  <button onclick="cellSize-=5; drawCells(data)">Zoom out</button>
+  <button onclick="cellSize+=5; drawCells(data)">+</button>
+  <button onclick="cellSize-=5; drawCells(data)">-</button>
     <canvas id="canvas" width="5000" height="5000"></canvas>
     <script>
         const canvas = document.getElementById('canvas');
