@@ -14,13 +14,14 @@
 </head>
 
 <body>
+    <center>
     <div style="position: fixed; z-index: 999;">
-        <center>
             <button onclick="cellSize+=5; drawCells(data)">+</button>
             <input style="width: 100px; height: 100px;" type="color" value="#f6f82"
             id="colorPicker">
-            <button onclick="cellSize-=5; drawCells(data)">-</button></center>
+            <button onclick="cellSize-=5; drawCells(data)">-</button>
     </div>
+</center>
     
   
     <canvas id="canvas" width="5000" height="5000"></canvas>
