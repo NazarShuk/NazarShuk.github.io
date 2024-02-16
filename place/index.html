@@ -5,13 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../other/styles.css">
-    <title>Document</title>
+    <title>N/Place</title>
 
     <style>
-        table,
-        th,
-        td {
-            border: 0px solid black;
+        canvas {
+            border: 1px solid black;
         }
     </style>
 </head>
@@ -19,134 +17,95 @@
 <body>
     <center><input style="position: fixed; z-index: 999; width: 100px; height: 100px;" type="color" value="#f6f82"
             id="colorPicker"></center>
-    <h2>Current canvas size: 50x50</h2>
-    <table id="table">
-
-    </table>
+    <h2>Current canvas size: 100x100</h2>
+  <button onclick="cellSize+=5; drawCells(data)">Zoom in</button>
+  <button onclick="cellSize-=5; drawCells(data)">Zoom out</button>
+    <canvas id="canvas" width="5000" height="5000"></canvas>
     <script>
-        Generate()
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        var data = []
+        var cellSize = 20; // size of each cell
+        const numRows = 100;
+        const numCols = 100;
+        let highlightedCell = { x: -1, y: -1 }; // initially no cell is highlighted
+
         function updateCanvas() {
-            const data = null;
-
             const xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === this.DONE) {
-                    console.log(this.responseText);
-                    Downloaded = JSON.parse(this.responseText);
-                    Downloaded.forEach(element => {
-                            document.getElementById(element.x+";"+element.y).style.color = element.color
-                            document.getElementById(element.x+";"+element.y).style.backgroundColor = element.color
-                    });
+                    const downloadedData = JSON.parse(this.responseText);
+                  data = downloadedData;
+                    drawCells(downloadedData);
                 }
             });
-
             xhr.open("GET", "https://shukhardin.000webhostapp.com/newGetPlace.inc.php");
             xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
-
-            xhr.send(data);
-
+            xhr.send();
         }
-        function Generate() {
-            var x = 50 //document.getElementById("x").value
-            var y = 50 //document.getElementById("y").value
-            var Downloaded = {}
-            const data = null;
+
+        function drawCells(data) {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+            data.forEach(element => {
+                ctx.fillStyle = element.color;
+                ctx.fillRect(element.x * cellSize, element.y * cellSize, cellSize, cellSize);
+            });
+            highlightCell(); // redraw the highlight after cells are drawn
+        }
+
+        function highlightCell() {
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+            if (highlightedCell.x >= 0 && highlightedCell.y >= 0) {
+                ctx.strokeRect(highlightedCell.x * cellSize, highlightedCell.y * cellSize, cellSize, cellSize);
+            }
+        }
+
+        function placeCell(x, y, color) {
+            const data = new FormData();
+            data.append("x", x);
+            data.append("y", y);
+            data.append("color", color);
 
             const xhr = new XMLHttpRequest();
-            xhr.withCredentials = true;
-
             xhr.addEventListener("readystatechange", function () {
                 if (this.readyState === this.DONE) {
                     console.log(this.responseText);
-                    Downloaded = JSON.parse(this.responseText);
-                    for (let index = 0; index < x; index++) {
-                        var tr = document.createElement('tr')
-                        for (let indexx = 0; indexx < y; indexx++) {
-                            var th = document.createElement('th')
-                            var a = document.createElement('button')
-                            a.innerHTML = "P"
-                            var color = ""
-                            Downloaded.forEach(element => {
-                                if (element.x == index && element.y == indexx) {
-                                    color = element.color
-                                    a.innerHTML = "F"
-                                }
-                            });
-                            a.style.backgroundColor = color
-                            a.style.color = color
-
-                            a.id = index + ";" + indexx
-                            a.onclick = function () {
-                                var coloor = document.getElementById("colorPicker").value
-                                const data = new FormData();
-                                data.append("x", index);
-                                data.append("y", indexx);
-                                data.append("color", coloor);
-
-                                const xhr = new XMLHttpRequest();
-                                xhr.withCredentials = true;
-
-                                xhr.addEventListener("readystatechange", function () {
-                                    if (this.readyState === this.DONE) {
-                                        console.log(this.responseText);
-                                        const data = null;
-
-                                        const xhr = new XMLHttpRequest();
-                                        xhr.withCredentials = true;
-
-                                        xhr.addEventListener("readystatechange", function () {
-                                            if (this.readyState === this.DONE) {
-                                                console.log(this.responseText);
-                                                var dDownloaded = JSON.parse(this.responseText);
-                                                dDownloaded.forEach(element => {
-                                                    if (element.x == index && element.y == indexx) {
-                                                        var coloor = element.color
-                                                        document.getElementById(index + ";" + indexx).style.color = coloor
-                                                        document.getElementById(index + ";" + indexx).style.backgroundColor = coloor
-                                                    }
-                                                });
-
-                                            }
-                                        });
-
-                                        xhr.open("GET", "https://shukhardin.000webhostapp.com/newGetPlace.inc.php");
-
-                                        xhr.send(data);
-                                    }
-                                });
-
-                                xhr.open("POST", "https://shukhardin.000webhostapp.com/newPlace.inc.php");
-
-                                xhr.send(data);
-                            }
-                            th.append(a)
-                            tr.append(th)
-
-                        }
-                        document.getElementById("table").append(tr)
-                    }
-                    for (var i = 0; i < x; i++) {
-                        for (var ii = 0; ii < y; ii++) {
-                            if (document.getElementById(i + ";" + ii).innerHTML == "P") {
-                                document.getElementById(i + ";" + ii).style.color = "white"
-                                document.getElementById(i + ";" + ii).style.backgroundColor = "white"
-                            }
-                        }
-                    }
+                    updateCanvas();
                 }
             });
-
-            xhr.open("GET", "https://shukhardin.000webhostapp.com/newGetPlace.inc.php");
-
+            xhr.open("POST", "https://shukhardin.000webhostapp.com/newPlace.inc.php");
             xhr.send(data);
+        }
 
+        function handleClick(event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+            const x = Math.floor(mouseX / cellSize);
+            const y = Math.floor(mouseY / cellSize);
+            const color = document.getElementById("colorPicker").value;
+            placeCell(x, y, color);
         }
-        function randomNumber(min, max) {
-            return Math.floor(Math.random() * (max - min) + min);
-        }
-        setInterval(updateCanvas,5000)
+        canvas.addEventListener('mousemove', function (event) {
+            const rect = canvas.getBoundingClientRect();
+            const mouseX = event.clientX - rect.left;
+            const mouseY = event.clientY - rect.top;
+            highlightedCell.x = Math.floor(mouseX / cellSize);
+            highlightedCell.y = Math.floor(mouseY / cellSize);
+            updateCanvas(); // redraw to remove previous highlight
+        });
+
+        canvas.addEventListener('mouseleave', function () {
+            highlightedCell.x = -1;
+            highlightedCell.y = -1;
+            updateCanvas(); // redraw to remove highlight
+        });
+
+        canvas.addEventListener('click', handleClick);
+
+        updateCanvas(); // initial drawing
+        setInterval(updateCanvas, 5000);
     </script>
 
 </body>
