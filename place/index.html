@@ -15,9 +15,10 @@
 
 <body>
     <center><input style="position: fixed; z-index: 999; width: 100px; height: 100px;" type="color" value="#f6f82"
-            id="colorPicker"></center>
-  <button onclick="cellSize+=5; drawCells(data)">+</button>
-  <button onclick="cellSize-=5; drawCells(data)">-</button>
+            id="colorPicker">
+            <button onclick="cellSize+=5; drawCells(data)">+</button>
+            <button onclick="cellSize-=5; drawCells(data)">-</button></center>
+  
     <canvas id="canvas" width="5000" height="5000"></canvas>
     <script>
         const canvas = document.getElementById('canvas');
