@@ -12,6 +12,7 @@
     <button onclick="localStorage.schedule = '[]'; window.location.reload()">Clear</button>
     <button onclick="toDefault(); window.location.reload()">Default</button>
     <button onclick="saveToClipboard(localStorage.schedule)">Copy to clipboard</button>
+    <button onclick="localStorage.schedule = pasteFromClipboard(); window.location.reload()">Paste from clipboard</button>
     <button onclick="window.location.pathname = 'schedule'">Go back to schedule</button>
     <hr>
     <h2>Edit</h2>
@@ -197,6 +198,22 @@ function saveToClipboard(text) {
       // You can handle errors here, like displaying an error message to the user
     });
 }
+// Function to paste text from clipboard
+function pasteFromClipboard() {
+  navigator.clipboard.readText()
+    .then(text => {
+      console.log('Text pasted from clipboard: ' + text);
+      // You can do whatever you want with the pasted text here
+    })
+    .catch(err => {
+      console.error('Failed to paste text from clipboard: ', err);
+      // You can handle errors here, like displaying an error message to the user
+    });
+}
+
+// Example usage
+pasteFromClipboard();
+
   </script>
 <button onclick="var yes = confirm('Wanna see something special??');if(yes){
      window.location.href = 'https://www.youtube.com/watch?v=xvFZjo5PgG0'
