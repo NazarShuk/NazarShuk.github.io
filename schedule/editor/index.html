@@ -11,6 +11,7 @@
     
     <button onclick="localStorage.schedule = '[]'; window.location.reload()">Clear</button>
     <button onclick="toDefault(); window.location.reload()">Default</button>
+    <button onclick="saveToClipboard(localStorage.schedule)">Copy to clipboard</button>
     <button onclick="window.location.pathname = 'schedule'">Go back to schedule</button>
     <hr>
     <h2>Edit</h2>
@@ -185,6 +186,17 @@ function array_move(arr, old_index, new_index) {
     return arr; // for testing
 };
 appendElements()
+function saveToClipboard(text) {
+  navigator.clipboard.writeText(text)
+    .then(() => {
+      console.log('Text saved to clipboard: ' + text);
+      // You can add any additional handling here, like showing a success message
+    })
+    .catch(err => {
+      console.error('Failed to save text to clipboard: ', err);
+      // You can handle errors here, like displaying an error message to the user
+    });
+}
   </script>
 <button onclick="var yes = confirm('Wanna see something special??');if(yes){
      window.location.href = 'https://www.youtube.com/watch?v=xvFZjo5PgG0'
