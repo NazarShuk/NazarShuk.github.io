@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../other/styles.css">
+    <meta content="Dyslexify" property="og:title" />
+<meta content="bro has to put some text and it will comeout as dyslexiya 🤑🤑🤑" property="og:description" />
+<meta content="https://nshis.vercel.app/dyslexify" property="og:url" />
+<meta content="#674FF0" data-react-helmet="true" name="theme-color" />
+    <title>Dyslexify</title>
+</head>
+    <h1>Dyeslexifier</h1>
+    <h2>Click the button or change the input to convert</h2>
+    <hr>
+    <textarea placeholder="Input text" id="input" cols="60" rows="10" onchange="dyslexify()"></textarea>
+    <br>
+    <input type="number" id="amount" placeholder="Amount of dyslexia" value="25" onchange="dyslexify()" max="1" min="0">%
+    <button onclick="dyslexify()">Dyslexify</button>
+    <br>
+    <br>
+    <textarea placeholder="Output text" id="output" cols="60" rows="10"></textarea>
+<body>
+    <script>
+        function dyslexify() {
+            var inputString = document.getElementById("input").value;
+            var probability = (document.getElementById("amount").value) /100;
+            const keyboardMapping = {
+                'q': ['w', 'a', 's'],
+                'w': ['q', 'e', 'a', 's', 'd'],
+                'e': ['w', 'r', 's', 'd', 'f'],
+                'r': ['e', 't', 'd', 'f', 'g'],
+                't': ['r', 'y', 'f', 'g', 'h'],
+                'y': ['t', 'u', 'g', 'h', 'j'],
+                'u': ['y', 'i', 'h', 'j', 'k'],
+                'i': ['u', 'o', 'j', 'k', 'l'],
+                'o': ['i', 'p', 'k', 'l'],
+                'p': ['o', 'l'],
+                'a': ['q', 'w', 's', 'z'],
+                's': ['q', 'w', 'e', 'a', 'd', 'z', 'x'],
+                'd': ['w', 'e', 'r', 's', 'f', 'x', 'c'],
+                'f': ['e', 'r', 't', 'd', 'g', 'c', 'v'],
+                'g': ['r', 't', 'y', 'f', 'h', 'v', 'b'],
+                'h': ['t', 'y', 'u', 'g', 'j', 'b', 'n'],
+                'j': ['y', 'u', 'i', 'h', 'k', 'n', 'm'],
+                'k': ['u', 'i', 'o', 'j', 'l', 'm'],
+                'l': ['i', 'o', 'p', 'k'],
+                'z': ['a', 's', 'x'],
+                'x': ['z', 's', 'd', 'c'],
+                'c': ['x', 'd', 'f', 'v'],
+                'v': ['c', 'f', 'g', 'b'],
+                'b': ['v', 'g', 'h', 'n'],
+                'n': ['b', 'h', 'j', 'm'],
+                'm': ['n', 'j', 'k']
+            };
+            const replaceChar = (char) => {
+                if (Math.random() < probability) {
+                    const lowerChar = char.toLowerCase();
+                    return keyboardMapping[lowerChar] ? keyboardMapping[lowerChar][Math.floor(Math.random() * keyboardMapping[lowerChar].length)] : char;
+                }
+                return char;
+            };
+            document.getElementById("output").value = inputString.split('').map(replaceChar).join('');
+        }
+
+    </script>
+</body>
+
+</html>
