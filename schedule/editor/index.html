@@ -12,21 +12,12 @@
     <button onclick="localStorage.schedule = '[]'; window.location.reload()">Clear</button>
     <button onclick="toDefault(); window.location.reload()">Default</button>
     <button onclick="window.location.pathname = 'schedule'">Go back to schedule</button>
+    <h2>To edit the item, click the name of the item you want to change</h2>
     <hr>
-    <h2>Edit</h2>
-    <p>Time:</p>
-    <input type="time" id="time" value="00:00:00" step="2">
-    <p>Name:</p>
-    <input type="text" placeholder="Name" id="name">
-    <br>
-    <p>To change an item, set the values here, and click change next to the item.</p>
-    <p>Cool Prefixes:
-        !h - Hide the item
-    </p>
-    <button onclick="addToSchedule()">Add</button>
-    <hr>
-    <h2>Current Schedule</h2>
-    <p id="container"></p>
+    
+    <center>
+    <div id="container"></div>
+</center>
   <script>
     var E_time = document.getElementById("time")
     var E_name = document.getElementById("name")
@@ -100,80 +91,45 @@
     function toDefault(){
         localStorage.schedule = JSON.stringify(defaultSchedule)
     }
-    function addToSchedule(){
-      schedule.push({
-        name:E_name.value,
-        date:E_time.value
+    function renderSchedule(){
+        document.getElementById("container").innerHTML = ""
+        schedule.forEach((element,index) => {
+                var e = document.createElement("p")
+                e.style.marginTop = "0"
+                e.style.marginBottom = "0"
+                e.style.textAlign = "center"
+                e.innerHTML = element.name
+                e.style.cursor = "pointer"
+                e.style.width= "fit-content"
+                e.addEventListener("click",function(){
+                    customPrompt("Item edit",index)
+                })
+                document.getElementById("container").append(e)
+                var g = document.createElement("input")
+                g.style.marginTop = "0"
+                g.style.marginBottom = "0"
+                g.style.textAlign = "center"
+                g.type = "time"
+                g.value = element.date.replace(" ","")
+                document.getElementById("container").append(g)
+                document.getElementById("container").append(document.createElement("br"))
+                document.getElementById("container").append(document.createElement("br"))
+                
+        })
+        var btn = document.createElement("button")
+        btn.innerHTML = "Add new"
+        btn.addEventListener("click",function(){
+            //addToSchedule()
+            schedule.push({
+        name:"new item",
+        date:"00:00:00"
       })
-      appendElements()
-      localStorage.schedule = JSON.stringify(schedule)
+            renderSchedule()
+        })
+        document.getElementById("container").append(btn)
+        localStorage.schedule = JSON.stringify(schedule)
     }
-    // Function to append elements to the body
-function appendElements() {
-    var container = document.getElementById("container");
-    
-    // Clear previous content
-    container.innerHTML = "";
-    
-    // Loop through the array and create elements
-    schedule.forEach(function(obj) {
-        var paragraph = document.createElement("p");
-        paragraph.innerHTML = obj.name + " - " + obj.date;
-        
-        var removeButton = document.createElement("button");
-        removeButton.innerHTML = "Remove";
-        // Add event listener to remove the element when the button is clicked
-        removeButton.addEventListener("click", function() {
-            // Remove the corresponding object from the array
-            var index = schedule.indexOf(obj);
-            if (index > -1) {
-                schedule.splice(index, 1);
-                // Re-render elements
-                localStorage.schedule = JSON.stringify(schedule)
-                appendElements();
-            }
-        });
-        var changeButton = document.createElement("button")
-        changeButton.innerHTML = "Change"
-        changeButton.addEventListener('click',function(){
-            var index = schedule.indexOf(obj);
-            if (index > -1) {
-                schedule[index].name = E_name.value
-                schedule[index].date = E_time.value
-                // Re-render elements
-                localStorage.schedule = JSON.stringify(schedule)
-                appendElements();
-            }
-        })
-        var moveUp = document.createElement("button")
-        moveUp.innerHTML="↑"
-        moveUp.addEventListener("click",function(){
-            var index = schedule.indexOf(obj);
-            if (index > -1) {
-                schedule = array_move(schedule,index,index-1)
-                localStorage.schedule = JSON.stringify(schedule)
-                appendElements();
-            }
-        })
-        var moveDown = document.createElement("button")
-        moveDown.innerHTML="↓"
-        moveDown.addEventListener("click",function(){
-            var index = schedule.indexOf(obj);
-            if (index > -1) {
-                schedule = array_move(schedule,index,index+1)
-                localStorage.schedule = JSON.stringify(schedule)
-                appendElements();
-            }
-        })
-        // Append paragraph and button to the container
-        container.appendChild(paragraph);
-        container.appendChild(removeButton);
-        container.appendChild(changeButton);
-        container.appendChild(moveUp);
-        container.appendChild(moveDown)
-        container.appendChild(document.createElement("br")); // Add line break
-    });
-}
+    renderSchedule()
 function array_move(arr, old_index, new_index) {
     if (new_index >= arr.length) {
         var k = new_index - arr.length + 1;
@@ -184,37 +140,76 @@ function array_move(arr, old_index, new_index) {
     arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
     return arr; // for testing
 };
-appendElements()
-function saveToClipboard(text) {
-  navigator.clipboard.writeText(text)
-    .then(() => {
-      console.log('Text saved to clipboard: ' + text);
-      // You can add any additional handling here, like showing a success message
-    })
-    .catch(err => {
-      console.error('Failed to save text to clipboard: ', err);
-      // You can handle errors here, like displaying an error message to the user
-    });
-}
-// Function to paste text from clipboard
-function pasteFromClipboard() {
-  navigator.clipboard.readText()
-    .then(text => {
-      console.log('Text pasted from clipboard: ' + text);
-      // You can do whatever you want with the pasted text here
-    })
-    .catch(err => {
-      console.error('Failed to paste text from clipboard: ', err);
-      // You can handle errors here, like displaying an error message to the user
-    });
-}
+function customPrompt(message, index, callback) {
+    // Create overlay to block background
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.zIndex = '9999';
 
-// Example usage
-pasteFromClipboard();
+    // Create prompt container
+    const promptContainer = document.createElement('div');
+    promptContainer.style.position = 'fixed';
+    promptContainer.style.top = '50%';
+    promptContainer.style.left = '50%';
+    promptContainer.style.transform = 'translate(-50%, -50%)';
+    promptContainer.style.backgroundColor = '#4D4770';
+    promptContainer.style.padding = '20px';
+    promptContainer.style.borderRadius = '5px';
+    promptContainer.style.boxShadow = '0 0 10px rgba(0, 0, 0, 0.3)';
+    promptContainer.style.zIndex = '10000';
+
+    // Create message element
+    const messageElement = document.createElement('p');
+    messageElement.textContent = message;
+    promptContainer.appendChild(messageElement);
+
+    // Create input element
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.placeholder = "Name of the item"
+    inputElement.value = schedule[index].name
+    inputElement.addEventListener("change",function(){
+        schedule[index].name = inputElement.value
+        renderSchedule()
+    })
+    promptContainer.appendChild(inputElement);
+    
+    promptContainer.appendChild(document.createElement("br"))
+	promptContainer.appendChild(document.createElement("br"))
+    const deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.addEventListener('click', function() {
+        schedule.splice(index,1)
+        renderSchedule()
+        document.body.removeChild(overlay);
+        document.body.removeChild(promptContainer);
+    });
+    promptContainer.appendChild(deleteButton);
+    
+    promptContainer.appendChild(document.createElement("br"))
+    promptContainer.appendChild(document.createElement("br"))
+    
+    // Create confirm button
+    const confirmButton = document.createElement('button');
+    confirmButton.textContent = 'OK';
+    confirmButton.addEventListener('click', function() {
+        document.body.removeChild(overlay);
+        document.body.removeChild(promptContainer);
+        const userInput = inputElement.value;
+        callback(userInput);
+    });
+    promptContainer.appendChild(confirmButton);
+
+    // Append overlay and prompt container to body
+    document.body.appendChild(overlay);
+    document.body.appendChild(promptContainer);
+}
 
   </script>
-<button onclick="var yes = confirm('Wanna see something special??');if(yes){
-     window.location.href = 'https://www.youtube.com/watch?v=xvFZjo5PgG0'
-}">Click this for a surprise</button>
 </body>
 </html>
