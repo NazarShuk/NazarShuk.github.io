@@ -111,6 +111,10 @@
                 g.style.textAlign = "center"
                 g.type = "time"
                 g.value = element.date.replace(" ","")
+                g.addEventListener("change",function(){
+                    schedule[index].date = " " + g.value
+                    localStorage.schedule = JSON.stringify(schedule)
+                })
                 document.getElementById("container").append(g)
                 document.getElementById("container").append(document.createElement("br"))
                 document.getElementById("container").append(document.createElement("br"))
