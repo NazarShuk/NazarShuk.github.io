@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+    .textbox {
+        flex: 1;
+        padding: 20px;
+        border-right: 2px solid #ccc;
+    }
+    .iframe-container {
+        flex: 2;
+        padding: 20px;
+    }
+    iframe {
+        width: 100%;
+        height: 100%;
+        border: 1px solid black;
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <textarea id="code" onchange="writeToIframe()"></textarea>
+    <div class="iframe-container">
+        <iframe id="myIframe" frameborder="0"></iframe>
+    </div>
+</div>
+<script>
+function writeToIframe(){
+        // Get reference to the iframe
+        var iframe = document.getElementById('myIframe');
+
+        // Get the document object of the iframe
+        var iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
+
+        // Write content to the iframe
+        iframeDocument.write(document.getElementById("code").value);
+
+        // Close the document to ensure proper rendering
+        iframeDocument.close();
+        }
+    </script>
+</body>
+</html>
