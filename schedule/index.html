@@ -3,11 +3,32 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../other/styles.css">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <link href="../other/styles.css" rel="stylesheet">
     <link href="https://github.hubspot.com/odometer/themes/odometer-theme-default.css" rel="stylesheet">
+    <script crossorigin="anonymous"
+            integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
+            src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <script src="https://github.hubspot.com/odometer/odometer.js"></script>
     <style>
+        .notification {
+            position: fixed;
+            background-color: #333;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            z-index: 9999;
+            width: 300px; /* Adjust width as needed */
+        }
+
+        .odometer.odometer-auto-theme, .odometer.odometer-theme-default {
+            font-family: "JetBrains Mono";
+            line-height: 1.1em;
+            margin: 0;
+        }
+
         @keyframes slide {
             0% {
                 color: rgb(255, 255, 255);
@@ -36,8 +57,27 @@
             }
         }
 
+        @keyframes disappear {
+            from {
+                font-size: 1em;
+            }
+            to {
+                font-size: 0;
+            }
+        }
+
+        @keyframes appear {
+            from {
+                font-size: 0;
+            }
+            to {
+                font-size: 56px;
+            }
+        }
+
         body {
             height: 100%;
+            overflow-x: hidden;
             overflow-y: hidden;
         }
 
@@ -45,7 +85,6 @@
         .odometer.odometer-animating-down.odometer-animating .odometer-ribbon-inner {
             -webkit-transition-duration: 1s !important;
             -moz-transition-duration: 1s !important;
-            -ms-transition-duration: 1s !important;
             -o-transition-duration: 1s !important;
             transition-duration: 1s !important
         }
@@ -59,143 +98,263 @@
             z-index: 999;
             /* Ensure the button stays on top */
         }
+        #time > * {
+            margin: 5px; /* Adjust the spacing between elements */
+        }
+        #time > p {
+            margin: 10px; /* Adjust the spacing between elements */
+        }
     </style>
     <title>Schedule</title>
 </head>
 
 <body>
-    <div id="menuPage">
-        <div class="center" style="flex-direction: column; font-size: larger;">
-            <center>
-                <h1 class="bigLabel" style="margin-bottom: 2px;">Schedule</h1>
-                <hr>
-                <button
-                    onclick="document.getElementById('menuPage').style.display='none';document.getElementById('main').style.display='inline'">Open
-                    the schedule</button>
-                <button onclick="window.location.pathname='schedule/editor';">Open the editor</button>
-                <hr>
-                <h1>Special</h1>
-                <button onclick="window.location.pathname='/schedule/birthday'">Add your birthday</button>
-                <button onclick="window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeCB-xTS-GZ-fdra100UUa1RF57o_4I43iYP4JrD3xIQjzlFQ/viewform?usp=sf_link'">Feature Form</button>
-                <hr>
-                <h2>Problem fix</h2>
-                <div style="font-size: 16px;">
-                    <button onclick="resetToDefault();window.location.reload()">Reset to default</button>
-                    <button onclick="localStorage.schedule = '[]';window.location.reload()">Clear schedule</button>
-                </div>
-                <h6 style="opacity: 50%; margin: 0;">Version: 140</h6>
-            </center>
-        </div>
-
-    </div>
-    <div id="main" style="display: none;">
-        <div id="slideButton">
-            <button
-                onclick="document.getElementById('menuPage').style.display='inline';document.getElementById('main').style.display='none'">Menu</button>
-        </div>
-        <div class="center" style="display: inline; font-size: 56px;" id="CenterTime">
-            <center>
-                <h1 id="demo3" style="margin:0;" class="odometer"></h1>
-                <abraham>h</abraham>
-                <h1 id="demo1" style="margin:0;" class="odometer"></h1>
-                <abraham id="demo11">m</abraham>
-                <h1 id="demo2" style="margin:0;" class="odometer"></h1>
-                s
-                <p id="subtitle" style="opacity:50%; font-size: 48px; margin:0; animation: sub 0.5s infinite"></p>
-                <p id="subsubtitle" style="margin:0;"></p>
-
-            </center>
-        </div>
+<div id="menuPage" style="transition: 0.5s">
+    <div class="center" style="flex-direction: column; font-size: larger; text-align: center">
         <center>
-            <p id="bottom" style="position: absolute;bottom: 25px;right: 25px; opacity:50%; margin:0; font-size: 24px;"></p>
+            <h1 class="bigLabel" style="margin-bottom: 0;">Schedule</h1>
+            <h2 id="menuPeopleConnected" style="margin-top: 0; opacity: 50%;"></h2>
+            <hr>
+            <button
+                    onclick="toggleMenu('main');toggleMenu('menu')">Open
+                the schedule
+            </button>
+            <button onclick="window.location.pathname='schedule/editor';">Open the editor</button>
+            <hr>
+            <h1>Special</h1>
+            <button onclick="toggleMenu('menu');toggleMenu('online')">Online features</button>
+            <button onclick="window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeCB-xTS-GZ-fdra100UUa1RF57o_4I43iYP4JrD3xIQjzlFQ/viewform?usp=sf_link'">
+                Feature Form
+            </button>
+            <hr>
+            <h2>Problem fix</h2>
+            <div style="font-size: 16px;">
+                <button onclick="resetToDefault();window.location.reload()">Reset to default</button>
+                <button onclick="localStorage.schedule = '[]';window.location.reload()">Clear schedule</button>
+            </div>
+            <h6 style="opacity: 50%; margin: 0;">Version: 140</h6>
         </center>
     </div>
-    <script>
-        function resetToDefault() {
-            localStorage.schedule = JSON.stringify([
-                {
-                    name: "Core 1",
-                    date: " 08:15:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 09:13:00"
-                },
-                {
-                    name: "Ridge time",
-                    date: " 09:16:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 09:51:00"
-                },
-                {
-                    name: "Core 4",
-                    date: " 09:54:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 10:52:00"
-                },
-                {
-                    name: "Core 3",
-                    date: " 10:54:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 11:52:00"
-                },
-                {
-                    name: "Lunch",
-                    date: " 11:54:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 12:24:00"
-                },
-                {
-                    name: "Core 2",
-                    date: " 12:26:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 13:23:00"
-                },
-                {
-                    name: "Elective",
-                    date: " 13:27:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 14:12:00"
-                },
-                {
-                    name: "Elective  ",
-                    date: " 14:15:00"
-                },
-                {
-                    name: "The End ",
-                    date: " 15:00:00"
-                }
-            ])
-        }
-        if (!localStorage.bugfixreset1) {
-            resetToDefault()
-            localStorage.bugfixreset1 = 1
-            //alert("Because of bugs with schedule not loading for a lot of people, doing this reset. Your existing schedule will be set to default.")
-        }
-        
 
-        var date = new Date()
-        var month = date.getMonth()
-        month = month + 1;
-        var day = date.getDate()
-        var year = date.getFullYear()
-        var today = month + "/" + day + ", " + year
-        var previousMisson;
-        var toggle;
-        function checkBirthdays(){
-        var birthdays = []
+</div>
+<div id="main" style="display: none; transition: 0.5s">
+    <div id="slideButton">
+        <button
+                onclick="toggleMenu('main');toggleMenu('menu')">Menu
+        </button>
+        <button
+                onclick="toggleOnlineppl()">Show online people
+        </button>
+    </div>
+    <div class="center" id="CenterTime" style="display: inline; font-size: 56px; transition: 0.5s;">
+        <center>
+            <div id="time"  style="display: flex; align-items: center; justify-content: center">
+                <h1 class="odometer" id="H1" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
+                <h1 class="odometer" id="H2" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
+                <p style="font-size: 4vw; display: inline">:</p>
+                <h1 class="odometer" id="M1" style="margin:0; font-size: 6vw ; transition: 0.5s;"></h1>
+                <h1 class="odometer" id="M2" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
+                <p id="demo11" style="font-size: 4vw;display: inline">:</p>
+                <h1 class="odometer" id="S1" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
+                <h1 class="odometer" id="S2" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
+            </div>
+            <p id="subtitle" style="opacity:50%; font-size: 48px; margin:0; animation: sub 0.5s infinite"></p>
+            <p id="subsubtitle" style="margin:0;"></p>
+        </center>
+    </div>
+    <center>
+        <p id="bottom" style="position: absolute;bottom: 25px;right: 25px; opacity:50%; margin:0; font-size: 24px;"></p>
+        
+        
+    </center>
+    <div style="position: absolute; right: -300px; top: 0px; margin:0; font-size: 24px; text-align: right; width: 300px; height: 100%; background: #333333; transition: 0.5s;" id="onlineppl">
+        <p id="topright" style="position: absolute; right: 25px; top: 50px; opacity:25%; margin:0; font-size: 24px; text-align: right">gop gop</p>
+    </div>
+</div>
+<div id="onlinePage" style="display: none; transition: 0.5s">
+    <div class="center" style="flex-direction: column; font-size: larger; text-align: center">
+        <center>
+            <h1 class="bigLabel" style="margin-bottom: 0;">Online</h1>
+            <h2 id="OnlineIndicator" oncontextmenu="socket.emit('adminRequest','')" style="color:red; margin-top: 0;">
+                You are currently offline</h2>
+            <button onclick="toggleMenu('menu');toggleMenu('online')">Menu</button>
+            <hr>
+            <p id="onlineSettingsPlaceholder" style="opacity: 10%;">you have to be connected to the server to change
+                settings</p>
+            
+            <div id="onlineSettings" style="display: none">
+                <input id="OnlineName" placeholder="Online name" type="text">
+                <button onclick="
+                    sendData();
+                    localStorage.scheduleOnlineName = document.getElementById('OnlineName').value
+                    ">Change username</button>
+                <p style="font-size: 14px">By clicking the button above, you agree, that you did not put anything inappropriate in your name, and if you did, you may get banned from using this feature.</p>
+            </div>
+            <div id="admin" style="display: none">
+                <hr>
+                <input id="adminNotif" placeholder="admin notification" type="text">
+                <button onclick="socket.emit('adminNotif',document.getElementById('adminNotif').value)">send</button>
+            </div>
+        </center>
+    </div>
+</div>
+<script>
+    function resetToDefault() {
+        localStorage.schedule = JSON.stringify([
+            {
+                name: "Core 1",
+                date: " 08:15:00"
+            },
+            {
+                name: "!h Transition",
+                date: " 09:13:00"
+            },
+            {
+                name: "Ridge time",
+                date: " 09:16:00"
+            },
+            {
+                name: "!h Transition",
+                date: " 09:51:00"
+            },
+            {
+                name: "Core 4",
+                date: " 09:54:00"
+            },
+            {
+                name: "!h Transition",
+                date: " 10:52:00"
+            },
+            {
+                name: "Core 3",
+                date: " 10:54:00"
+            },
+            {
+                name: "!h Transition",
+                date: " 11:52:00"
+            },
+            {
+                name: "Lunch",
+                date: " 11:54:00"
+            },
+            {
+                name: "!h Transition",
+                date: " 12:24:00"
+            },
+            {
+                name: "Core 2",
+                date: " 12:26:00"
+            },
+            {
+                name: "!h Transition",
+                date: " 13:23:00"
+            },
+            {
+                name: "Elective",
+                date: " 13:27:00"
+            },
+            {
+                name: "!h Transition",
+                date: " 14:12:00"
+            },
+            {
+                name: "Elective  ",
+                date: " 14:15:00"
+            },
+            {
+                name: "The End ",
+                date: " 15:00:00"
+            }
+        ])
+    }
+
+    if (!localStorage.bugfixreset1) {
+        resetToDefault()
+        localStorage.bugfixreset1 = 1
+
+    }
+    if(!localStorage.uniqueAccountId){
+        localStorage.uniqueAccountId = btoa((Math.floor(Math.random() * 1000000) * new Date().getMilliseconds()).toString()) + btoa(new Date().getHours().toString() + new Date().getMinutes().toString() + new Date().getSeconds().toString() + new Date().getMilliseconds().toString())
+    }
+
+    const socket = io.connect("https://schedule-backend.nshis.com:2096");
+    if (localStorage.scheduleOnlineName) {
+        document.getElementById('OnlineName').value = localStorage.scheduleOnlineName
+        sendData();
+    }
+    socket.on("connect_error", (err) => {
+        // the reason of the error, for example "xhr poll error"
+        console.log(err.message);
+
+        // some additional description, for example the status code of the initial HTTP response
+        console.log(err.description);
+
+        // some additional context, for example the XMLHttpRequest object
+        console.log(err.context);
+    });
+
+    socket.on("connect", () => {
+        console.log("connected to the server!")
+        document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
+        document.getElementById("OnlineIndicator").style.color = "Green"
+        document.getElementById("onlineSettingsPlaceholder").style.display = "none"
+        document.getElementById("onlineSettings").style.display = "inline"
+        showNotification("Connected")
+        if(localStorage.scheduleOnlineName){
+            sendData();
+        }
+    })
+
+    socket.on("disconnect", () => {
+        console.log("connected to the server!")
+        document.getElementById("OnlineIndicator").innerHTML = "You are currently offline"
+        document.getElementById("OnlineIndicator").style.color = "Red"
+        document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
+        document.getElementById("onlineSettings").style.display = "none"
+        document.getElementById("menuPeopleConnected").innerHTML = "";
+        showNotification("Disconnected")
+    })
+    socket.on("ClientInfo", info => {
+        if (info.length !== 1) {
+            document.getElementById("menuPeopleConnected").innerHTML = "There are " + info.length + " people online";
+        } else {
+            document.getElementById("menuPeopleConnected").innerHTML = "There is " + info.length + " person online";
+        }
+        onlinePPL = info
+        let final = "Online:";
+        info.forEach(element => {
+            final += "<br>" + element
+        })
+        document.getElementById("topright").innerHTML = final
+    })
+    
+    socket.on("serverNotification", notif => {
+        showNotification(notif);
+    })
+
+    socket.on("adminGranted", () => {
+        document.getElementById("admin").style.display = "inline"
+
+    })
+
+    function sendData() {
+        socket.emit("userInfo", {
+            name: document.getElementById("OnlineName").value,
+            id:localStorage.uniqueAccountId
+        })
+    }
+
+    const date = new Date();
+    let month = date.getMonth();
+    month = month + 1;
+    const day = date.getDate();
+    const year = date.getFullYear();
+    const today = month + "/" + day + ", " + year;
+    let previousMisson;
+    let toggle;
+
+    function checkBirthdays() {
+        let birthdays = [];
         const xhr = new XMLHttpRequest();
         xhr.withCredentials = true;
         xhr.addEventListener("readystatechange", function () {
@@ -203,86 +362,148 @@
                 console.log(this.responseText);
                 birthdays = JSON.parse(this.responseText)
                 filteredBirthdays = []
-                birthdays.forEach(birthday=>{
-                    var datecam = new Date(birthday.birthday)
-                    console.log((datecam.getDate() + 1) +" " + date.getDate() +" " + (datecam.getMonth() + 1) + " " + (date.getMonth() + 1))
-                    if(datecam.getDate() + 1 === date.getDate() && datecam.getMonth() + 1 === date.getMonth() + 1){
+                birthdays.forEach(birthday => {
+                    const datecam = new Date(birthday.birthday);
+                    console.log((datecam.getDate() + 1) + " " + date.getDate() + " " + (datecam.getMonth() + 1) + " " + (date.getMonth() + 1))
+                    if (datecam.getDate() + 1 === date.getDate() && datecam.getMonth() + 1 === date.getMonth() + 1) {
                         filteredBirthdays.push(birthday);
                         console.log("its today!")
                     }
                 })
-                var finalText = ""
+                let finalText = "";
                 finalText += "Its "
-                filteredBirthdays.forEach(birthday=>{
+                filteredBirthdays.forEach(birthday => {
                     finalText += birthday.name + "'s, "
                 })
                 finalText += " birthday!"
                 if (filteredBirthdays.length !== 0) {
                     document.getElementById("bottom").innerHTML = finalText
-                
+
                 }
             }
         });
         xhr.open("GET", "https://shukhardin.000webhostapp.com/scheduleBirthdayGet.inc.php");
-        xhr.setRequestHeader("User-Agent", "insomnia/8.6.0");
         //xhr.send();
+    }
+
+    setInterval(checkBirthdays(), 30000)
+    checkBirthdays()
+    if (localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null) {
+        document.getElementById("subsubtitle").innerHTML = "No schedule found!<br><button onclick=\"window.location.pathname='schedule/editor'\">Editor</button>"
+
+    }
+    const nextMissions = JSON.parse(localStorage.schedule);
+    nextMissions.forEach(item => {
+        item.date = today + " " + item.date
+    })
+
+    nextMissions.forEach(element => {
+        if (!element.name.startsWith("!h ")) {
+            const e = document.createElement("p");
+            e.id = element.name
+            e.className = "scheduleItemsClass"
+            e.style.marginTop = "0"
+            e.style.marginBottom = "0"
+            e.style.opacity = "25%"
+            e.style.transition = "1s"
+            e.innerHTML = element.name + "<br>" + (element.date).replace(today, "") + "<br>------------"
+            document.getElementById("main").append(e)
         }
-        setInterval(checkBirthdays(),30000)
-        checkBirthdays()
-        if (localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null) {
-            document.getElementById("subsubtitle").innerHTML = "No schedule found!<br><button onclick=\"window.location.pathname='schedule/editor'\">Editor</button>"
 
-        }
-        var nextMissions = JSON.parse(localStorage.schedule)
-        nextMissions.forEach(item => {
-            item.date = today + " " + item.date
-        })
+    })
 
-        nextMissions.forEach(element => {
-            if (!element.name.startsWith("!h ")) {
-                var e = document.createElement("p")
-                e.id = element.name
-                e.className = "scheduleItemsClass"
-                e.style.marginTop = "0"
-                e.style.marginBottom = "0"
-                e.style.opacity = "25%"
-                e.innerHTML = element.name + "<br>" + (element.date).replace(today, "") + "<br>------------"
-                document.getElementById("main").append(e)
-            }
+    let isloading = false;
+    // Set the date we're counting down to
+    //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
+    let countDownDate = new Date(nextMissions[0].date).getTime();
+    // Update the count down every 1 second
+    const x = setInterval(function () {
+        let splitMinutes;
+        let splitSeconds;
+        let splitHours;
+        if (nextMissions.length != 0) {
 
-        })
 
-        var isloading = false;
-        // Set the date we're counting down to
-        //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
-        var countDownDate = new Date(nextMissions[0].date).getTime()
-        // Update the count down every 1 second
-        var x = setInterval(function () {
             // Get today's date and time
-            var now = new Date().getTime();
+            const now = new Date().getTime();
             // Find the distance between now and the count down date
-            var distance = countDownDate - now;
+            const distance = countDownDate - now;
             // Time calculations for days, hours, minutes and seconds
-            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            var miliseconds = Math.floor((distance % (1000)) / 1000);
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const miliseconds = Math.floor((distance % (1000)) / 1000);
 
             // Display the result in the element with id="demo"
             if (previousMisson != null) {
                 if (distance > 0) {
                     if (previousMisson.name.startsWith("!h ")) {
-                        /*document.getElementById("demo1").innerHTML = minutes
-                        document.getElementById("demo2").innerHTML = seconds
-                        document.getElementById("demo3").innerHTML = hours
-                        document.getElementById("subtitle").innerHTML = (previousMisson.name).replace("!h ", "")*/
-                        document.getElementById("CenterTime").style.display = "none"
-                    }
-                    else {
-                        document.getElementById("demo1").innerHTML = minutes
-                        document.getElementById("demo2").innerHTML = seconds
-                        document.getElementById("demo3").innerHTML = hours
+                        splitMinutes = minutes.toString().split("");
+                        splitSeconds = seconds.toString().split("");
+                        splitHours = hours.toString().split("");
+                        
+                        if (splitSeconds[1] === undefined) {
+                            document.getElementById("S2").style.fontSize = "0"
+                        }
+                        if (splitSeconds[1] !== undefined) {
+                            document.getElementById("S2").style.fontSize = "6vw"
+                        }
+
+                        if (splitMinutes[1] === undefined) {
+                            document.getElementById("M2").style.fontSize = "0"
+                        }
+                        if (splitMinutes[1] !== undefined) {
+                            document.getElementById("M2").style.fontSize = "6vw"
+                        }
+
+                        if (splitHours[1] === undefined) {
+                            document.getElementById("H2").style.fontSize = "0"
+                        }
+                        if (splitHours[1] !== undefined) {
+                            document.getElementById("H2").style.fontSize = "6vw"
+                        }
+
+                        document.getElementById("M1").innerHTML = splitMinutes[0]
+                        document.getElementById("M2").innerHTML = splitMinutes[1]
+                        document.getElementById("S1").innerHTML = splitSeconds[0]
+                        document.getElementById("S2").innerHTML = splitSeconds[1]
+                        document.getElementById("H1").innerHTML = splitHours[0]
+                        document.getElementById("H2").innerHTML = splitHours[1]
+                        document.getElementById("CenterTime").style.display = "inline"
+                        document.getElementById("subtitle").innerHTML = (previousMisson.name).replace("!h ", "")
+                        //document.getElementById("CenterTime").style.display = "none"
+                    } else {
+                        splitMinutes = minutes.toString().split("");
+                        splitSeconds = seconds.toString().split("");
+                        splitHours = hours.toString().split("");
+                        if (splitSeconds[1] === undefined) {
+                            document.getElementById("S2").style.fontSize = "0"
+                        }
+                        if (splitSeconds[1] !== undefined) {
+                            document.getElementById("S2").style.fontSize = "6vw"
+                        }
+
+                        if (splitMinutes[1] === undefined) {
+                            document.getElementById("M2").style.fontSize = "0"
+                        }
+                        if (splitMinutes[1] !== undefined) {
+                            document.getElementById("M2").style.fontSize = "6vw"
+                        }
+
+                        if (splitHours[1] === undefined) {
+                            document.getElementById("H2").style.fontSize = "0"
+                        }
+                        if (splitHours[1] !== undefined) {
+                            document.getElementById("H2").style.fontSize = "6vw"
+                        }
+
+                        document.getElementById("M1").innerHTML = splitMinutes[0]
+                        document.getElementById("M2").innerHTML = splitMinutes[1]
+                        document.getElementById("S1").innerHTML = splitSeconds[0]
+                        document.getElementById("S2").innerHTML = splitSeconds[1]
+                        document.getElementById("H1").innerHTML = splitHours[0]
+                        document.getElementById("H2").innerHTML = splitHours[1]
                         document.getElementById("CenterTime").style.display = "inline"
                         document.getElementById("subtitle").innerHTML = ""
                     }
@@ -291,7 +512,10 @@
             // If the count down is finished, write some text
             if (distance < 0) {
                 if (!nextMissions[0].name.startsWith("!h ")) {
-                    document.getElementById(nextMissions[0].name).innerHTML = ""
+                    document.getElementById(nextMissions[0].name).style.fontSize = "0"
+                    /*setTimeout(function () {
+                        document.getElementById(nextMissions[0].name).innerHTML = ""
+                    }, 1000)*/
                 }
                 previousMisson = nextMissions[0]
                 nextMissions.splice(0, 1)
@@ -299,18 +523,118 @@
                 document.getElementById("subtitle").innerHTML = "loading"
                 isloading = true;
             }
-        }, 500);
+        } else {
+            document.getElementById("time").style.display = "none"
+            document.getElementById("subtitle").innerHTML = ""
+            document.getElementById("subsubtitle").innerHTML = "Schedule ended"
+        }
+    }, 100);
 
-        window.addEventListener('mousemove', function (event) {
-            var slideButton = document.getElementById('slideButton');
-            var mouseY = event.clientY;
-            if (mouseY < 150) { // Adjust this value as needed to determine how close to the top the mouse needs to be
-                slideButton.style.top = '5px'; // Slide the button into view
+    window.addEventListener('mousemove', function (event) {
+        const slideButton = document.getElementById('slideButton');
+        const mouseY = event.clientY;
+        if (mouseY < 150) { // Adjust this value as needed to determine how close to the top the mouse needs to be
+            slideButton.style.top = '5px'; // Slide the button into view
+        } else {
+            slideButton.style.top = '-200px'; // Hide the button when the mouse is not near the top
+        }
+    });
+
+    function showNotification(message) {
+        const existingNotifications = document.querySelectorAll('.notification');
+
+        // Create notification element
+        const notification = document.createElement("div");
+        notification.className = "notification";
+        notification.textContent = message;
+        notification.style.fontSize = "24px"
+        document.body.appendChild(notification);
+
+        // Positioning
+        const numNotifications = existingNotifications.length;
+        const bottomOffset = 20 + (numNotifications * 100); // Adjust for spacing between notifications
+        notification.style.bottom = bottomOffset + "px";
+        notification.style.right = "20px";
+
+        // Animation
+        notification.style.opacity = "0";
+        setTimeout(function () {
+            notification.style.opacity = "1";
+        }, 50); // Delay for smooth transition
+
+        // Remove notification after a certain time
+        setTimeout(function () {
+            notification.style.opacity = "0";
+            setTimeout(function () {
+                notification.parentNode.removeChild(notification);
+            }, 500); // Wait for the animation to finish before removing the notification
+        }, 3000); // Adjust the time the notification stays visible (in milliseconds)
+    }
+
+    let MenuToggle = true;
+    let MainToggle = false;
+    let OnlineToggle = false;
+
+    function toggleMenu(name) {
+        if (name === "menu") {
+            if (MenuToggle === true) {
+                document.getElementById("menuPage").style.opacity = "0"
+                setTimeout(function () {
+                    document.getElementById("menuPage").style.display = "none"
+                    MenuToggle = false;
+                }, 500)
             } else {
-                slideButton.style.top = '-200px'; // Hide the button when the mouse is not near the top
+                document.getElementById("menuPage").style.display = "inline"
+                setTimeout(function () {
+                    document.getElementById("menuPage").style.opacity = "1"
+                }, 1)
+
+                MenuToggle = true;
             }
-        });
-    </script>
+        } else if (name === "main") {
+            if (MainToggle === true) {
+                document.getElementById("main").style.opacity = "0"
+                setTimeout(function () {
+                    document.getElementById("main").style.display = "none"
+                    MainToggle = false;
+                }, 500)
+            } else {
+                document.getElementById("main").style.display = "inline"
+                setTimeout(function () {
+                    document.getElementById("main").style.opacity = "1"
+                }, 1)
+
+                MainToggle = true;
+            }
+        } else if (name === "online") {
+            if (OnlineToggle === true) {
+                document.getElementById("onlinePage").style.opacity = "0"
+                setTimeout(function () {
+                    document.getElementById("onlinePage").style.display = "none"
+                    OnlineToggle = false;
+                }, 500)
+            } else {
+                document.getElementById("onlinePage").style.display = "inline"
+                setTimeout(function () {
+                    document.getElementById("onlinePage").style.opacity = "1"
+                }, 1)
+
+                OnlineToggle = true;
+            }
+        }
+    }
+    let toggledOnlineppl = false;
+    function toggleOnlineppl(){
+        if(!toggledOnlineppl){
+            document.getElementById("onlineppl").style.right = "0px";
+            toggledOnlineppl = true;
+        }
+        else{
+            document.getElementById("onlineppl").style.right = "-300px";
+            toggledOnlineppl = false;
+        }
+    }
+</script>
 </body>
 
 </html>
