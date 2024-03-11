@@ -292,10 +292,10 @@
         document.getElementById('OnlineName').value = localStorage.scheduleOnlineName
 
     }
-
+    var wsUrl = "wss://backend.nshis.com:2096"
     var ws;
     function websockets() {
-        ws = new WebSocket("wss://backend.nshis.com:2096");
+        ws = new WebSocket(wsUrl);
         ws.addEventListener("open", (event) => {
             console.log("connected to the server!")
             document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
