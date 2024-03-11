@@ -111,61 +111,53 @@
 </head>
 
 <body>
-<div id="menuPage" style="transition: 0.5s">
-    <div class="center" style="flex-direction: column; font-size: larger; text-align: center">
-        <center>
+<div id="menuPage" style="display: none; transition: 0.5s;width:80%;">
+    <div class="center" style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
             <h1 class="bigLabel" style="margin-bottom: 0;">Schedule</h1>
             <h2 id="menuPeopleConnected" style="margin-top: 0; opacity: 50%;"></h2>
-            <hr>
+            
             <button
                     onclick="toggleMenu('main');toggleMenu('menu')">Open
                 the schedule
             </button>
             <button onclick="window.location.pathname='schedule/editor';">Open the editor</button>
-            <hr>
+            
             <h1 style="margin-bottom: 0;">Special</h1>
             <p style="font-size: 14px;margin-top: 0;">Birthdays are currently disabled</p>
             <button onclick="toggleMenu('menu');toggleMenu('online')">Online</button>
-            <hr>
+            
             <h2>Problem fix</h2>
             <div style="font-size: 16px;">
                 <button onclick="resetToDefault();window.location.reload()">Reset to default</button>
                 <button onclick="localStorage.schedule = '[]';window.location.reload()">Clear schedule</button>
             </div>
             <h6 style="opacity: 50%; margin: 0;">Version: 142</h6>
-        </center>
     </div>
 
 </div>
-<div id="main" style="display: none; transition: 0.5s">
+<div id="main" style=" transition: 0.5s">
     <div id="slideButton">
         
         <button onclick="toggleMenu('main');toggleMenu('menu')">Menu</button>
         <button onclick="toggleOnlineppl()">Show online people</button>
         <button onclick="toggleScheduleItems()">Show schedule items</button>
     </div>
-    <div class="center" id="CenterTime" style="display: inline; font-size: 56px; transition: 0.5s; min-width: 300px">
-        <center>
+    <div class="center" id="CenterTime" style="display: inline; font-size: 56px; transition: 0.5s; min-width: 300px; text-align: center; align-items: center;">
             <div id="time" style="display: flex; align-items: center; justify-content: center">
                 <h1 class="odometer" id="H1" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
                 <h1 class="odometer" id="H2" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
-                <p style="font-size: 4vw; display: inline">h</p>
+                <p style="font-size: 4vw; display: inline" id="hLabel">h</p>
                 <h1 class="odometer" id="M1" style="margin:0; font-size: 7.5vw ; transition: 0.5s;"></h1>
                 <h1 class="odometer" id="M2" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
-                <p style="font-size: 4vw;display: inline">m</p>
+                <p style="font-size: 4vw;display: inline" id="mLabel">m</p>
                 <h1 class="odometer" id="S1" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
                 <h1 class="odometer" id="S2" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
                 <p style="font-size: 4vw;display: inline">s</p>
             </div>
             <p id="subtitle" style="opacity:50%; font-size: 48px; margin:0; animation: sub 0.5s infinite"></p>
             <p id="subsubtitle" style="margin:0;"></p>
-        </center>
     </div>
-    <center>
-        <p id="bottom" style="position: absolute;bottom: 25px;right: 25px; opacity:50%; margin:0; font-size: 24px;"></p>
-
-
-    </center>
+    <p id="bottom" style="position: absolute;bottom: 25px;right: 25px; opacity:50%; margin:0; font-size: 24px;"></p>
     <div style="position: absolute; left:0; top: 50px; margin:0; height: 100%; width: fit-content;  transition: 0.5s;" id="scheduleItems"></div>
     <div style="position: absolute; right: -300px; top: 0px; margin:0; font-size: 20px; text-align: right; width: 300px; height: 100%; transition: 0.5s;" id="onlineppl">
         
@@ -173,15 +165,14 @@
     </div>
 </div>
 <div id="onlinePage" style="display: none; transition: 0.5s">
-    <div class="center" style="flex-direction: column; font-size: larger; text-align: center">
-        <center>
+    <div class="center" style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
             <h1 class="bigLabel" style="margin-bottom: 0;">Online</h1>
             <h2 id="OnlineIndicator" oncontextmenu="ws.send(JSON.stringify({type:'adminRequest',
             name: document.getElementById('OnlineName').value,
             accountId:localStorage.uniqueAccountId}))" style="color:red; margin-top: 0;">
                 You are currently offline</h2>
             <button onclick="toggleMenu('menu');toggleMenu('online')">Menu</button>
-            <hr>
+            
             <p id="onlineSettingsPlaceholder" style="opacity: 10%;">you have to be connected to the server to change
                 settings</p>
 
@@ -195,7 +186,7 @@
                 <p style="font-size: 14px"></p>
             </div>
             <div id="admin" style="display: none">
-                <hr>
+                
                 <p>Admin granted</p>
                 <input type="text" placeholder="Username" id="OnlineAdminUserName">
                 <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminBan',accountId:localStorage.uniqueAccountId}))">
@@ -205,7 +196,6 @@
                     Unban
                 </button>
             </div>
-        </center>
     </div>
 </div>
 <script>
@@ -459,43 +449,7 @@
             // Display the result in the element with id="demo"
             if (previousMisson != null) {
                 if (distance > 0) {
-                    if (previousMisson.name.startsWith("!h ")) {
-                        splitMinutes = minutes.toString().split("");
-                        splitSeconds = seconds.toString().split("");
-                        splitHours = hours.toString().split("");
-
-                        if (splitSeconds[1] === undefined) {
-                            document.getElementById("S2").style.fontSize = "0"
-                        }
-                        if (splitSeconds[1] !== undefined) {
-                            document.getElementById("S2").style.fontSize = "7.5vw"
-                        }
-
-                        if (splitMinutes[1] === undefined) {
-                            document.getElementById("M2").style.fontSize = "0"
-                        }
-                        if (splitMinutes[1] !== undefined) {
-                            document.getElementById("M2").style.fontSize = "7.5vw"
-                        }
-
-                        if (splitHours[1] === undefined) {
-                            document.getElementById("H2").style.fontSize = "0"
-                        }
-                        if (splitHours[1] !== undefined) {
-                            document.getElementById("H2").style.fontSize = "7.5vw"
-                        }
-
-                        document.getElementById("M1").innerHTML = splitMinutes[0]
-                        document.getElementById("M2").innerHTML = splitMinutes[1]
-                        document.getElementById("S1").innerHTML = splitSeconds[0]
-                        document.getElementById("S2").innerHTML = splitSeconds[1]
-                        document.getElementById("H1").innerHTML = splitHours[0]
-                        document.getElementById("H2").innerHTML = splitHours[1]
-                        document.getElementById("CenterTime").style.display = "inline"
-                        document.getElementById("subtitle").innerHTML = (previousMisson.name).replace("!h ", "")
-                        //document.getElementById("CenterTime").style.display = "none"
-                    } else {
-                        splitMinutes = minutes.toString().split("");
+                    splitMinutes = minutes.toString().split("");
                         splitSeconds = seconds.toString().split("");
                         splitHours = hours.toString().split("");
                         if (splitSeconds[1] === undefined) {
@@ -519,6 +473,24 @@
                             document.getElementById("H2").style.fontSize = "7.5vw"
                         }
 
+                        if (minutes == 0) {
+                            document.getElementById("M1").style.fontSize = "0"
+                            document.getElementById("mLabel").style.fontSize = "0"
+                        }
+                        if (minutes != 0) {
+                            document.getElementById("M1").style.fontSize = "7.5vw"
+                            document.getElementById("mLabel").style.fontSize = "4vw"
+                        }
+
+                        if (hours === 0) {
+                            document.getElementById("H1").style.fontSize = "0"
+                            document.getElementById("hLabel").style.fontSize = "0"
+                        }
+                        if (hours !== 0) {
+                            document.getElementById("H1").style.fontSize = "7.5vw"
+                            document.getElementById("hLabel").style.fontSize = "4vw"
+                        }
+
                         document.getElementById("M1").innerHTML = splitMinutes[0]
                         document.getElementById("M2").innerHTML = splitMinutes[1]
                         document.getElementById("S1").innerHTML = splitSeconds[0]
@@ -526,8 +498,13 @@
                         document.getElementById("H1").innerHTML = splitHours[0]
                         document.getElementById("H2").innerHTML = splitHours[1]
                         document.getElementById("CenterTime").style.display = "inline"
-                        document.getElementById("subtitle").innerHTML = ""
-                    }
+                        
+                        if(previousMisson.name.startsWith("!h ")){
+                            document.getElementById("subtitle").innerHTML = (previousMisson.name).replace("!h ","")
+                        }
+                        else{
+                            document.getElementById("subtitle").innerHTML = ""
+                        }
                 }
             }
             // If the count down is finished, write some text
@@ -667,6 +644,10 @@
             toggledScheduleItems = false;
         }
     }
+
+
+    // Final
+    console.log("Schedule succesfully loaded!")
 </script>
 </body>
 
