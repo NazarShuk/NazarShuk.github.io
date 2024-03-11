@@ -295,7 +295,7 @@
 
     var ws;
     function websockets() {
-        ws = new WebSocket("ws://192.168.1.209:2096");
+        ws = new WebSocket("wss://backend.nshis.com:2096");
         ws.addEventListener("open", (event) => {
             console.log("connected to the server!")
             document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
