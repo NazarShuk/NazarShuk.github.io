@@ -98,11 +98,13 @@
             z-index: 999;
             /* Ensure the button stays on top */
         }
+
         #time > * {
             margin: 5px; /* Adjust the spacing between elements */
         }
+
         #time > p {
-            margin: 10px; /* Adjust the spacing between elements */
+            margin: 20px; /* Adjust the spacing between elements */
         }
     </style>
     <title>Schedule</title>
@@ -121,42 +123,39 @@
             </button>
             <button onclick="window.location.pathname='schedule/editor';">Open the editor</button>
             <hr>
-            <h1>Special</h1>
-            <button onclick="toggleMenu('menu');toggleMenu('online')">Online features</button>
-            <button onclick="window.location.href = 'https://docs.google.com/forms/d/e/1FAIpQLSeCB-xTS-GZ-fdra100UUa1RF57o_4I43iYP4JrD3xIQjzlFQ/viewform?usp=sf_link'">
-                Feature Form
-            </button>
+            <h1 style="margin-bottom: 0;">Special</h1>
+            <p style="font-size: 14px;margin-top: 0;">Birthdays are currently disabled</p>
+            <button onclick="toggleMenu('menu');toggleMenu('online')">Online</button>
             <hr>
             <h2>Problem fix</h2>
             <div style="font-size: 16px;">
                 <button onclick="resetToDefault();window.location.reload()">Reset to default</button>
                 <button onclick="localStorage.schedule = '[]';window.location.reload()">Clear schedule</button>
             </div>
-            <h6 style="opacity: 50%; margin: 0;">Version: 140</h6>
+            <h6 style="opacity: 50%; margin: 0;">Version: 142</h6>
         </center>
     </div>
 
 </div>
 <div id="main" style="display: none; transition: 0.5s">
     <div id="slideButton">
-        <button
-                onclick="toggleMenu('main');toggleMenu('menu')">Menu
-        </button>
-        <button
-                onclick="toggleOnlineppl()">Show online people
-        </button>
+        
+        <button onclick="toggleMenu('main');toggleMenu('menu')">Menu</button>
+        <button onclick="toggleOnlineppl()">Show online people</button>
+        <button onclick="toggleScheduleItems()">Show schedule items</button>
     </div>
-    <div class="center" id="CenterTime" style="display: inline; font-size: 56px; transition: 0.5s;">
+    <div class="center" id="CenterTime" style="display: inline; font-size: 56px; transition: 0.5s; min-width: 300px">
         <center>
-            <div id="time"  style="display: flex; align-items: center; justify-content: center">
-                <h1 class="odometer" id="H1" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
-                <h1 class="odometer" id="H2" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
-                <p style="font-size: 4vw; display: inline">:</p>
-                <h1 class="odometer" id="M1" style="margin:0; font-size: 6vw ; transition: 0.5s;"></h1>
-                <h1 class="odometer" id="M2" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
-                <p id="demo11" style="font-size: 4vw;display: inline">:</p>
-                <h1 class="odometer" id="S1" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
-                <h1 class="odometer" id="S2" style="margin:0; font-size: 6vw; transition: 0.5s;"></h1>
+            <div id="time" style="display: flex; align-items: center; justify-content: center">
+                <h1 class="odometer" id="H1" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
+                <h1 class="odometer" id="H2" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
+                <p style="font-size: 4vw; display: inline">h</p>
+                <h1 class="odometer" id="M1" style="margin:0; font-size: 7.5vw ; transition: 0.5s;"></h1>
+                <h1 class="odometer" id="M2" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
+                <p style="font-size: 4vw;display: inline">m</p>
+                <h1 class="odometer" id="S1" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
+                <h1 class="odometer" id="S2" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
+                <p style="font-size: 4vw;display: inline">s</p>
             </div>
             <p id="subtitle" style="opacity:50%; font-size: 48px; margin:0; animation: sub 0.5s infinite"></p>
             <p id="subsubtitle" style="margin:0;"></p>
@@ -164,36 +163,47 @@
     </div>
     <center>
         <p id="bottom" style="position: absolute;bottom: 25px;right: 25px; opacity:50%; margin:0; font-size: 24px;"></p>
-        
-        
+
+
     </center>
-    <div style="position: absolute; right: -300px; top: 0px; margin:0; font-size: 24px; text-align: right; width: 300px; height: 100%; background: #333333; transition: 0.5s;" id="onlineppl">
-        <p id="topright" style="position: absolute; right: 25px; top: 50px; opacity:25%; margin:0; font-size: 24px; text-align: right">gop gop</p>
+    <div style="position: absolute; left:25px; top: 50px; margin:0; height: 100%; width: fit-content;  transition: 0.5s;" id="scheduleItems"></div>
+    <div style="position: absolute; right: -300px; top: 0px; margin:0; font-size: 20px; text-align: right; width: 300px; height: 100%; transition: 0.5s;" id="onlineppl">
+        
+        <p id="topright" style="position: absolute; right: 25px; top: 50px; opacity:25%; margin:0; font-size: 20px; text-align: right">gop gop</p>
     </div>
 </div>
 <div id="onlinePage" style="display: none; transition: 0.5s">
     <div class="center" style="flex-direction: column; font-size: larger; text-align: center">
         <center>
             <h1 class="bigLabel" style="margin-bottom: 0;">Online</h1>
-            <h2 id="OnlineIndicator" oncontextmenu="socket.emit('adminRequest','')" style="color:red; margin-top: 0;">
+            <h2 id="OnlineIndicator" oncontextmenu="ws.send(JSON.stringify({type:'adminRequest',
+            name: document.getElementById('OnlineName').value,
+            accountId:localStorage.uniqueAccountId}))" style="color:red; margin-top: 0;">
                 You are currently offline</h2>
             <button onclick="toggleMenu('menu');toggleMenu('online')">Menu</button>
             <hr>
             <p id="onlineSettingsPlaceholder" style="opacity: 10%;">you have to be connected to the server to change
                 settings</p>
-            
+
             <div id="onlineSettings" style="display: none">
-                <input id="OnlineName" placeholder="Online name" type="text">
+                <input id="OnlineName" placeholder="Online name" type="text" maxlength="15">
                 <button onclick="
                     sendData();
                     localStorage.scheduleOnlineName = document.getElementById('OnlineName').value
-                    ">Change username</button>
-                <p style="font-size: 14px">By clicking the button above, you agree, that you did not put anything inappropriate in your name, and if you did, you may get banned from using this feature.</p>
+                    ">Change username
+                </button>
+                <p style="font-size: 14px"></p>
             </div>
             <div id="admin" style="display: none">
                 <hr>
-                <input id="adminNotif" placeholder="admin notification" type="text">
-                <button onclick="socket.emit('adminNotif',document.getElementById('adminNotif').value)">send</button>
+                <p>Admin granted</p>
+                <input type="text" placeholder="Username" id="OnlineAdminUserName">
+                <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminBan',accountId:localStorage.uniqueAccountId}))">
+                    Ban
+                </button>
+                <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminUnBan',accountId:localStorage.uniqueAccountId}))">
+                    Unban
+                </button>
             </div>
         </center>
     </div>
@@ -273,77 +283,86 @@
         localStorage.bugfixreset1 = 1
 
     }
-    if(!localStorage.uniqueAccountId){
+    if (!localStorage.uniqueAccountId) {
         localStorage.uniqueAccountId = btoa((Math.floor(Math.random() * 1000000) * new Date().getMilliseconds()).toString()) + btoa(new Date().getHours().toString() + new Date().getMinutes().toString() + new Date().getSeconds().toString() + new Date().getMilliseconds().toString())
     }
 
-    const socket = io.connect("https://schedule-backend.nshis.com:2096");
+
     if (localStorage.scheduleOnlineName) {
         document.getElementById('OnlineName').value = localStorage.scheduleOnlineName
-        sendData();
+
     }
-    socket.on("connect_error", (err) => {
-        // the reason of the error, for example "xhr poll error"
-        console.log(err.message);
 
-        // some additional description, for example the status code of the initial HTTP response
-        console.log(err.description);
-
-        // some additional context, for example the XMLHttpRequest object
-        console.log(err.context);
-    });
-
-    socket.on("connect", () => {
-        console.log("connected to the server!")
-        document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
-        document.getElementById("OnlineIndicator").style.color = "Green"
-        document.getElementById("onlineSettingsPlaceholder").style.display = "none"
-        document.getElementById("onlineSettings").style.display = "inline"
-        showNotification("Connected")
-        if(localStorage.scheduleOnlineName){
-            sendData();
-        }
-    })
-
-    socket.on("disconnect", () => {
-        console.log("connected to the server!")
-        document.getElementById("OnlineIndicator").innerHTML = "You are currently offline"
-        document.getElementById("OnlineIndicator").style.color = "Red"
-        document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
-        document.getElementById("onlineSettings").style.display = "none"
-        document.getElementById("menuPeopleConnected").innerHTML = "";
-        showNotification("Disconnected")
-    })
-    socket.on("ClientInfo", info => {
-        if (info.length !== 1) {
-            document.getElementById("menuPeopleConnected").innerHTML = "There are " + info.length + " people online";
-        } else {
-            document.getElementById("menuPeopleConnected").innerHTML = "There is " + info.length + " person online";
-        }
-        onlinePPL = info
-        let final = "Online:";
-        info.forEach(element => {
-            final += "<br>" + element
+    var ws;
+    function websockets() {
+        ws = new WebSocket("ws://192.168.1.209:2096");
+        ws.addEventListener("open", (event) => {
+            console.log("connected to the server!")
+            document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
+            document.getElementById("OnlineIndicator").style.color = "Green"
+            document.getElementById("onlineSettingsPlaceholder").style.display = "none"
+            document.getElementById("onlineSettings").style.display = "inline"
+            showNotification("Connected")
+            if (localStorage.scheduleOnlineName) {
+                sendData()
+                ws.send(JSON.stringify({
+                    type: "adminRequest",
+                    name: document.getElementById("OnlineName").value,
+                    accountId: localStorage.uniqueAccountId
+                }))
+            }
         })
-        document.getElementById("topright").innerHTML = final
-    })
-    
-    socket.on("serverNotification", notif => {
-        showNotification(notif);
-    })
+        ws.addEventListener("error",(error)=>{
+            console.log(error)
+        })
+        ws.addEventListener("close", (event) => {
+            console.log("disconnected from the server")
+            document.getElementById("OnlineIndicator").innerHTML = "You are currently offline"
+            document.getElementById("OnlineIndicator").style.color = "Red"
+            document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
+            document.getElementById("onlineSettings").style.display = "none"
+            document.getElementById("menuPeopleConnected").innerHTML = "";
+            //showNotification("Disconnected")
+            setTimeout(function () {
+                websockets()
+            }, 1000)
+        })
 
-    socket.on("adminGranted", () => {
-        document.getElementById("admin").style.display = "inline"
+        ws.addEventListener("message", (event) => {
+            var data = JSON.parse(event.data)
+            if (data.type === "clientInfo") {
+                var info = data.users;
+                if (data.amount !== 1) {
+                    document.getElementById("menuPeopleConnected").innerHTML = "There are " + data.amount + " people online";
+                } else {
+                    document.getElementById("menuPeopleConnected").innerHTML = "There is " + data.amount + " person online";
+                }
+                onlinePPL = info
+                let final = "Online:<br>------------";
+                info.forEach(element => {
+                    final += "<br>" + element + "<br>------------"
+                })
+                document.getElementById("topright").innerHTML = final
+            } else if (data.type === "serverNotif") {
+                showNotification(data.notif)
+            } else if (data.type === "adminGranted") {
+                document.getElementById("admin").style.display = "inline"
+            }
+        })
 
-    })
 
+        
+    }
     function sendData() {
-        socket.emit("userInfo", {
+        ws.send(JSON.stringify({
+            type: "onlineData",
             name: document.getElementById("OnlineName").value,
-            id:localStorage.uniqueAccountId
-        })
+            accountId: localStorage.uniqueAccountId
+        }))
     }
-
+    websockets()
+    
+    
     const date = new Date();
     let month = date.getMonth();
     month = month + 1;
@@ -404,10 +423,12 @@
             e.className = "scheduleItemsClass"
             e.style.marginTop = "0"
             e.style.marginBottom = "0"
+            e.style.marginLeft = "0"
             e.style.opacity = "25%"
             e.style.transition = "1s"
+            e.style.fontSize="20px"
             e.innerHTML = element.name + "<br>" + (element.date).replace(today, "") + "<br>------------"
-            document.getElementById("main").append(e)
+            document.getElementById("scheduleItems").append(e)
         }
 
     })
@@ -442,26 +463,26 @@
                         splitMinutes = minutes.toString().split("");
                         splitSeconds = seconds.toString().split("");
                         splitHours = hours.toString().split("");
-                        
+
                         if (splitSeconds[1] === undefined) {
                             document.getElementById("S2").style.fontSize = "0"
                         }
                         if (splitSeconds[1] !== undefined) {
-                            document.getElementById("S2").style.fontSize = "6vw"
+                            document.getElementById("S2").style.fontSize = "7.5vw"
                         }
 
                         if (splitMinutes[1] === undefined) {
                             document.getElementById("M2").style.fontSize = "0"
                         }
                         if (splitMinutes[1] !== undefined) {
-                            document.getElementById("M2").style.fontSize = "6vw"
+                            document.getElementById("M2").style.fontSize = "7.5vw"
                         }
 
                         if (splitHours[1] === undefined) {
                             document.getElementById("H2").style.fontSize = "0"
                         }
                         if (splitHours[1] !== undefined) {
-                            document.getElementById("H2").style.fontSize = "6vw"
+                            document.getElementById("H2").style.fontSize = "7.5vw"
                         }
 
                         document.getElementById("M1").innerHTML = splitMinutes[0]
@@ -481,21 +502,21 @@
                             document.getElementById("S2").style.fontSize = "0"
                         }
                         if (splitSeconds[1] !== undefined) {
-                            document.getElementById("S2").style.fontSize = "6vw"
+                            document.getElementById("S2").style.fontSize = "7.5vw"
                         }
 
                         if (splitMinutes[1] === undefined) {
                             document.getElementById("M2").style.fontSize = "0"
                         }
                         if (splitMinutes[1] !== undefined) {
-                            document.getElementById("M2").style.fontSize = "6vw"
+                            document.getElementById("M2").style.fontSize = "7.5vw"
                         }
 
                         if (splitHours[1] === undefined) {
                             document.getElementById("H2").style.fontSize = "0"
                         }
                         if (splitHours[1] !== undefined) {
-                            document.getElementById("H2").style.fontSize = "6vw"
+                            document.getElementById("H2").style.fontSize = "7.5vw"
                         }
 
                         document.getElementById("M1").innerHTML = splitMinutes[0]
@@ -533,7 +554,7 @@
     window.addEventListener('mousemove', function (event) {
         const slideButton = document.getElementById('slideButton');
         const mouseY = event.clientY;
-        if (mouseY < 150) { // Adjust this value as needed to determine how close to the top the mouse needs to be
+        if (mouseY < 50) { // Adjust this value as needed to determine how close to the top the mouse needs to be
             slideButton.style.top = '5px'; // Slide the button into view
         } else {
             slideButton.style.top = '-200px'; // Hide the button when the mouse is not near the top
@@ -571,9 +592,9 @@
         }, 3000); // Adjust the time the notification stays visible (in milliseconds)
     }
 
-    let MenuToggle = true;
-    let MainToggle = false;
-    let OnlineToggle = false;
+    var MenuToggle = true;
+    var MainToggle = false;
+    var OnlineToggle = false;
 
     function toggleMenu(name) {
         if (name === "menu") {
@@ -623,15 +644,27 @@
             }
         }
     }
+
     let toggledOnlineppl = false;
-    function toggleOnlineppl(){
-        if(!toggledOnlineppl){
+
+    function toggleOnlineppl() {
+        if (!toggledOnlineppl) {
             document.getElementById("onlineppl").style.right = "0px";
             toggledOnlineppl = true;
-        }
-        else{
+        } else {
             document.getElementById("onlineppl").style.right = "-300px";
             toggledOnlineppl = false;
+        }
+    }
+    
+    let toggledScheduleItems = true;
+    function toggleScheduleItems() {
+        if (!toggledScheduleItems) {
+            document.getElementById("scheduleItems").style.left = "25px";
+            toggledScheduleItems = true;
+        } else {
+            document.getElementById("scheduleItems").style.left = (0 - (document.getElementById("scheduleItems").offsetWidth)).toString() + "px";
+            toggledScheduleItems = false;
         }
     }
 </script>
