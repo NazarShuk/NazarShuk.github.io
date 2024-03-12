@@ -331,7 +331,9 @@
                 onlinePPL = info
                 let final = "Online:<br>------------";
                 info.forEach(element => {
-                    final += "<br>" + element + "<br>------------"
+                    if(element !== ""){
+                        final += "<br>" + element + "<br>------------"
+                    }
                 })
                 document.getElementById("topright").innerHTML = final
             } else if (data.type === "serverNotif") {
