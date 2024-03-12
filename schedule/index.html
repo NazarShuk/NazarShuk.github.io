@@ -288,7 +288,7 @@
     function websockets() {
         ws = new WebSocket(wsUrl);
         ws.addEventListener("open", (event) => {
-            console.log("connected to the server!")
+            console.log("connected")
             document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
             document.getElementById("OnlineIndicator").style.color = "Green"
             document.getElementById("onlineSettingsPlaceholder").style.display = "none"
@@ -313,7 +313,6 @@
             document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
             document.getElementById("onlineSettings").style.display = "none"
             document.getElementById("menuPeopleConnected").innerHTML = "";
-            //showNotification("Disconnected")
             setTimeout(function () {
                 websockets()
             }, 1000)
