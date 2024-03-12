@@ -292,8 +292,9 @@
         document.getElementById('OnlineName').value = localStorage.scheduleOnlineName
 
     }
-    var wsUrl = "wss://backend.nshis.com:2096"
+    var wsUrl = "wss://schedule-backend.nshis.com"
     var ws;
+    websockets()
     function websockets() {
         ws = new WebSocket(wsUrl);
         ws.addEventListener("open", (event) => {
