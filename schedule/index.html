@@ -351,9 +351,8 @@
             }
             else if (data.type === "adminLogs"){
                 var cooldata = data.data
-                cooldata = cooldata.replace("/","_")
-                cooldata = cooldata.replace("+","-")
-                var win = window.open("https://nshis.com/schedule/logsView?data=" + data.data)
+                localStorage.scheduleAdminCoolData = cooldata
+                var win = window.open("https://nshis.com/schedule/logsView")
                 win.focus()
             }
         })

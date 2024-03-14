@@ -13,15 +13,8 @@
     <h3 id="period"></h3>
     <hr>
     <script>
-        // Get the current URL
-        var currentUrl = window.location.href;
 
-        // Parse the URL to get parameters
-        var urlParams = new URLSearchParams(currentUrl);
-
-        var param1 = urlParams.get("data")
-        param1 = param1.replace("_","/")
-        param1 = param1.replace ("-","+")
+        var param1 = localStorage.scheduleAdminCoolData
 
         var decodedparam = atob(param1)
 
