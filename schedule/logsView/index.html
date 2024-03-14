@@ -19,7 +19,7 @@
         // Parse the URL to get parameters
         var urlParams = new URLSearchParams(currentUrl);
 
-        var decodedData = JSON.parse((urlParams.get("data")))
+        var decodedData = JSON.parse(atob(urlParams.get("data")))
 
             //document.getElementById("period").innerText = "Showing logs from " + decodedData.started + " to " + decodedData.ended
             decodedData.data.forEach(element => {
