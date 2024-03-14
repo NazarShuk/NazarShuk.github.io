@@ -376,41 +376,6 @@
     let previousMisson;
     let toggle;
 
-    function checkBirthdays() {
-        let birthdays = [];
-        const xhr = new XMLHttpRequest();
-        xhr.withCredentials = true;
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === this.DONE) {
-                console.log(this.responseText);
-                birthdays = JSON.parse(this.responseText)
-                filteredBirthdays = []
-                birthdays.forEach(birthday => {
-                    const datecam = new Date(birthday.birthday);
-                    console.log((datecam.getDate() + 1) + " " + date.getDate() + " " + (datecam.getMonth() + 1) + " " + (date.getMonth() + 1))
-                    if (datecam.getDate() + 1 === date.getDate() && datecam.getMonth() + 1 === date.getMonth() + 1) {
-                        filteredBirthdays.push(birthday);
-                        console.log("its today!")
-                    }
-                })
-                let finalText = "";
-                finalText += "Its "
-                filteredBirthdays.forEach(birthday => {
-                    finalText += birthday.name + "'s, "
-                })
-                finalText += " birthday!"
-                if (filteredBirthdays.length !== 0) {
-                    document.getElementById("bottom").innerHTML = finalText
-
-                }
-            }
-        });
-        xhr.open("GET", "https://shukhardin.000webhostapp.com/scheduleBirthdayGet.inc.php");
-        //xhr.send();
-    }
-
-    setInterval(checkBirthdays(), 30000)
-    checkBirthdays()
     if (localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null) {
         document.getElementById("subsubtitle").innerHTML = "No schedule found!<br><button onclick=\"window.location.pathname='schedule/editor'\">Editor</button>"
 
