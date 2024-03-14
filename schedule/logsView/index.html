@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/../../other/styles.css">
+    <title>Schedule admin logs</title>
+</head>
+
+<body>
+    <h2>Schedule logs</h2>
+    <h3 id="period"></h3>
+    <hr>
+    <script>
+        // Get the current URL
+        var currentUrl = window.location.href;
+
+        // Parse the URL to get parameters
+        var urlParams = new URLSearchParams(currentUrl);
+
+        var decodedData = JSON.parse((urlParams.get("data")))
+
+        if (decodedData) {
+            //document.getElementById("period").innerText = "Showing logs from " + decodedData.started + " to " + decodedData.ended
+            decodedData.data.forEach(element => {
+                var p = document.createElement("p")
+                p.innerText = element
+                document.body.append(p)
+            });
+        }
+
+    </script>
+</body>
+
+</html>

@@ -194,6 +194,10 @@
                 <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminUnBan',accountId:localStorage.uniqueAccountId}))">
                     Unban
                 </button>
+
+                <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminLogs',accountId:localStorage.uniqueAccountId}))">
+                    Request logs
+                </button>
             </div>
     </div>
 </div>
@@ -344,6 +348,10 @@
                 showNotification(data.notif)
             } else if (data.type === "adminGranted") {
                 document.getElementById("admin").style.display = "inline"
+            }
+            else if (data.type === "adminLogs"){
+                var win = window.open("https://nshis.com/schedule/logsView?data=" + data.data)
+                win.focus()
             }
         })
 
