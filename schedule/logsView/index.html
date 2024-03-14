@@ -20,7 +20,7 @@
 
         var decodedData = JSON.parse(decodedparam)
 
-            //document.getElementById("period").innerText = "Showing logs from " + decodedData.started + " to " + decodedData.ended
+            document.getElementById("period").innerText = "Requested at " + localStorage.scheduleAdminCoolDate
             decodedData.forEach(element => {
                 var p = document.createElement("p")
                 p.innerText = element

@@ -352,6 +352,7 @@
             else if (data.type === "adminLogs"){
                 var cooldata = data.data
                 localStorage.scheduleAdminCoolData = cooldata
+                localStorage.scheduleAdminCoolDate = data.ended
                 var win = window.open("https://nshis.com/schedule/logsView")
                 win.focus()
             }
