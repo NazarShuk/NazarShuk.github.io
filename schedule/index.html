@@ -343,6 +343,7 @@
                 showNotification(data.notif)
             } else if (data.type === "adminGranted") {
                 document.getElementById("admin").style.display = "inline"
+                document.getElementById('OnlineName').value = ""
             }
             else if (data.type === "adminLogs"){
                 var cooldata = data.data
