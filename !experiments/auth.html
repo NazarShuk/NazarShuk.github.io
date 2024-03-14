@@ -1,20 +1,10 @@
 <script>
-    const url = window.location.href;
-
-    const paramsString = url.split('?')[1];
-
-    if (paramsString) {
-        const params = paramsString.split('&');
-        const paramsObj = {};
-
-        params.forEach(param => {
-            const [key, value] = param.split('=');
-            paramsObj[key] = decodeURIComponent(value);
-        });
-
-        document.write('URL parameters:', paramsObj);
-    } else {
-        document.write('No URL parameters found! Try adding some in the URL~ ✨');
-    }
-
+    function gop(name) {const url = window.location.href;const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)");const results = regex.exec(url);if (results && results[2]) {return decodeURIComponent(results[2].replace(/\+/g, " "));};return null;}
+    
+if(gop('auth') === "gopgoper"){
+    document.write("authencticated")
+}
+else{
+    document.write("oopsie you dodo kaka")
+}
 </script>
