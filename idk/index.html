@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../other/styles.css">
+    <title></title>
+</head>
+
+<body>
+    <input type="text" id="terminalInput">
+    <button onclick="await run(document.getElementById('terminalInput').value)">></button>
+    <div id="terminal"></div>
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+      </script>
+    <script type="module">
+        import { GoogleGenerativeAI } from "@google/generative-ai";
+        // Fetch your API_KEY
+        const API_KEY = "AIzaSyBydRfQwF9K3wDUt5Dg-Th55Yxzj69B590";
+        // Access your API key (see "Set up your API key" above)
+        const genAI = new GoogleGenerativeAI(API_KEY);
+        const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+        const chat = model.startChat({
+            history: [],
+            generationConfig: {
+                maxOutputTokens: 2048,
+            },
+        });
+        const prompt = ``
+        const rp = await run(prompt)
+            console.log(rp)
+        
+        async function run(prompt) {
+            var msg = prompt;
+            const result = await chat.sendMessage(msg);
+            const response = await result.response;
+            const text = response.text();
+            var p = document.createElement("p")
+            p.innerText = text
+            document.getElementById("terminal").prepend(p)
+        }
+
+        
+
+        function Print(data) {
+            var e = document.createElement("p");
+            //e.innerHTML = data;
+            e.style.wordWrap = "break-word"
+            e.style.alignText = "center"
+            document.getElementById("msgs").prepend(e);
+            data.split("").forEach(char=>{
+e.innerHTML += char;
+})
+        }
+
+        function setValueOf(id,value){
+            document.getElementById(id).innerHTML = value
+        }
+    </script>
+</body>
+
+</html>
