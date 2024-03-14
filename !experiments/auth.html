@@ -1,0 +1,10 @@
+<script>
+    const params = new URLSearchParams(window.location.href);
+    const gop = params.get("auth")
+    if(gop === "gopgoper"){
+        document.write("succecfully authenticated")
+    }
+    else{
+        document.write("failure authenticating")
+    }
+</script>
