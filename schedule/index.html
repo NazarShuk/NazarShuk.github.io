@@ -332,7 +332,7 @@
                     document.getElementById("menuPeopleConnected").innerHTML = "There is " + data.amount + " person online";
                 }
                 onlinePPL = info
-                let final = "Online:<br>------------";
+                let final = `Online (${data.amount}):<br>------------`;
                 info.forEach(element => {
                     if(element !== ""){
                         final += "<br>" + element + "<br>------------"
