@@ -1,12 +1,20 @@
 <script>
-    const params = new URLSearchParams(window.location.href);
-    const gop = params.get("auth")
-    if(gop === "gopgoper"){
-        document.write("succecfully authenticated")
+    const url = window.location.href;
+
+    const paramsString = url.split('?')[1];
+
+    if (paramsString) {
+        const params = paramsString.split('&');
+        const paramsObj = {};
+
+        params.forEach(param => {
+            const [key, value] = param.split('=');
+            paramsObj[key] = decodeURIComponent(value);
+        });
+
+        document.write('URL parameters:', paramsObj);
+    } else {
+        document.write('No URL parameters found! Try adding some in the URL~ ✨');
     }
-    else{
-        document.write(`failure authenticating
-        auth = ${gop}
-        `)
-    }
+
 </script>
