@@ -21,7 +21,7 @@
         var decodedData = JSON.parse(decodedparam)
 
             //document.getElementById("period").innerText = "Showing logs from " + decodedData.started + " to " + decodedData.ended
-            decodedData.data.forEach(element => {
+            decodedData.forEach(element => {
                 var p = document.createElement("p")
                 p.innerText = element
                 document.body.append(p)
