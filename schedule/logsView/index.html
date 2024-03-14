@@ -20,6 +20,9 @@
         var urlParams = new URLSearchParams(currentUrl);
 
         var param1 = urlParams.get("data")
+        param1 = param1.replace("_","/")
+        param1 = param1.replace ("-","+")
+
         var decodedparam = atob(param1)
 
         var decodedData = JSON.parse(decodedparam)
