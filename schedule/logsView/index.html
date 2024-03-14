@@ -21,14 +21,12 @@
 
         var decodedData = JSON.parse((urlParams.get("data")))
 
-        if (decodedData) {
             //document.getElementById("period").innerText = "Showing logs from " + decodedData.started + " to " + decodedData.ended
             decodedData.data.forEach(element => {
                 var p = document.createElement("p")
                 p.innerText = element
                 document.body.append(p)
             });
-        }
 
     </script>
 </body>
