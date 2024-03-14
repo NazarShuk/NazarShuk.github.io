@@ -305,11 +305,6 @@
             showNotification("Connected")
             if (localStorage.scheduleOnlineName) {
                 sendData()
-                ws.send(JSON.stringify({
-                    type: "adminRequest",
-                    name: document.getElementById("OnlineName").value,
-                    accountId: localStorage.uniqueAccountId
-                }))
             }
         })
         ws.addEventListener("error",(error)=>{
