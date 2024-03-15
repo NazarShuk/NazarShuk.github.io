@@ -41,9 +41,7 @@
 <script>
 function writeToIframe(){
     if(document.getElementById("code").value === "ncord"){
-    document.getElementById("code").value = `
-    <script> document.write(new Date().valueOf()) </script>
-    `
+    document.getElementById("code").value = new Date().valueOf()
 }
         // Get reference to the iframe
         var iframe = document.getElementById('myIframe');
