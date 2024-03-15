@@ -6,9 +6,8 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <link href="../other/styles.css" rel="stylesheet">
     <link href="https://github.hubspot.com/odometer/themes/odometer-theme-default.css" rel="stylesheet">
-    <script crossorigin="anonymous"
-            integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
-            src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
+    <script crossorigin="anonymous" integrity="sha384-Gr6Lu2Ajx28mzwyVR8CFkULdCU7kMlZ9UthllibdOSo6qAiN+yXNHqtgdTvFXMT4"
+        src="https://cdn.socket.io/4.7.4/socket.io.min.js"></script>
     <script src="https://github.hubspot.com/odometer/odometer.js"></script>
     <style>
         .notification {
@@ -20,10 +19,12 @@
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             z-index: 9999;
-            width: 300px; /* Adjust width as needed */
+            width: 300px;
+            /* Adjust width as needed */
         }
 
-        .odometer.odometer-auto-theme, .odometer.odometer-theme-default {
+        .odometer.odometer-auto-theme,
+        .odometer.odometer-theme-default {
             font-family: "JetBrains Mono";
             line-height: 1.1em;
             margin: 0;
@@ -61,6 +62,7 @@
             from {
                 font-size: 1em;
             }
+
             to {
                 font-size: 0;
             }
@@ -70,6 +72,7 @@
             from {
                 font-size: 0;
             }
+
             to {
                 font-size: 56px;
             }
@@ -99,29 +102,31 @@
             /* Ensure the button stays on top */
         }
 
-        #time > * {
-            margin: 5px; /* Adjust the spacing between elements */
+        #time>* {
+            margin: 5px;
+            /* Adjust the spacing between elements */
         }
 
-        #time > p {
-            margin: 20px; /* Adjust the spacing between elements */
+        #time>p {
+            margin: 20px;
+            /* Adjust the spacing between elements */
         }
     </style>
     <title>Schedule</title>
 </head>
 
 <body>
-<div id="menuPage" style="transition: 0.5s;width:80%;">
-    <div class="center" style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
+    <div id="menuPage" style="transition: 0.5s;width:80%;">
+        <div class="center"
+            style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
             <h1 class="bigLabel" style="margin-bottom: 0;">Schedule</h1>
             <h2 id="menuPeopleConnected" style="margin-top: 0; opacity: 50%;"></h2>
-            
-            <button
-                    onclick="toggleMenu('main');toggleMenu('menu')">Open
+
+            <button onclick="toggleMenu('main');toggleMenu('menu')">Open
                 the schedule
             </button>
             <button onclick="window.location.pathname='schedule/editor';">Open the editor</button>
-            
+
             <h1 style="margin-bottom: 0;">Other</h1>
             <button onclick="toggleMenu('menu');toggleMenu('online')">Online features</button>
             <button onclick="toggleMenu('menu');toggleMenu('settings')">Settings</button>
@@ -130,18 +135,19 @@
                 <button onclick="resetToDefault();window.location.reload()">Reset to default</button>
                 <button onclick="localStorage.schedule = '[]';window.location.reload()">Clear schedule</button>
             </div>
-            <h6 style="opacity: 50%; margin: 0;">Version: 143</h6>
-    </div>
+            <h6 id="versionText" style="opacity: 50%; margin: 0;">loading version</h6>
+        </div>
 
-</div>
-<div id="main" style="display: none;  transition: 0.5s">
-    <div id="slideButton">
-        
-        <button onclick="toggleMenu('main');toggleMenu('menu')">Menu</button>
-        <button onclick="toggleOnlineppl()">Show online people</button>
-        <button onclick="toggleScheduleItems()">Show schedule items</button>
     </div>
-    <div class="center" id="CenterTime" style="display: inline; font-size: 56px; transition: 0.5s; min-width: 300px; text-align: center; align-items: center;">
+    <div id="main" style="display: none;  transition: 0.5s">
+        <div id="slideButton">
+
+            <button onclick="toggleMenu('main');toggleMenu('menu')">Menu</button>
+            <button onclick="toggleOnlineppl()">Show online people</button>
+            <button onclick="toggleScheduleItems()">Show schedule items</button>
+        </div>
+        <div class="center" id="CenterTime"
+            style="display: inline; font-size: 56px; transition: 0.5s; min-width: 300px; text-align: center; align-items: center;">
             <div id="time" style="display: flex; align-items: center; justify-content: center">
                 <h1 class="odometer" id="H1" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
                 <h1 class="odometer" id="H2" style="margin:0; font-size: 7.5vw; transition: 0.5s;"></h1>
@@ -155,23 +161,28 @@
             </div>
             <p id="subtitle" style=" font-size: 48px; margin:0; animation: sub 0.5s infinite"></p>
             <p id="subsubtitle" style="margin:0;"></p>
+        </div>
+        <p id="bottom" style="position: absolute;bottom: 25px;right: 25px; opacity:50%; margin:0; font-size: 24px;"></p>
+        <div style="position: absolute; left:0; top: 50px; margin:0; height: 100%; width: fit-content;  transition: 0.5s;"
+            id="scheduleItems"></div>
+        <div style="position: absolute; right: -300px; top: 0px; margin:0; font-size: 20px; text-align: right; width: 300px; height: 100%; transition: 0.5s;"
+            id="onlineppl">
+
+            <p id="topright"
+                style="position: absolute; right: 0; top: 50px; opacity:25%; margin:0; font-size: 20px; text-align: right">
+                gop gop</p>
+        </div>
     </div>
-    <p id="bottom" style="position: absolute;bottom: 25px;right: 25px; opacity:50%; margin:0; font-size: 24px;"></p>
-    <div style="position: absolute; left:0; top: 50px; margin:0; height: 100%; width: fit-content;  transition: 0.5s;" id="scheduleItems"></div>
-    <div style="position: absolute; right: -300px; top: 0px; margin:0; font-size: 20px; text-align: right; width: 300px; height: 100%; transition: 0.5s;" id="onlineppl">
-        
-        <p id="topright" style="position: absolute; right: 0; top: 50px; opacity:25%; margin:0; font-size: 20px; text-align: right">gop gop</p>
-    </div>
-</div>
-<div id="onlinePage" style="display: none; transition: 0.5s">
-    <div class="center" style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
+    <div id="onlinePage" style="display: none; transition: 0.5s">
+        <div class="center"
+            style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
             <h1 class="bigLabel" style="margin-bottom: 0;">Online</h1>
             <h2 id="OnlineIndicator" oncontextmenu="ws.send(JSON.stringify({type:'adminRequest',
             name: document.getElementById('OnlineName').value,
             accountId:localStorage.uniqueAccountId}))" style="color:red; margin-top: 0;">
                 You are currently offline</h2>
             <button onclick="toggleMenu('menu');toggleMenu('online')">Menu</button>
-            
+
             <p id="onlineSettingsPlaceholder" style="opacity: 10%;">you have to be connected to the server to change
                 settings</p>
 
@@ -185,270 +196,304 @@
                 <p style="font-size: 14px"></p>
             </div>
             <div id="admin" style="display: none">
-                
+
                 <p>Admin granted</p>
                 <input type="text" placeholder="Username" id="OnlineAdminUserName">
-                <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminBan',accountId:localStorage.uniqueAccountId}))">
+                <button
+                    onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminBan',accountId:localStorage.uniqueAccountId}))">
                     Ban
                 </button>
-                <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminUnBan',accountId:localStorage.uniqueAccountId}))">
+                <button
+                    onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminUnBan',accountId:localStorage.uniqueAccountId}))">
                     Unban
                 </button>
 
-                <button onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminLogs',accountId:localStorage.uniqueAccountId}))">
+                <button
+                    onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminLogs',accountId:localStorage.uniqueAccountId}))">
                     Request logs
                 </button>
             </div>
+        </div>
     </div>
-</div>
 
-<div id="settingsPage" style="display: none; transition: 0.5s">
-    <div class="center" style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
+    <div id="settingsPage" style="display: none; transition: 0.5s">
+        <div class="center"
+            style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
             <h1 class="bigLabel" style="margin-bottom: 0;">Settings</h1>
             <button onclick="toggleMenu('menu');toggleMenu('settings')">Go back</button>
             <br>
             <br>
             <label>Background color:</label>
-            <input value="#23272a" type="color" onchange="document.body.style.backgroundColor = document.getElementById('bg-color-select').value; localStorage.scheduleBgColor = document.getElementById('bg-color-select').value" id="bg-color-select"> 
+            <input value="#23272a" type="color"
+                onchange="document.body.style.backgroundColor = document.getElementById('bg-color-select').value; localStorage.scheduleBgColor = document.getElementById('bg-color-select').value"
+                id="bg-color-select">
             <br>
             <p style="font-size: 4px; opacity: 25%;">Thats for you Shahmeer :)</p>
             <br>
             <br>
-            <button onclick="document.getElementById('bg-color-select').value = '#23272a'; document.body.style.backgroundColor = document.getElementById('bg-color-select').value; localStorage.scheduleBgColor = document.getElementById('bg-color-select').value">Default</button>
+            <button
+                onclick="document.getElementById('bg-color-select').value = '#23272a'; document.body.style.backgroundColor = document.getElementById('bg-color-select').value; localStorage.scheduleBgColor = document.getElementById('bg-color-select').value">Default</button>
+        </div>
     </div>
-</div>
-<script>
-    function resetToDefault() {
-        localStorage.schedule = JSON.stringify([
-            {
-                name: "Core 1",
-                date: " 08:15:00"
-            },
-            {
-                name: "!h Transition",
-                date: " 09:13:00"
-            },
-            {
-                name: "Ridge time",
-                date: " 09:16:00"
-            },
-            {
-                name: "!h Transition",
-                date: " 09:51:00"
-            },
-            {
-                name: "Core 4",
-                date: " 09:54:00"
-            },
-            {
-                name: "!h Transition",
-                date: " 10:52:00"
-            },
-            {
-                name: "Core 3",
-                date: " 10:54:00"
-            },
-            {
-                name: "!h Transition",
-                date: " 11:52:00"
-            },
-            {
-                name: "Lunch",
-                date: " 11:54:00"
-            },
-            {
-                name: "!h Transition",
-                date: " 12:24:00"
-            },
-            {
-                name: "Core 2",
-                date: " 12:26:00"
-            },
-            {
-                name: "!h Transition",
-                date: " 13:23:00"
-            },
-            {
-                name: "Elective",
-                date: " 13:27:00"
-            },
-            {
-                name: "!h Transition",
-                date: " 14:12:00"
-            },
-            {
-                name: "Elective  ",
-                date: " 14:15:00"
-            },
-            {
-                name: "The End ",
-                date: " 15:00:00"
-            }
-        ])
-    }
-
-    if (!localStorage.bugfixreset1) {
-        resetToDefault()
-        localStorage.bugfixreset1 = 1
-
-    }
-    if (!localStorage.uniqueAccountId) {
-        localStorage.uniqueAccountId = btoa((Math.floor(Math.random() * 1000000) * new Date().getMilliseconds()).toString()) + btoa(new Date().getHours().toString() + new Date().getMinutes().toString() + new Date().getSeconds().toString() + new Date().getMilliseconds().toString())
-    }
-
-
-    if (localStorage.scheduleOnlineName) {
-        document.getElementById('OnlineName').value = localStorage.scheduleOnlineName
-
-    }
-    var wsUrl = "wss://schedule-backend.nshis.com"
-    var ws;
-    websockets()
-    function websockets() {
-        try{
-            ws.close()
-        }
-        catch{
-            //bruh
-        }
-        ws = new WebSocket(wsUrl);
-        ws.addEventListener("open", (event) => {
-            console.log("connected")
-            document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
-            document.getElementById("OnlineIndicator").style.color = "Green"
-            document.getElementById("onlineSettingsPlaceholder").style.display = "none"
-            document.getElementById("onlineSettings").style.display = "inline"
-            showNotification("Connected")
-            if (localStorage.scheduleOnlineName) {
-                sendData()
-            }
-        })
-        ws.addEventListener("error",(error)=>{
-            console.log(error)
-        })
-        ws.addEventListener("close", (event) => {
-            console.log("disconnected from the server")
-            document.getElementById("OnlineIndicator").innerHTML = "You are currently offline"
-            document.getElementById("OnlineIndicator").style.color = "Red"
-            document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
-            document.getElementById("onlineSettings").style.display = "none"
-            document.getElementById("menuPeopleConnected").innerHTML = "";
-            setTimeout(function () {
-                websockets()
-            }, 5000)
-        })
-
-        ws.addEventListener("message", (event) => {
-            var data = JSON.parse(event.data)
-            if (data.type === "clientInfo") {
-                var info = data.users;
-                if (data.amount !== 1) {
-                    document.getElementById("menuPeopleConnected").innerHTML = "There are " + data.amount + " people online";
-                } else {
-                    document.getElementById("menuPeopleConnected").innerHTML = "There is " + data.amount + " person online";
+    <script>
+        function resetToDefault() {
+            localStorage.schedule = JSON.stringify([
+                {
+                    name: "Core 1",
+                    date: " 08:15:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 09:13:00"
+                },
+                {
+                    name: "Ridge time",
+                    date: " 09:16:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 09:51:00"
+                },
+                {
+                    name: "Core 4",
+                    date: " 09:54:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 10:52:00"
+                },
+                {
+                    name: "Core 3",
+                    date: " 10:54:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 11:52:00"
+                },
+                {
+                    name: "Lunch",
+                    date: " 11:54:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 12:24:00"
+                },
+                {
+                    name: "Core 2",
+                    date: " 12:26:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 13:23:00"
+                },
+                {
+                    name: "Elective",
+                    date: " 13:27:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 14:12:00"
+                },
+                {
+                    name: "Elective  ",
+                    date: " 14:15:00"
+                },
+                {
+                    name: "The End ",
+                    date: " 15:00:00"
                 }
-                onlinePPL = info
-                let final = `Online (${data.amount}):<br>------------`;
-                info.forEach(element => {
-                    if(element !== ""){
-                        final += "<br>" + element + "<br>------------"
+            ])
+        }
+
+        if (!localStorage.bugfixreset1) {
+            resetToDefault()
+            localStorage.bugfixreset1 = 1
+
+        }
+        if (!localStorage.uniqueAccountId) {
+            localStorage.uniqueAccountId = btoa((Math.floor(Math.random() * 1000000) * new Date().getMilliseconds()).toString()) + btoa(new Date().getHours().toString() + new Date().getMinutes().toString() + new Date().getSeconds().toString() + new Date().getMilliseconds().toString())
+        }
+
+
+        if (localStorage.scheduleOnlineName) {
+            document.getElementById('OnlineName').value = localStorage.scheduleOnlineName
+
+        }
+
+        var clientVersion = 144
+        document.getElementById("versionText").innerHTML = clientVersion
+        setInterval(function () {
+            fetch("https://nshis.com/schedule/ver.ver")
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(textResponse => {
+                    console.log(textResponse);
+                    var version = parseInt(textResponse)
+                    if(version !== clientVersion){
+                        customPrompt(`Server version is different (${version}!=${clientVersion}). Please reload`,[])
+                    }
+                    else{
+                        document.getElementById("versionText").innerHTML = `${version}=${clientVersion}`
                     }
                 })
-                document.getElementById("topright").innerHTML = final
-            } else if (data.type === "serverNotif") {
-                showNotification(data.notif)
-            } else if (data.type === "adminGranted") {
-                document.getElementById("admin").style.display = "inline"
-                document.getElementById('OnlineName').value = ""
+                .catch(error => {
+                    console.error('There has been a problem with your fetch operation:', error);
+                });
+
+        },30000)
+
+        var wsUrl = "wss://schedule-backend.nshis.com"
+        var ws;
+        websockets()
+        function websockets() {
+            try {
+                ws.close()
             }
-            else if (data.type === "adminLogs"){
-                var cooldata = data.data
-                localStorage.scheduleAdminCoolData = cooldata
-                localStorage.scheduleAdminCoolDate = data.ended
-                var win = window.open("https://nshis.com/schedule/logsView")
-                win.focus()
+            catch {
+                //bruh
             }
-        })
+            ws = new WebSocket(wsUrl);
+            ws.addEventListener("open", (event) => {
+                console.log("connected")
+                document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
+                document.getElementById("OnlineIndicator").style.color = "Green"
+                document.getElementById("onlineSettingsPlaceholder").style.display = "none"
+                document.getElementById("onlineSettings").style.display = "inline"
+                showNotification("Connected")
+                if (localStorage.scheduleOnlineName) {
+                    sendData()
+                }
+            })
+            ws.addEventListener("error", (error) => {
+                console.log(error)
+            })
+            ws.addEventListener("close", (event) => {
+                console.log("disconnected from the server")
+                document.getElementById("OnlineIndicator").innerHTML = "You are currently offline"
+                document.getElementById("OnlineIndicator").style.color = "Red"
+                document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
+                document.getElementById("onlineSettings").style.display = "none"
+                document.getElementById("menuPeopleConnected").innerHTML = "";
+                setTimeout(function () {
+                    websockets()
+                }, 5000)
+            })
+
+            ws.addEventListener("message", (event) => {
+                var data = JSON.parse(event.data)
+                if (data.type === "clientInfo") {
+                    var info = data.users;
+                    if (data.amount !== 1) {
+                        document.getElementById("menuPeopleConnected").innerHTML = "There are " + data.amount + " people online";
+                    } else {
+                        document.getElementById("menuPeopleConnected").innerHTML = "There is " + data.amount + " person online";
+                    }
+                    onlinePPL = info
+                    let final = `Online (${data.amount}):<br>------------`;
+                    info.forEach(element => {
+                        if (element !== "") {
+                            final += "<br>" + element + "<br>------------"
+                        }
+                    })
+                    document.getElementById("topright").innerHTML = final
+                } else if (data.type === "serverNotif") {
+                    showNotification(data.notif)
+                } else if (data.type === "adminGranted") {
+                    document.getElementById("admin").style.display = "inline"
+                    document.getElementById('OnlineName').value = ""
+                }
+                else if (data.type === "adminLogs") {
+                    var cooldata = data.data
+                    localStorage.scheduleAdminCoolData = cooldata
+                    localStorage.scheduleAdminCoolDate = data.ended
+                    var win = window.open("https://nshis.com/schedule/logsView")
+                    win.focus()
+                }
+            })
 
 
-        
-    }
-    function sendData() {
-        ws.send(JSON.stringify({
-            type: "onlineData",
-            name: document.getElementById("OnlineName").value,
-            accountId: localStorage.uniqueAccountId
-        }))
-    }
-    //websockets()
-    if(localStorage.scheduleBgColor){
-        document.getElementById('bg-color-select').value = localStorage.scheduleBgColor
-    document.body.style.backgroundColor = document.getElementById('bg-color-select').value
-    }
-    
 
-    const date = new Date();
-    let month = date.getMonth();
-    month = month + 1;
-    const day = date.getDate();
-    const year = date.getFullYear();
-    const today = month + "/" + day + ", " + year;
-    let previousMisson;
-    let toggle;
-
-    if (localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null) {
-        document.getElementById("subsubtitle").innerHTML = "No schedule found!<br><button onclick=\"window.location.pathname='schedule/editor'\">Editor</button>"
-
-    }
-    const nextMissions = JSON.parse(localStorage.schedule);
-    nextMissions.forEach(item => {
-        item.date = today + " " + item.date
-    })
-
-    nextMissions.forEach(element => {
-        if (!element.name.startsWith("!h ")) {
-            const e = document.createElement("p");
-            e.id = element.name
-            e.className = "scheduleItemsClass"
-            e.style.marginTop = "0"
-            e.style.marginBottom = "0"
-            e.style.marginLeft = "0"
-            e.style.opacity = "25%"
-            e.style.transition = "1s"
-            e.style.fontSize="20px"
-            e.innerHTML = element.name + "<br>" + (element.date).replace(today, "") + "<br>------------"
-            document.getElementById("scheduleItems").append(e)
+        }
+        function sendData() {
+            ws.send(JSON.stringify({
+                type: "onlineData",
+                name: document.getElementById("OnlineName").value,
+                accountId: localStorage.uniqueAccountId
+            }))
+        }
+        //websockets()
+        if (localStorage.scheduleBgColor) {
+            document.getElementById('bg-color-select').value = localStorage.scheduleBgColor
+            document.body.style.backgroundColor = document.getElementById('bg-color-select').value
         }
 
-    })
 
-    let isloading = false;
-    // Set the date we're counting down to
-    //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
-    let countDownDate = new Date(nextMissions[0].date).getTime();
-    // Update the count down every 1 second
-    const x = setInterval(function () {
-        let splitMinutes;
-        let splitSeconds;
-        let splitHours;
-        if (nextMissions.length != 0) {
+        const date = new Date();
+        let month = date.getMonth();
+        month = month + 1;
+        const day = date.getDate();
+        const year = date.getFullYear();
+        const today = month + "/" + day + ", " + year;
+        let previousMisson;
+        let toggle;
+
+        if (localStorage.schedule == "[]" || localStorage.schedule == undefined || localStorage.schedule == null) {
+            document.getElementById("subsubtitle").innerHTML = "No schedule found!<br><button onclick=\"window.location.pathname='schedule/editor'\">Editor</button>"
+
+        }
+        const nextMissions = JSON.parse(localStorage.schedule);
+        nextMissions.forEach(item => {
+            item.date = today + " " + item.date
+        })
+
+        nextMissions.forEach(element => {
+            if (!element.name.startsWith("!h ")) {
+                const e = document.createElement("p");
+                e.id = element.name
+                e.className = "scheduleItemsClass"
+                e.style.marginTop = "0"
+                e.style.marginBottom = "0"
+                e.style.marginLeft = "0"
+                e.style.opacity = "25%"
+                e.style.transition = "1s"
+                e.style.fontSize = "20px"
+                e.innerHTML = element.name + "<br>" + (element.date).replace(today, "") + "<br>------------"
+                document.getElementById("scheduleItems").append(e)
+            }
+
+        })
+
+        let isloading = false;
+        // Set the date we're counting down to
+        //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
+        let countDownDate = new Date(nextMissions[0].date).getTime();
+        // Update the count down every 1 second
+        const x = setInterval(function () {
+            let splitMinutes;
+            let splitSeconds;
+            let splitHours;
+            if (nextMissions.length != 0) {
 
 
-            // Get today's date and time
-            const now = new Date().getTime();
-            // Find the distance between now and the count down date
-            const distance = countDownDate - now;
-            // Time calculations for days, hours, minutes and seconds
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            const miliseconds = Math.floor((distance % (1000)) / 1000);
+                // Get today's date and time
+                const now = new Date().getTime();
+                // Find the distance between now and the count down date
+                const distance = countDownDate - now;
+                // Time calculations for days, hours, minutes and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                const miliseconds = Math.floor((distance % (1000)) / 1000);
 
-            // Display the result in the element with id="demo"
-            if (previousMisson != null) {
-                if (distance > 0) {
-                    splitMinutes = minutes.toString().split("");
+                // Display the result in the element with id="demo"
+                if (previousMisson != null) {
+                    if (distance > 0) {
+                        splitMinutes = minutes.toString().split("");
                         splitSeconds = seconds.toString().split("");
                         splitHours = hours.toString().split("");
                         if (splitSeconds[1] === undefined) {
@@ -497,174 +542,244 @@
                         document.getElementById("H1").innerHTML = splitHours[0]
                         document.getElementById("H2").innerHTML = splitHours[1]
                         document.getElementById("CenterTime").style.display = "inline"
-                        
-                        if(previousMisson.name.startsWith("!h ")){
-                            document.getElementById("subtitle").innerHTML = (previousMisson.name).replace("!h ","")
+
+                        if (previousMisson.name.startsWith("!h ")) {
+                            document.getElementById("subtitle").innerHTML = (previousMisson.name).replace("!h ", "")
                         }
-                        else{
+                        else {
                             document.getElementById("subtitle").innerHTML = ""
                         }
+                    }
                 }
-            }
-            // If the count down is finished, write some text
-            if (distance < 0) {
-                if (!nextMissions[0].name.startsWith("!h ")) {
-                    document.getElementById(nextMissions[0].name).style.fontSize = "0"
-                    /*setTimeout(function () {
-                        document.getElementById(nextMissions[0].name).innerHTML = ""
-                    }, 1000)*/
+                // If the count down is finished, write some text
+                if (distance < 0) {
+                    if (!nextMissions[0].name.startsWith("!h ")) {
+                        document.getElementById(nextMissions[0].name).style.fontSize = "0"
+                        /*setTimeout(function () {
+                            document.getElementById(nextMissions[0].name).innerHTML = ""
+                        }, 1000)*/
+                    }
+                    previousMisson = nextMissions[0]
+                    nextMissions.splice(0, 1)
+                    countDownDate = new Date(nextMissions[0].date).getTime()
+                    document.getElementById("subtitle").innerHTML = "loading"
+                    isloading = true;
                 }
-                previousMisson = nextMissions[0]
-                nextMissions.splice(0, 1)
-                countDownDate = new Date(nextMissions[0].date).getTime()
-                document.getElementById("subtitle").innerHTML = "loading"
-                isloading = true;
+            } else {
+                document.getElementById("time").style.display = "none"
+                document.getElementById("subtitle").innerHTML = ""
+                document.getElementById("subsubtitle").innerHTML = "Schedule ended"
             }
-        } else {
-            document.getElementById("time").style.display = "none"
-            document.getElementById("subtitle").innerHTML = ""
-            document.getElementById("subsubtitle").innerHTML = "Schedule ended"
-        }
-    }, 100);
+        }, 100);
 
-    window.addEventListener('mousemove', function (event) {
-        const slideButton = document.getElementById('slideButton');
-        const mouseY = event.clientY;
-        if (mouseY < 50) { // Adjust this value as needed to determine how close to the top the mouse needs to be
-            slideButton.style.top = '5px'; // Slide the button into view
-        } else {
-            slideButton.style.top = '-200px'; // Hide the button when the mouse is not near the top
-        }
-    });
+        window.addEventListener('mousemove', function (event) {
+            const slideButton = document.getElementById('slideButton');
+            const mouseY = event.clientY;
+            if (mouseY < 50) { // Adjust this value as needed to determine how close to the top the mouse needs to be
+                slideButton.style.top = '5px'; // Slide the button into view
+            } else {
+                slideButton.style.top = '-200px'; // Hide the button when the mouse is not near the top
+            }
+        });
 
-    function showNotification(message) {
-        const existingNotifications = document.querySelectorAll('.notification');
+        function showNotification(message) {
+            const existingNotifications = document.querySelectorAll('.notification');
 
-        // Create notification element
-        const notification = document.createElement("div");
-        notification.className = "notification";
-        notification.textContent = message;
-        notification.style.fontSize = "24px"
-        document.body.appendChild(notification);
+            // Create notification element
+            const notification = document.createElement("div");
+            notification.className = "notification";
+            notification.textContent = message;
+            notification.style.fontSize = "24px"
+            document.body.appendChild(notification);
 
-        // Positioning
-        const numNotifications = existingNotifications.length;
-        const bottomOffset = 20 + (numNotifications * 100); // Adjust for spacing between notifications
-        notification.style.bottom = bottomOffset + "px";
-        notification.style.right = "20px";
+            // Positioning
+            const numNotifications = existingNotifications.length;
+            const bottomOffset = 20 + (numNotifications * 100); // Adjust for spacing between notifications
+            notification.style.bottom = bottomOffset + "px";
+            notification.style.right = "20px";
 
-        // Animation
-        notification.style.opacity = "0";
-        setTimeout(function () {
-            notification.style.opacity = "1";
-        }, 50); // Delay for smooth transition
-
-        // Remove notification after a certain time
-        setTimeout(function () {
+            // Animation
             notification.style.opacity = "0";
             setTimeout(function () {
-                notification.parentNode.removeChild(notification);
-            }, 500); // Wait for the animation to finish before removing the notification
-        }, 3000); // Adjust the time the notification stays visible (in milliseconds)
-    }
+                notification.style.opacity = "1";
+            }, 50); // Delay for smooth transition
 
-    var MenuToggle = true;
-    var MainToggle = false;
-    var OnlineToggle = false;
-    var SettingsToggle = false;
-
-    function toggleMenu(name) {
-        if (name === "menu") {
-            if (MenuToggle === true) {
-                document.getElementById("menuPage").style.opacity = "0"
+            // Remove notification after a certain time
+            setTimeout(function () {
+                notification.style.opacity = "0";
                 setTimeout(function () {
-                    document.getElementById("menuPage").style.display = "none"
-                    MenuToggle = false;
-                }, 500)
-            } else {
-                document.getElementById("menuPage").style.display = "inline"
-                setTimeout(function () {
-                    document.getElementById("menuPage").style.opacity = "1"
-                }, 1)
+                    notification.parentNode.removeChild(notification);
+                }, 500); // Wait for the animation to finish before removing the notification
+            }, 3000); // Adjust the time the notification stays visible (in milliseconds)
+        }
 
-                MenuToggle = true;
+        var MenuToggle = true;
+        var MainToggle = false;
+        var OnlineToggle = false;
+        var SettingsToggle = false;
+
+        function toggleMenu(name) {
+            if (name === "menu") {
+                if (MenuToggle === true) {
+                    document.getElementById("menuPage").style.opacity = "0"
+                    setTimeout(function () {
+                        document.getElementById("menuPage").style.display = "none"
+                        MenuToggle = false;
+                    }, 500)
+                } else {
+                    document.getElementById("menuPage").style.display = "inline"
+                    setTimeout(function () {
+                        document.getElementById("menuPage").style.opacity = "1"
+                    }, 1)
+
+                    MenuToggle = true;
+                }
+            } else if (name === "main") {
+                if (MainToggle === true) {
+                    document.getElementById("main").style.opacity = "0"
+                    setTimeout(function () {
+                        document.getElementById("main").style.display = "none"
+                        MainToggle = false;
+                    }, 500)
+                } else {
+                    document.getElementById("main").style.display = "inline"
+                    setTimeout(function () {
+                        document.getElementById("main").style.opacity = "1"
+                    }, 1)
+
+                    MainToggle = true;
+                }
+            } else if (name === "online") {
+                if (OnlineToggle === true) {
+                    document.getElementById("onlinePage").style.opacity = "0"
+                    setTimeout(function () {
+                        document.getElementById("onlinePage").style.display = "none"
+                        OnlineToggle = false;
+                    }, 500)
+                } else {
+                    document.getElementById("onlinePage").style.display = "inline"
+                    setTimeout(function () {
+                        document.getElementById("onlinePage").style.opacity = "1"
+                    }, 1)
+
+                    OnlineToggle = true;
+                }
             }
-        } else if (name === "main") {
-            if (MainToggle === true) {
-                document.getElementById("main").style.opacity = "0"
-                setTimeout(function () {
-                    document.getElementById("main").style.display = "none"
-                    MainToggle = false;
-                }, 500)
-            } else {
-                document.getElementById("main").style.display = "inline"
-                setTimeout(function () {
-                    document.getElementById("main").style.opacity = "1"
-                }, 1)
+            else if (name === "settings") {
+                if (SettingsToggle === true) {
+                    document.getElementById("settingsPage").style.opacity = "0"
+                    setTimeout(function () {
+                        document.getElementById("settingsPage").style.display = "none"
+                        SettingsToggle = false;
+                    }, 500)
+                } else {
+                    document.getElementById("settingsPage").style.display = "inline"
+                    setTimeout(function () {
+                        document.getElementById("settingsPage").style.opacity = "1"
+                    }, 1)
 
-                MainToggle = true;
-            }
-        } else if (name === "online") {
-            if (OnlineToggle === true) {
-                document.getElementById("onlinePage").style.opacity = "0"
-                setTimeout(function () {
-                    document.getElementById("onlinePage").style.display = "none"
-                    OnlineToggle = false;
-                }, 500)
-            } else {
-                document.getElementById("onlinePage").style.display = "inline"
-                setTimeout(function () {
-                    document.getElementById("onlinePage").style.opacity = "1"
-                }, 1)
-
-                OnlineToggle = true;
+                    SettingsToggle = true;
+                }
             }
         }
-        else if (name === "settings") {
-            if (SettingsToggle === true) {
-                document.getElementById("settingsPage").style.opacity = "0"
-                setTimeout(function () {
-                    document.getElementById("settingsPage").style.display = "none"
-                    SettingsToggle = false;
-                }, 500)
-            } else {
-                document.getElementById("settingsPage").style.display = "inline"
-                setTimeout(function () {
-                    document.getElementById("settingsPage").style.opacity = "1"
-                }, 1)
 
-                SettingsToggle = true;
+        let toggledOnlineppl = false;
+
+        function toggleOnlineppl() {
+            if (!toggledOnlineppl) {
+                document.getElementById("onlineppl").style.right = "0px";
+                toggledOnlineppl = true;
+            } else {
+                document.getElementById("onlineppl").style.right = "-300px";
+                toggledOnlineppl = false;
             }
         }
-    }
 
-    let toggledOnlineppl = false;
-
-    function toggleOnlineppl() {
-        if (!toggledOnlineppl) {
-            document.getElementById("onlineppl").style.right = "0px";
-            toggledOnlineppl = true;
-        } else {
-            document.getElementById("onlineppl").style.right = "-300px";
-            toggledOnlineppl = false;
+        let toggledScheduleItems = true;
+        function toggleScheduleItems() {
+            if (!toggledScheduleItems) {
+                document.getElementById("scheduleItems").style.left = "0";
+                toggledScheduleItems = true;
+            } else {
+                document.getElementById("scheduleItems").style.left = (0 - (document.getElementById("scheduleItems").offsetWidth)).toString() + "px";
+                toggledScheduleItems = false;
+            }
         }
-    }
-    
-    let toggledScheduleItems = true;
-    function toggleScheduleItems() {
-        if (!toggledScheduleItems) {
-            document.getElementById("scheduleItems").style.left = "0";
-            toggledScheduleItems = true;
-        } else {
-            document.getElementById("scheduleItems").style.left = (0 - (document.getElementById("scheduleItems").offsetWidth)).toString() + "px";
-            toggledScheduleItems = false;
+
+        async function customPrompt(message, fields) {
+            return new Promise((resolve, reject) => {
+                // Create necessary HTML elements
+                const promptContainer = document.createElement('div');
+                const promptOverlay = document.createElement('div'); // New overlay element
+
+                const promptMessage = document.createElement('p');
+                var inputs = []
+                fields.forEach(element => {
+                    const inputField = document.createElement('input');
+                    inputField.type = 'text';
+                    inputField.id = element.id
+                    inputField.placeholder = element.placeholder
+                    inputs.push(inputField)
+                });
+                const confirmButton = document.createElement('button');
+
+                // Set up the prompt message
+                promptMessage.textContent = message;
+
+                // Set up the input field
+
+                // Set up the confirm button
+                confirmButton.textContent = 'OK';
+                confirmButton.addEventListener('click', () => {
+
+                    // Once the button is clicked, remove the prompt and overlay from the DOM
+                    promptContainer.remove();
+                    promptOverlay.remove(); // Remove overlay
+                    // Resolve the promise with the input value
+                    var resolved = []
+                    inputs.forEach(element => {
+                        resolved.push({
+                            id: element.id,
+                            value: element.value
+                        })
+                    });
+                    window.location.reload()
+                    resolve(resolved);
+                });
+
+                // Append elements to the container
+                promptContainer.appendChild(promptMessage);
+                inputs.forEach(element => {
+                    promptContainer.appendChild(element)
+                });
+                promptContainer.appendChild(confirmButton);
+
+                // Apply CSS styles to center the prompt and place it on top of everything
+                promptContainer.style.position = 'fixed';
+                promptContainer.style.top = '50%';
+                promptContainer.style.left = '50%';
+                promptContainer.style.transform = 'translate(-50%, -50%)';
+                promptContainer.style.zIndex = '9999';
+                promptContainer.style.backgroundColor = '#4D4770';
+                promptContainer.style.padding = '20px';
+
+                // Apply CSS styles to the overlay
+                promptOverlay.style.position = 'fixed';
+                promptOverlay.style.top = '0';
+                promptOverlay.style.left = '0';
+                promptOverlay.style.width = '100%';
+                promptOverlay.style.height = '100%';
+                promptOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent black
+                promptOverlay.style.zIndex = '9998'; // Behind the prompt
+
+                // Append the container and overlay to the document body
+                document.body.appendChild(promptOverlay); // Append overlay first
+                document.body.appendChild(promptContainer);
+            });
         }
-    }
-
-
-    // Final
-    console.log("Schedule succesfully loaded!")
-</script>
+        // Final
+        console.log("Schedule succesfully loaded!")
+    </script>
 </body>
 
 </html>
