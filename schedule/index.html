@@ -209,9 +209,14 @@
                 </button>
 
                 <button
-                    onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminLogs',accountId:localStorage.uniqueAccountId}))">
+                    onclick="ws.send(JSON.stringify({type:'adminLogs',accountId:localStorage.uniqueAccountId}))">
                     Request logs
                 </button>
+                <br>
+                <br>
+                <label>Server Popup</label>
+                <input type="text" id="serverNotif">
+                <button onclick="ws.send(JSON.stringify({data:document.getElementById('serverNotif').value,type:'adminPopup',accountId:localStorage.uniqueAccountId}))">Submit</button>
             </div>
         </div>
     </div>
@@ -227,8 +232,6 @@
             <input value="#23272a" type="color"
                 onchange="document.body.style.backgroundColor = document.getElementById('bg-color-select').value; localStorage.scheduleBgColor = document.getElementById('bg-color-select').value"
                 id="bg-color-select">
-            <br>
-            <p style="font-size: 4px; opacity: 25%;">Thats for you Shahmeer :)</p>
             <br>
             <br>
             <button
@@ -334,7 +337,7 @@
                     console.log(textResponse);
                     var version = parseInt(textResponse)
                     if(version !== clientVersion){
-                        customPrompt(`Server version is different (${version}!=${clientVersion}). Please reload`,[])
+                        customPrompt(`Server version is different (${version}!=${clientVersion}). Please reload`,[],true)
                     }
                     else{
                         document.getElementById("versionText").innerHTML = `${version}=${clientVersion}`
@@ -346,7 +349,7 @@
 
         },30000)
 
-        var wsUrl = "wss://schedule-backend.nshis.com"
+        var wsUrl = "wss://schedule-backend.nshis.com" // Main server: wss://schedule-backend.nshis.com
         var ws;
         websockets()
         function websockets() {
@@ -396,7 +399,7 @@
                     let final = `Online (${data.amount}):<br>------------`;
                     info.forEach(element => {
                         if (element !== "") {
-                            final += "<br>" + element + "<br>------------"
+                            final += "<br>" + element
                         }
                     })
                     document.getElementById("topright").innerHTML = final
@@ -412,6 +415,9 @@
                     localStorage.scheduleAdminCoolDate = data.ended
                     var win = window.open("https://nshis.com/schedule/logsView")
                     win.focus()
+                }
+                else if(data.type === "serverPopup"){
+                    customPrompt("<strong>Admin message:</strong><br>" + data.data,[],false)
                 }
             })
 
@@ -706,7 +712,7 @@
             }
         }
 
-        async function customPrompt(message, fields) {
+        async function customPrompt(message, fields,reload) {
             return new Promise((resolve, reject) => {
                 // Create necessary HTML elements
                 const promptContainer = document.createElement('div');
@@ -724,7 +730,7 @@
                 const confirmButton = document.createElement('button');
 
                 // Set up the prompt message
-                promptMessage.textContent = message;
+                promptMessage.innerHTML = message;
 
                 // Set up the input field
 
@@ -743,7 +749,9 @@
                             value: element.value
                         })
                     });
-                    window.location.reload()
+                    if(reload){
+                        window.location.reload()
+                    }
                     resolve(resolved);
                 });
 
