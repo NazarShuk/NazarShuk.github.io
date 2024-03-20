@@ -323,7 +323,7 @@
 
         }
 
-        var clientVersion = 144
+        var clientVersion = 145
         document.getElementById("versionText").innerHTML = clientVersion
         setInterval(function () {
             fetch("https://nshis.com/schedule/ver.ver")
@@ -351,7 +351,7 @@
 
         var wsUrl = "wss://schedule-backend.nshis.com" // Main server: wss://schedule-backend.nshis.com
         var ws;
-        websockets()
+        //websockets()
         function websockets() {
             try {
                 ws.close()
