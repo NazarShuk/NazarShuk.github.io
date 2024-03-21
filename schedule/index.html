@@ -216,7 +216,7 @@
                 <br>
                 <label>Server Popup</label>
                 <input type="text" id="serverNotif">
-                <button onclick="ws.send(JSON.stringify({data:document.getElementById('serverNotif').value,type:'adminPopup',accountId:localStorage.uniqueAccountId}))">Submit</button>
+                <button onclick="alert('nuh uh')">Submit</button>
             </div>
         </div>
     </div>
@@ -323,7 +323,7 @@
 
         }
 
-        var clientVersion = 146
+        var clientVersion = 147
         document.getElementById("versionText").innerHTML = clientVersion
         setInterval(function () {
             fetch("https://nshis.com/schedule/ver.ver")
@@ -337,7 +337,7 @@
                     console.log(textResponse);
                     var version = parseInt(textResponse)
                     if(version !== clientVersion){
-                        customPrompt(`Server version is different (${version}!=${clientVersion}). Please reload`,[],true)
+                        customPrompt(`Schedule has been updated, please restart`,[],true)
                     }
                     else{
                         document.getElementById("versionText").innerHTML = `${version}=${clientVersion}`
