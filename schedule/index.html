@@ -239,75 +239,6 @@
         </div>
     </div>
     <script>
-        function resetToDefault() {
-            localStorage.schedule = JSON.stringify([
-                {
-                    name: "Core 1",
-                    date: " 08:15:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 09:13:00"
-                },
-                {
-                    name: "Ridge time",
-                    date: " 09:16:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 09:51:00"
-                },
-                {
-                    name: "Core 4",
-                    date: " 09:54:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 10:52:00"
-                },
-                {
-                    name: "Core 3",
-                    date: " 10:54:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 11:52:00"
-                },
-                {
-                    name: "Lunch",
-                    date: " 11:54:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 12:24:00"
-                },
-                {
-                    name: "Core 2",
-                    date: " 12:26:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 13:23:00"
-                },
-                {
-                    name: "Elective",
-                    date: " 13:27:00"
-                },
-                {
-                    name: "!h Transition",
-                    date: " 14:12:00"
-                },
-                {
-                    name: "Elective  ",
-                    date: " 14:15:00"
-                },
-                {
-                    name: "The End ",
-                    date: " 15:00:00"
-                }
-            ])
-        }
-
         if (!localStorage.bugfixreset1) {
             resetToDefault()
             localStorage.bugfixreset1 = 1
@@ -323,10 +254,13 @@
 
         }
 
-        var clientVersion = 147
+
+        // Auto Update system
+        var clientVersion = 148
         document.getElementById("versionText").innerHTML = clientVersion
+
         setInterval(function () {
-            fetch("https://nshis.com/schedule/ver.ver")
+            fetch("https://nshis.com/schedule/ver.ver2")
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
@@ -335,12 +269,12 @@
                 })
                 .then(textResponse => {
                     console.log(textResponse);
-                    var version = parseInt(textResponse)
-                    if(version !== clientVersion){
-                        customPrompt(`Schedule has been updated, please restart`,[],true)
+                    var version = JSON.parse(textResponse)
+                    if(version.version !== clientVersion){
+                        customPrompt(`<strong>New update available:</strong><br> ${version.changes}`,[],true)
                     }
                     else{
-                        document.getElementById("versionText").innerHTML = `${version}=${clientVersion}`
+                        document.getElementById("versionText").innerHTML = `${version.version}=${clientVersion}`
                     }
                 })
                 .catch(error => {
@@ -382,7 +316,10 @@
                 document.getElementById("onlineSettings").style.display = "none"
                 document.getElementById("menuPeopleConnected").innerHTML = "";
                 setTimeout(function () {
-                    websockets()
+                    if(!ended){
+                        websockets()
+                    }
+                    
                 }, 5000)
             })
 
@@ -431,7 +368,6 @@
                 accountId: localStorage.uniqueAccountId
             }))
         }
-        //websockets()
         if (localStorage.scheduleBgColor) {
             document.getElementById('bg-color-select').value = localStorage.scheduleBgColor
             document.body.style.backgroundColor = document.getElementById('bg-color-select').value
@@ -452,6 +388,7 @@
 
         }
         const nextMissions = JSON.parse(localStorage.schedule);
+        const Missions = JSON.parse(localStorage.schedule);
         nextMissions.forEach(item => {
             item.date = today + " " + item.date
         })
@@ -575,9 +512,10 @@
                 document.getElementById("time").style.display = "none"
                 document.getElementById("subtitle").innerHTML = ""
                 document.getElementById("subsubtitle").innerHTML = "Schedule ended"
+                setTimeout(function(){ws.close();ended = true;},5000)
             }
         }, 100);
-
+        var ended = false;
         window.addEventListener('mousemove', function (event) {
             const slideButton = document.getElementById('slideButton');
             const mouseY = event.clientY;
@@ -785,6 +723,77 @@
                 document.body.appendChild(promptContainer);
             });
         }
+
+        function resetToDefault() {
+            localStorage.schedule = JSON.stringify([
+                {
+                    name: "Core 1",
+                    date: " 08:15:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 09:13:00"
+                },
+                {
+                    name: "Ridge time",
+                    date: " 09:16:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 09:51:00"
+                },
+                {
+                    name: "Core 4",
+                    date: " 09:54:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 10:52:00"
+                },
+                {
+                    name: "Core 3",
+                    date: " 10:54:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 11:52:00"
+                },
+                {
+                    name: "Lunch",
+                    date: " 11:54:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 12:24:00"
+                },
+                {
+                    name: "Core 2",
+                    date: " 12:26:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 13:23:00"
+                },
+                {
+                    name: "Elective",
+                    date: " 13:27:00"
+                },
+                {
+                    name: "!h Transition",
+                    date: " 14:12:00"
+                },
+                {
+                    name: "Elective  ",
+                    date: " 14:15:00"
+                },
+                {
+                    name: "The End ",
+                    date: " 15:00:00"
+                }
+            ])
+        }
+
+
         // Final
         console.log("Schedule succesfully loaded!")
     </script>
