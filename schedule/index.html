@@ -299,7 +299,7 @@
         function sendData() {
             socket.emit("onlineData",{
                 name:document.querySelector("input").value,
-                id: "UniqueAccountId"
+                id: localStorage.uniqueAccountId
             })
         }
         if (localStorage.scheduleBgColor) {
