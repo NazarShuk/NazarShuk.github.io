@@ -177,9 +177,7 @@
         <div class="center"
             style="flex-direction: column; font-size: larger; text-align: center;align-items: center; display:inline;">
             <h1 class="bigLabel" style="margin-bottom: 0;">Online</h1>
-            <h2 id="OnlineIndicator" oncontextmenu="ws.send(JSON.stringify({type:'adminRequest',
-            name: document.getElementById('OnlineName').value,
-            accountId:localStorage.uniqueAccountId}))" style="color:red; margin-top: 0;">
+            <h2 id="OnlineIndicator" style="color:red; margin-top: 0;">
                 You are currently offline</h2>
             <button onclick="toggleMenu('menu');toggleMenu('online')">Menu</button>
 
@@ -194,29 +192,6 @@
                     ">Change username
                 </button>
                 <p style="font-size: 14px"></p>
-            </div>
-            <div id="admin" style="display: none">
-
-                <p>Admin granted</p>
-                <input type="text" placeholder="Username" id="OnlineAdminUserName">
-                <button
-                    onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminBan',accountId:localStorage.uniqueAccountId}))">
-                    Ban
-                </button>
-                <button
-                    onclick="ws.send(JSON.stringify({who:document.getElementById('OnlineAdminUserName').value,type:'adminUnBan',accountId:localStorage.uniqueAccountId}))">
-                    Unban
-                </button>
-
-                <button
-                    onclick="ws.send(JSON.stringify({type:'adminLogs',accountId:localStorage.uniqueAccountId}))">
-                    Request logs
-                </button>
-                <br>
-                <br>
-                <label>Server Popup</label>
-                <input type="text" id="serverNotif">
-                <button onclick="alert('nuh uh')">Submit</button>
             </div>
         </div>
     </div>
@@ -256,7 +231,7 @@
 
 
         // Auto Update system
-        var clientVersion = 148
+        var clientVersion = 149
         document.getElementById("versionText").innerHTML = clientVersion
 
         setInterval(function () {
@@ -283,90 +258,49 @@
 
         },30000)
 
-        var wsUrl = "wss://schedule-backend.nshis.com" // Main server: wss://schedule-backend.nshis.com
-        var ws;
-        websockets()
-        function websockets() {
-            try {
-                ws.close()
+        var wsUrl = "https://schedule-backend.nshis.com" // Main server: https://schedule-backend.nshis.com
+        const socket = io(wsUrl);
+        
+        socket.on("connect",()=>{
+            console.log("connected")
+            document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
+            document.getElementById("OnlineIndicator").style.color = "Green"
+            document.getElementById("onlineSettingsPlaceholder").style.display = "none"
+            document.getElementById("onlineSettings").style.display = "inline"
+            showNotification("Connected")
+            if (localStorage.scheduleOnlineName) {
+                sendData()
             }
-            catch {
-                //bruh
+        })
+        socket.on("disconnect",()=>{
+            console.log("disconnected from the server")
+            document.getElementById("OnlineIndicator").innerHTML = "You are currently offline"
+            document.getElementById("OnlineIndicator").style.color = "Red"
+            document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
+            document.getElementById("onlineSettings").style.display = "none"
+            document.getElementById("menuPeopleConnected").innerHTML = "";
+        })
+        socket.on("clientInfo",(data)=>{
+            
+            if (data.amount !== 1) {
+                document.getElementById("menuPeopleConnected").innerHTML = "There are " + data.length + " people online";
+            } else {
+                document.getElementById("menuPeopleConnected").innerHTML = "There is " + data.length + " person online";
             }
-            ws = new WebSocket(wsUrl);
-            ws.addEventListener("open", (event) => {
-                console.log("connected")
-                document.getElementById("OnlineIndicator").innerHTML = "You are currently online"
-                document.getElementById("OnlineIndicator").style.color = "Green"
-                document.getElementById("onlineSettingsPlaceholder").style.display = "none"
-                document.getElementById("onlineSettings").style.display = "inline"
-                showNotification("Connected")
-                if (localStorage.scheduleOnlineName) {
-                    sendData()
+
+            let final = `Online (${data.length}):<br>------------`;
+            data.forEach(element => {
+                if (element.name !== "") {
+                    final += "<br>" + element.name
                 }
             })
-            ws.addEventListener("error", (error) => {
-                console.log(error)
-            })
-            ws.addEventListener("close", (event) => {
-                console.log("disconnected from the server")
-                document.getElementById("OnlineIndicator").innerHTML = "You are currently offline"
-                document.getElementById("OnlineIndicator").style.color = "Red"
-                document.getElementById("onlineSettingsPlaceholder").style.display = "inline"
-                document.getElementById("onlineSettings").style.display = "none"
-                document.getElementById("menuPeopleConnected").innerHTML = "";
-                setTimeout(function () {
-                    if(!ended){
-                        websockets()
-                    }
-                    
-                }, 5000)
-            })
-
-            ws.addEventListener("message", (event) => {
-                var data = JSON.parse(event.data)
-                if (data.type === "clientInfo") {
-                    var info = data.users;
-                    if (data.amount !== 1) {
-                        document.getElementById("menuPeopleConnected").innerHTML = "There are " + data.amount + " people online";
-                    } else {
-                        document.getElementById("menuPeopleConnected").innerHTML = "There is " + data.amount + " person online";
-                    }
-                    onlinePPL = info
-                    let final = `Online (${data.amount}):<br>------------`;
-                    info.forEach(element => {
-                        if (element !== "") {
-                            final += "<br>" + element
-                        }
-                    })
-                    document.getElementById("topright").innerHTML = final
-                } else if (data.type === "serverNotif") {
-                    showNotification(data.notif)
-                } else if (data.type === "adminGranted") {
-                    document.getElementById("admin").style.display = "inline"
-                    document.getElementById('OnlineName').value = ""
-                }
-                else if (data.type === "adminLogs") {
-                    var cooldata = data.data
-                    localStorage.scheduleAdminCoolData = cooldata
-                    localStorage.scheduleAdminCoolDate = data.ended
-                    var win = window.open("https://nshis.com/schedule/logsView")
-                    win.focus()
-                }
-                else if(data.type === "serverPopup"){
-                    customPrompt("<strong>Admin message:</strong><br>" + data.data,[],false)
-                }
-            })
-
-
-
-        }
+            document.getElementById("topright").innerHTML = final
+        })
         function sendData() {
-            ws.send(JSON.stringify({
-                type: "onlineData",
-                name: document.getElementById("OnlineName").value,
-                accountId: localStorage.uniqueAccountId
-            }))
+            socket.emit("onlineData",{
+                name:document.querySelector("input").value,
+                id: "UniqueAccountId"
+            })
         }
         if (localStorage.scheduleBgColor) {
             document.getElementById('bg-color-select').value = localStorage.scheduleBgColor
@@ -512,7 +446,7 @@
                 document.getElementById("time").style.display = "none"
                 document.getElementById("subtitle").innerHTML = ""
                 document.getElementById("subsubtitle").innerHTML = "Schedule ended"
-                setTimeout(function(){ws.close();ended = true;},5000)
+                setTimeout(function(){socket.close();},5000)
             }
         }, 100);
         var ended = false;

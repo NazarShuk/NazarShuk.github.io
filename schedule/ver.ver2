@@ -1,4 +1,4 @@
 {
-    "version":148,
-    "changes":"Fixed bugs with online system and auto-update system."
+    "version":149,
+    "changes":"Updated the online servers. Removed admin panel."
 }
