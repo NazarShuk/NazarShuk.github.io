@@ -231,7 +231,7 @@
 
 
         // Auto Update system
-        var clientVersion = 149
+        var clientVersion = 150
         document.getElementById("versionText").innerHTML = clientVersion
 
         setInterval(function () {
@@ -326,7 +326,16 @@
         nextMissions.forEach(item => {
             item.date = today + " " + item.date
         })
-
+        const e = document.createElement("p");
+                e.className = "scheduleItemsClass"
+                e.style.marginTop = "0"
+                e.style.marginBottom = "0"
+                e.style.marginLeft = "0"
+                e.style.opacity = "25%"
+                e.style.transition = "1s"
+                e.style.fontSize = "1.5vw"
+                e.innerHTML = "Next up:<br>------------"
+                document.getElementById("scheduleItems").append(e)
         nextMissions.forEach(element => {
             if (!element.name.startsWith("!h ")) {
                 const e = document.createElement("p");

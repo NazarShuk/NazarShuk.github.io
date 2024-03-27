@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../other/styles.css" rel="stylesheet">
+    <style>
+        .hoverhighlight:hover {
+            background-color: rgb(68 81 222);
+        }
+
+        .hoverhighlight {
+            outline: 4px solid black;
+            width: 25%;
+            height: 100%;
+            transition: 0.5s;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            background-color: rgb(88 101 242);
+        }
+
+        .hoverhighlight h1 {
+            width: 100%;
+            word-wrap: break-word;
+        }
+    </style>
+    <title>Quizlet free test</title>
+</head>
+
+<body>
+    <div class="center" id="mainMenu" style="flex-direction: column; text-align: center; display: none;">
+        <h1>A free version of quizlet study thingy</h1>
+        <p>Insert a link to a set from quizlet, and study, for FREE</p>
+        <input type="text" placeholder="Quizlet link">
+        <br>
+        <div style="flex-direction: row;">
+            <button>Flashcards</button>
+            <button>Matching</button>
+            <button>Test</button>
+            <button>Chat</button>
+            <hr>
+            <button>Live</button>
+        </div>
+    </div>
+
+    <div id="testMenu" style="width: 100%; height: 100%; ">
+        <div
+            style="width: 100%; height: 10%; background-color: rgb(88 101 242); display: flex; align-items: center; text-align: center; outline: 2px black solid;">
+            <h1 style="width: 100%;" id="titleLabel">Title</h1>
+        </div>
+        <div style="width: 100%; height: 45%; display: flex; align-items: center; text-align: center;">
+            <h1 style="width: 100%;" id="questionLabel">Question !!!</h1>
+        </div>
+        <div
+            style="width: 100%; height: 45%; background-color: rgb(88 101 242); display: flex; align-items: center; text-align: center;">
+            <div class="hoverhighlight" onclick="answer(document.getElementById('answer1').innerText)">
+                <h1 id="answer1">11111111111111111</h1>
+            </div>
+            <div class="hoverhighlight" onclick="answer(document.getElementById('answer2').innerText)">
+                <h1 id="answer2">2</h1>
+            </div>
+            <div class="hoverhighlight" onclick="answer(document.getElementById('answer3').innerText)">
+                <h1 id="answer3">3</h1>
+            </div>
+            <div class="hoverhighlight" onclick="answer(document.getElementById('answer4').innerText)">
+                <h1 id="answer4">4</h1>
+            </div>
+        </div>
+    </div>
+    <script>
+        let studySet = {
+            name: "General questions",
+            cards: [
+                {
+                    term: "What is the capital of Australia?",
+                    definition: "Canberra"
+                },
+                {
+                    term: "Who wrote 'To Kill a Mockingbird'?",
+                    definition: "Harper Lee"
+                },
+                {
+                    term: "What is the chemical symbol for water?",
+                    definition: "H2O"
+                },
+                {
+                    term: "What is the tallest mountain in the world?",
+                    definition: "Mount Everest"
+                },
+                {
+                    term: "What is the currency of Japan?",
+                    definition: "Japanese Yen"
+                },
+                {
+                    term: "Who painted the Mona Lisa?",
+                    definition: "Leonardo da Vinci"
+                },
+                {
+                    term: "What is the largest mammal in the world?",
+                    definition: "Blue Whale"
+                },
+                {
+                    term: "What year did the Titanic sink?",
+                    definition: "1912"
+                },
+                {
+                    term: "Who was the first man to walk on the moon?",
+                    definition: "Neil Armstrong"
+                },
+                {
+                    term: "What is the chemical formula for table salt?",
+                    definition: "NaCl"
+                },
+
+                {
+                    term: "What is the capital of France?",
+                    definition: "Paris"
+                },
+                {
+                    term: "Who wrote '1984'?",
+                    definition: "George Orwell"
+                },
+                {
+                    term: "What is the chemical symbol for gold?",
+                    definition: "Au"
+                },
+                {
+                    term: "What is the deepest ocean in the world?",
+                    definition: "Pacific Ocean"
+                },
+                {
+                    term: "What is the currency of Brazil?",
+                    definition: "Brazilian Real"
+                },
+                {
+                    term: "Who painted 'Starry Night'?",
+                    definition: "Vincent van Gogh"
+                },
+                {
+                    term: "What is the fastest land animal?",
+                    definition: "Cheetah"
+                },
+                {
+                    term: "What year did World War II end?",
+                    definition: "1945"
+                },
+                {
+                    term: "Who discovered penicillin?",
+                    definition: "Alexander Fleming"
+                },
+                {
+                    term: "What is the chemical formula for carbon dioxide?",
+                    definition: "CO2"
+                },
+                {
+                    term: "What is the largest planet in our solar system?",
+                    definition: "Jupiter"
+                },
+                {
+                    term: "Who wrote 'Pride and Prejudice'?",
+                    definition: "Jane Austen"
+                },
+                {
+                    term: "What is the chemical symbol for oxygen?",
+                    definition: "O"
+                },
+                {
+                    term: "What is the hottest continent on Earth?",
+                    definition: "Africa"
+                },
+                {
+                    term: "What is the currency of Russia?",
+                    definition: "Russian Ruble"
+                },
+                {
+                    term: "Who painted 'The Last Supper'?",
+                    definition: "Leonardo da Vinci"
+                },
+                {
+                    term: "What is the largest bird in the world?",
+                    definition: "Ostrich"
+                },
+                {
+                    term: "In what year did the Berlin Wall fall?",
+                    definition: "1989"
+                },
+                {
+                    term: "Who is known as the 'Father of Modern Physics'?",
+                    definition: "Albert Einstein"
+                },
+                {
+                    term: "What is the chemical formula for methane?",
+                    definition: "CH4"
+                }
+            ]
+        }
+        var currentQuestion = 0
+        var scorePerQuestion = 100 / studySet.cards.length
+        var score = 0
+        let rightAnswer
+
+        setQuestion()   
+
+        function setQuestion() {
+            try {
+                let newCards = studySet.cards
+                let variants = []
+                newCards.splice(currentQuestion, 1)
+                for (var i = 0; i < 3; i++) {
+                    let card = newCards[Math.floor(Math.random() * newCards.length)]
+                    newCards.splice(newCards.indexOf(card), 1)
+                    variants.push(card)
+                }
+                variants.push(studySet.cards[currentQuestion])
+                variants = shuffle(variants)
+                setLabels(studySet.name + ". Score: " + Math.floor(score), studySet.cards[currentQuestion].term, variants[0].definition, variants[1].definition, variants[2].definition, variants[3].definition)
+                rightAnswer = studySet.cards[currentQuestion].definition
+            }
+            catch (e) {
+                alert(`${currentQuestion}, ${e}`)
+
+            }
+
+        }
+
+        function setLabels(title, question, a1, a2, a3, a4) {
+            document.getElementById("titleLabel").innerText = title
+            document.getElementById("questionLabel").innerText = question
+            document.getElementById("answer1").innerText = a1
+            document.getElementById("answer2").innerText = a2
+            document.getElementById("answer3").innerText = a3
+            document.getElementById("answer4").innerText = a4
+        }
+        function answer(answer) {
+            if (rightAnswer === answer) {
+                alert("yippie you got it right!!!")
+                score += scorePerQuestion
+                currentQuestion += 1;
+                setQuestion()
+            }
+            else {
+                alert("grrrrrrrrrrrrrrrrrrrrrrrrrrr")
+                setQuestion()
+            }
+        }
+        function get_random(list) {
+            return list[Math.floor((Math.random() * list.length))];
+        }
+
+        function shuffle(array) {
+            let currentIndex = array.length, randomIndex;
+
+            // While there remain elements to shuffle...
+            while (currentIndex != 0) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+
+                // And swap it with the current element.
+                [array[currentIndex], array[randomIndex]] = [
+                    array[randomIndex], array[currentIndex]];
+            }
+
+            return array;
+        }
+    </script>
+</body>
+
+</html>
