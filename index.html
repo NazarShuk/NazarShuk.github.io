@@ -17,46 +17,24 @@
     </style>
     <title>Home</title>
 </head>
-<body style="transition: 1s">
-    <center>
-        <h2 style="margin-bottom: 0;">Hi! I am</h2>
-            <h1 class="bigLabel" style="margin-top: 0">NshIS</h1>
-            <h2 id="quote" style="font-style: italic;"></h2>
-            <div style="font-size: larger;">
-                <hr>
-            <center>
-                <h2>My projects</h2>
-                
-                <button onclick="redirect('/schedule')">Schedule</button>
-                <button onclick="redirect('/code')">Live Code</button>
-                <button onclick="redirect('/nvoice')">Ncord voice</button>
-                <button onclick="redirect('/chat')">Ncord chat</button>
-                
-            </center>
-                <hr>
-                <center>
-                    <h2>My socials</h2>
-                    <button onclick="redirect('https://github.com/NazarShuk',true)">Github</button>
-                    <button onclick="redirect('https://discordapp.com/users/743902235473346563',true)">Discord</button>
-                    <button onclick="redirect('https://youtube.com/@nshis',true)">Youtube</button>
-                    <p>Rarely used:</p>
-                    <button onclick="redirect('https://twitter.com/NshISMusic',true)">Twitter 💀</button>
+<body style="transition: 1s;">
+    
+    <div style="transition: 0.05s; user-select: none; user-focus: none; z-index: 999; position:absolute; width: 300px; height: fit-content; min-height: 25px; background-color: rgb(44, 47, 51);" id="mousefollower">
+        <p style="margin: 0;" id="followerPlaceholder">get out of here grrrr.</p>
+    </div>
 
-                </center>
-        </div>
-    </center>
+    <div style="display: grid; grid-template-columns: 125px 125px 125px; grid-template-rows: 75px 75px 75px; position: absolute; width: 100%;height: 100%;">
+        <h1 style="z-index: 99; position: absolute; top: 50%; margin: 0; left: 50%; transform: translate(-50%, -50%); opacity: 5%; font-size: 15vw; user-select: none;">NshIS</h1>
+        <h2 style="z-index: 99; position: absolute; top: 65%; margin: 0; left: 50%; transform: translate(-50%, -50%); opacity: 5%; font-size: 1vw; user-select: none;">My projects, and more?</h2>
+        <button onclick="redirect('/schedule')" onmouseleave="buttonHover(false,'')" onmouseenter="buttonHover(true,'Shows time left until a certain time in your schedule.')">Schedule</button>
+        <button onclick="redirect('/code')" onmouseleave="buttonHover(false,'')" onmouseenter="buttonHover(true,'Something like CodePen, but much much worse')">Live Code</button>
+        <button onclick="redirect('/nvoice')" onmouseleave="buttonHover(false,'')" onmouseenter="buttonHover(true,'A simple voice chat app using peer.js.')">Ncord voice</button>
+        <button onclick="redirect('/chat')" onmouseleave="buttonHover(false,'')" onmouseenter="buttonHover(true,'A simple chat app using peer.js.')">Ncord chat</button>
+        
+    </div>
+    
     <script>
-        var quote = document.getElementById("quote")
-        var quotes = [
-            "now on nshis.com!"
-        ]
-        var chosen = quotes[Math.floor(Math.random()*quotes.length)]
-        chosen.split("").forEach((char,index)=>{
-            setTimeout(function(){
-quote.innerHTML += char
-            },index * 250)
-            
-        })
+       
         function redirect(where,newTab){
             
             if(newTab){
@@ -65,6 +43,23 @@ quote.innerHTML += char
             else{
                 window.location.href =  where
             }
+        }
+        
+        document.onmousemove = (e) =>{
+            document.getElementById("mousefollower").style.transform = "translate(" + (e.x + 15) + "px, " + (e.y + 15)+ "px)"
+        }
+        
+        buttonHover(false,'')
+        
+        function buttonHover(hover,placeholder){
+            var follower = document.getElementById("mousefollower")
+            if(hover){
+                follower.style.display = "inline"
+            }
+            else{
+                follower.style.display = "none"
+            }
+            document.getElementById("followerPlaceholder").innerHTML = placeholder
         }
     </script>
 </body>
