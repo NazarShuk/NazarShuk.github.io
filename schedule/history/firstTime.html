@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
+    <title>TIME</title>
+</head>
+<body>
+<h1 id="id" class="center"></h1>
+<progress class="center" min=0 max=1000 id="prog"></progress>
+<script>
+    setInterval(function(){
+
+        var d = new Date()
+        var seconds = d.getSeconds()
+        var minutes = d.getMinutes()
+        var hours = d.getHours()
+        var mill = d.getMilliseconds()
+        document.getElementById("prog").value = mill
+        if(seconds < 10){
+            seconds = (0).toString() + seconds.toString()
+        }
+        if(hours < 10){
+            hours = (0).toString() + hours.toString()
+        }
+        if(minutes < 10){
+            minutes = (0).toString() + minutes.toString()
+        }
+
+        document.getElementById("id").innerHTML = hours+":"+minutes+":"+seconds
+    })
+</script>
+</body>
+</html>

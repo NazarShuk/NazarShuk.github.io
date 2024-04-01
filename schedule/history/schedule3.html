@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://nshis.vercel.app/other/styles.css">
+    <title>RC</title>
+</head>
+
+<body>
+<div class="center" style="display: inline; font-size: xx-large;">
+    <center>
+        <h1 id="demo"></h1>
+        <p id="nextmissions"></p>
+    </center>
+</div>
+<h2>Up next:</h2>
+<script>
+    var date = new Date()
+    var month = date.getMonth()
+    month = month + 1;
+    var day = date.getDate()
+    var year = date.getFullYear()
+    var today = month + "/" + day +", " +year
+    var previousMisson;
+    var nextMissions = [
+        {
+            name:"Period 1",
+            date: today + " 08:15:00"
+        },
+        {
+            name:"[HIDE]",
+            date: today + " 09:13:00"
+        },
+        {
+            name:"Period 2",
+            date: today + " 09:16:00"
+        },
+        {
+            name:"[HIDE]",
+            date: today + " 09:51:00"
+        },
+        {
+            name:"Period 3",
+            date: today + " 09:54:00"
+        },
+        {
+            name:"[HIDE]",
+            date: today + " 10:53:00"
+        },
+        {
+            name:"Period 4",
+            date: today + " 10:56:00"
+        },
+        {
+            name:"[HIDE]",
+            date: today + " 11:26:00"
+        },
+        {
+            name:"Period 5",
+            date: today + " 11:30:00"
+        },
+        {
+            name:"[HIDE]",
+            date: today + " 12:15:00"
+        },
+        {
+            name:"Period 6",
+            date: today + " 12:18:00"
+        },
+        {
+            name:"[HIDE]",
+            date: today + " 13:03:00"
+        },
+        {
+            name:"Period 7",
+            date: today + " 13:06:00"
+        },
+        {
+            name:"[HIDE]",
+            date: today + " 14:02:00"
+        },
+        {
+            name:"Period 8",
+            date: today + " 14:04:00"
+        },
+        {
+            name:"End of school",
+            date: today + " 15:00:00"
+        },
+    ]
+    nextMissions.forEach(element =>{
+        if(!element.name.startsWith("[HIDE]")){
+            var e = document.createElement("p")
+            e.id = element.name
+            e.style.marginTop = "0"
+            e.style.marginBottom = "0"
+            e.innerHTML = element.name + "<br>" + element.date
+            document.body.append(e)
+        }
+
+    })
+    // Set the date we're counting down to
+    //var countDownDate = new Date("Nov 17, 2023 15:00:00").getTime();
+    var countDownDate = new Date(nextMissions[0].date).getTime()
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+
+        // Get today's date and time
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+        // Time calculations for days, hours, minutes and seconds
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        // Display the result in the element with id="demo"
+        if(previousMisson != null){
+            if(previousMisson.name.startsWith("[HIDE]")){
+                document.getElementById("demo").innerHTML = "..."
+            }
+            else{
+                document.getElementById("demo").innerHTML = hours + "h "
+                    + minutes + "m " + seconds + "s ";
+            }
+        }
+
+        // If the count down is finished, write some text
+        if (distance < 0) {
+            if(!nextMissions[0].name.startsWith("[HIDE]")){
+                document.getElementById(nextMissions[0].name).innerHTML = ""
+            }
+            previousMisson = nextMissions[0]
+            nextMissions.splice(0,1)
+            countDownDate = new Date(nextMissions[0].date).getTime()
+            //document.getElementById("demo").innerHTML = "EXPIRED";
+        }
+    }, 50);
+</script>
+</body>
+
+</html>
