@@ -1,6 +1,6 @@
 const url = "https://backend.nshis.com/api/"
 
-function APIregister(name, password) {
+function APIregister(name, password,callback) {
     // Fetch data from the URL
     fetch(url + "register?name=" + name + "&password=" + password)
         .then(response => {
@@ -10,8 +10,7 @@ function APIregister(name, password) {
             return response.json();
         })
         .then(data => {
-            // Process the JSON data
-            console.log(data);
+            callback(data);
         })
         .catch(error => {
             // Handle any errors that occur during the fetch operation
@@ -20,7 +19,7 @@ function APIregister(name, password) {
 
 }
 
-function APIlogin(name, password) {
+function APIlogin(name, password,callback) {
     // Fetch data from the URL
     fetch(url + "login?name=" + name + "&password=" + password)
         .then(response => {
@@ -30,8 +29,7 @@ function APIlogin(name, password) {
             return response.json();
         })
         .then(data => {
-            // Process the JSON data
-            console.log(data);
+            callback(data);
         })
         .catch(error => {
             // Handle any errors that occur during the fetch operation
@@ -40,7 +38,7 @@ function APIlogin(name, password) {
 
 }
 
-function APIgetData(token) {
+function APIgetData(token,callback) {
     // Fetch data from the URL
     fetch(url + "data/get?token=" + token)
         .then(response => {
@@ -50,8 +48,7 @@ function APIgetData(token) {
             return response.json();
         })
         .then(data => {
-            // Process the JSON data
-            console.log(data);
+            callback(data);
         })
         .catch(error => {
             // Handle any errors that occur during the fetch operation
@@ -60,7 +57,7 @@ function APIgetData(token) {
 
 }
 
-function APIsetData(token,key,value) {
+function APIsetData(token,key,value,callback) {
     // Fetch data from the URL
     fetch(url + "data/set?token=" + token + "&key=" + key + "&keyValue=" + value)
         .then(response => {
@@ -70,8 +67,7 @@ function APIsetData(token,key,value) {
             return response.json();
         })
         .then(data => {
-            // Process the JSON data
-            console.log(data);
+            callback(data);
         })
         .catch(error => {
             // Handle any errors that occur during the fetch operation

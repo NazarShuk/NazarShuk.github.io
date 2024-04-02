@@ -8,8 +8,151 @@
     <title>Account</title>
 </head>
 <body>
-<script>
-    APIgetData("1712004891570")
-</script>
+    <div style="text-align: center;align-items: center; justify-content: center; display: flex; flex-direction: column;">
+        <h1 class="bigLabel">Account</h1>
+        
+        <div id="loggedOut">
+            <br>
+            <input id="usernameInput" type="text" style="width: 90%;" placeholder="Username" maxlength="32">
+            <br>
+            <input id="passwordInput" type="password" style="width: 90%;" placeholder="Password" maxlength="32">
+            <br>
+            <br>
+            <button onclick="register()">Register</button>
+            <p style="margin: 0;">or</p>
+            <button onclick="login()">Log In</button>
+            
+        </div>
+        <div id="loggedIn" style="display: none;">
+            <h1 id="name" style="margin-bottom: 0;"></h1>
+            <h2 style="margin-top: 0; opacity: 50%;" id="catText"></h2>
+            <button onclick="logOut()">Log Out</button>
+        </div>
+        <br>
+        
+    </div>
+
+    <script>
+
+        var nameI = document.getElementById("usernameInput")
+        var passI = document.getElementById("passwordInput")
+        
+        showLoggedIn()
+        function showLoggedIn() {
+            if (localStorage.account) {
+                document.getElementById("loggedIn").style.display = "inline"
+                document.getElementById("loggedOut").style.display = "none"
+                document.getElementById("name").innerText = JSON.parse(localStorage.account).name
+                var date = new Date(JSON.parse(localStorage.account).date)
+                document.getElementById("catText").innerText = "Joined on " + date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear()
+            }
+        }
+        function register(){
+            if((nameI.value && passI.value) && (nameI.value.length > 4 && passI.value.length > 4)){
+                APIregister(nameI.value,passI.value, (data)=>{
+                    if(data.status){
+                        customPrompt(data.status,[])
+                    }
+                })
+            }
+            else{
+                customPrompt("Error. Please check your credentials",[])
+            }
+        }
+        function login(){
+            if((nameI.value && passI.value) && (nameI.value.length > 4 && passI.value.length > 4)){
+                APIlogin(nameI.value,passI.value, (data)=>{
+                    if (!data.status){
+                        customPrompt("Sucessfully logged in.",[])
+                        console.log(data)
+                        localStorage.account = JSON.stringify(data[0])
+                        showLoggedIn()
+                    }
+                    else{
+                        customPrompt(data.status,[])
+                    }
+                })
+            }
+            else{
+                customPrompt("Error. Please check your credentials",[])
+            }
+        }
+        
+        function logOut(){
+            localStorage.account = ""
+            window.location.reload()
+        }
+
+        async function customPrompt(message, fields) {
+            return new Promise((resolve, reject) => {
+                // Create necessary HTML elements
+                const promptContainer = document.createElement('div');
+                const promptOverlay = document.createElement('div'); // New overlay element
+
+                const promptMessage = document.createElement('p');
+                var inputs = []
+                fields.forEach(element => {
+                    const inputField = document.createElement('input');
+                    inputField.type = 'text';
+                    inputField.id = element.id
+                    inputField.placeholder = element.placeholder
+                    inputs.push(inputField)
+                });
+                const confirmButton = document.createElement('button');
+
+                // Set up the prompt message
+                promptMessage.innerHTML = message;
+
+                // Set up the input field
+
+                // Set up the confirm button
+                confirmButton.textContent = 'OK';
+                confirmButton.addEventListener('click', () => {
+
+                    // Once the button is clicked, remove the prompt and overlay from the DOM
+                    promptContainer.remove();
+                    promptOverlay.remove(); // Remove overlay
+                    // Resolve the promise with the input value
+                    var resolved = []
+                    inputs.forEach(element => {
+                        resolved.push({
+                            id: element.id,
+                            value: element.value
+                        })
+                    });
+                    resolve(resolved);
+                });
+
+                // Append elements to the container
+                promptContainer.appendChild(promptMessage);
+                inputs.forEach(element => {
+                    promptContainer.appendChild(element)
+                });
+                promptContainer.appendChild(confirmButton);
+
+                // Apply CSS styles to center the prompt and place it on top of everything
+                promptContainer.style.position = 'fixed';
+                promptContainer.style.top = '50%';
+                promptContainer.style.left = '50%';
+                promptContainer.style.transform = 'translate(-50%, -50%)';
+                promptContainer.style.zIndex = '9999';
+                promptContainer.style.backgroundColor = '#4D4770';
+                promptContainer.style.padding = '20px';
+
+                // Apply CSS styles to the overlay
+                promptOverlay.style.position = 'fixed';
+                promptOverlay.style.top = '0';
+                promptOverlay.style.left = '0';
+                promptOverlay.style.width = '100%';
+                promptOverlay.style.height = '100%';
+                promptOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)'; // Semi-transparent black
+                promptOverlay.style.zIndex = '9998'; // Behind the prompt
+
+                // Append the container and overlay to the document body
+                document.body.appendChild(promptOverlay); // Append overlay first
+                document.body.appendChild(promptContainer);
+            });
+        }
+    </script>
 </body>
 </html>
