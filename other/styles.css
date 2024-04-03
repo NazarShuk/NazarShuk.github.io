@@ -74,7 +74,12 @@ button:hover{
 
 input {
     font-size: larger;
-    font-weight:bold;
+    font-family: "JetBrains Mono";
+    font-weight: bold;
+}
+
+select{
+    font-family: "JetBrains Mono";
 }
 
 p {
@@ -88,4 +93,12 @@ p {
 
 a{
     color:var(--main-color);
+}
+
+textarea{
+    font-family: "JetBrains Mono";
+}
+code{
+    background-color: var(--fg-color);
+    padding: 5px;
 }
