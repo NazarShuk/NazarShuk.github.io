@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="../other/logos/favicon.ico">
     <link href="../other/styles.css" rel="stylesheet">
     <script src="../other/api.js"></script>
@@ -43,8 +44,8 @@
                 document.getElementById("loggedIn").style.display = "inline"
                 document.getElementById("loggedOut").style.display = "none"
                 document.getElementById("name").innerText = JSON.parse(localStorage.account).name
-                var date = new Date(JSON.parse(localStorage.account).date)
-                document.getElementById("catText").innerText = "Joined on " + date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear()
+                var date = JSON.parse(localStorage.account).date.split("T")[0] //new Date(JSON.parse(localStorage.account).date)
+                document.getElementById("catText").innerText = "Joined on " + date
             }
         }
         function register(){
