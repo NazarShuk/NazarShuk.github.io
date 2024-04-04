@@ -1,148 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link href="../other/styles.css" rel="stylesheet"> <link rel="icon" type="image/x-icon" href="../other/logos/favicon.ico">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="../other/styles.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../other/logos/favicon.ico">
     <script src="https://unpkg.com/peerjs@1.5.0/dist/peerjs.min.js"></script>
     <title>Ncord chat</title>
-  </head>
-  <body>
-    <h2 id="ConnectionText" style="color: yellow;">Connecting</h2>
-    <p id="dynMsg"></p>
-    <p id="id-text"></p>
-    <hr>
-    <button onclick="ChangeUsername()">Change Username</button>
-    <button onclick="clearAllData()">Clear all data</button>
-    <hr>
-    <div class="footer">
-    <input type="text" placeholder="Id" id="input-id" />
-    <input type="text" placeholder="Message" id="msg-input" />
+</head>
+<body>
+<h2 id="ConnectionText" style="color: yellow;">Connecting</h2>
+<p id="dynMsg"></p>
+<p id="id-text"></p>
+<h4>If you have an nshis.com account, your account username will be used here.</h4>
+<hr>
+<button onclick="ChangeUsername()">Change Username</button>
+<button onclick="clearAllData()">Clear all data</button>
+<hr>
+<div class="footer">
+    <input type="text" placeholder="Id" id="input-id"/>
+    <input type="text" placeholder="Message" id="msg-input"/>
     <button type="submit" id="send-btn" onclick="Connect()">Send</button>
-    </div>
-    <div id="msgs"></div>
-    <script>
-      var username;
-      if(localStorage.getItem("messages") !=null){
+</div>
+<div id="msgs"></div>
+<script>
+    var username;
+    if (localStorage.getItem("messages") != null) {
         JSON.parse(localStorage.getItem("messages")).msgs.forEach(element => {
-          var e = document.createElement("p");
-        e.innerHTML = "asdasd"
-        e.innerHTML = element;
-        e.style.wordWrap = "break-word"
-        document.getElementById("msgs").prepend(e);
+            var e = document.createElement("p");
+            e.innerHTML = "asdasd"
+            e.innerHTML = element;
+            e.style.wordWrap = "break-word"
+            document.getElementById("msgs").prepend(e);
         });
-      }
-      if (localStorage.name == null) {
+    }
+    
+    
+    
+    if (localStorage.name == null) {
         localStorage.name = rng(1111, 9999);
         username = localStorage.name;
-      } else {
+    } else {
         username = localStorage.name;
-      }
-      var peer = new Peer(username);
-      peer.on("open", (p) => {
+    }
+    if(localStorage.account){
+        localStorage.name = JSON.parse(localStorage.account).name
+    }
+    var peer = new Peer(username);
+    peer.on("open", (p) => {
         document.getElementById("id-text").innerHTML = "Your username: " + peer.id;
         document.getElementById("ConnectionText").innerHTML = "Connected"
         document.getElementById("ConnectionText").style.color = "green"
-        
-        Notification.requestPermission().then(function (permission) {
-    console.log(permission);
-});
 
-      });
-      function Connect() {
-      if(document.getElementById("msg-input").value != ""){
-        var conn = peer.connect(document.getElementById("input-id").value);
-        // on open will be launch when you successfully connect to PeerServer
-        conn.on("open", function () {
-          conn.send(
-            peer.id + ": " + document.getElementById("msg-input").value
-          );
-          Print(peer.id + "->" + document.getElementById("input-id").value +": " + document.getElementById("msg-input").value)
-          document.getElementById("msg-input").value = "";
+        Notification.requestPermission().then(function (permission) {
+            console.log(permission);
         });
-      }
-      else{
-        Print("Error sending last message!")
-      }
-        
-      }
-      peer.on("connection", function (conn) {
+
+    });
+
+    function Connect() {
+        if (document.getElementById("msg-input").value != "") {
+            var conn = peer.connect(document.getElementById("input-id").value);
+            // on open will be launch when you successfully connect to PeerServer
+            conn.on("open", function () {
+                conn.send(
+                    peer.id + ": " + document.getElementById("msg-input").value
+                );
+                Print(peer.id + "->" + document.getElementById("input-id").value + ": " + document.getElementById("msg-input").value)
+                document.getElementById("msg-input").value = "";
+            });
+        } else {
+            Print("Error sending last message!")
+        }
+
+    }
+
+    peer.on("connection", function (conn) {
         conn.on("data", function (data) {
-          // Will print 'hi!'
-          console.log(data);
-          Print(data)
-          conn.close();
-          if(document.hidden){
-          new Notification("New message!",{body:data})
-          }
+            // Will print 'hi!'
+            console.log(data);
+            Print(data)
+            conn.close();
+            if (document.hidden) {
+                new Notification("New message!", {body: data})
+            }
         });
-      });
-      peer.on("disconnected", function () {
+    });
+    peer.on("disconnected", function () {
         document.getElementById("ConnectionText").innerHTML = "Disconnected"
         document.getElementById("ConnectionText").style.color = "red"
         peer.reconnect();
-      });
-      function rng(min, max) {
+    });
+
+    function rng(min, max) {
         // min and max included
         return Math.floor(Math.random() * (max - min + 1) + min);
-      }
-      function Print(data){
+    }
+
+    function Print(data) {
         var e = document.createElement("p");
         e.innerHTML = "asdasd"
         e.innerHTML = data;
         e.style.wordWrap = "break-word"
         document.getElementById("msgs").prepend(e);
-        if(localStorage.getItem("messages") != null){
-          var json = JSON.parse(localStorage.getItem("messages"))
-          json.msgs.push(data)
-          localStorage.setItem("messages",JSON.stringify(json))
+        if (localStorage.getItem("messages") != null) {
+            var json = JSON.parse(localStorage.getItem("messages"))
+            json.msgs.push(data)
+            localStorage.setItem("messages", JSON.stringify(json))
+        } else {
+            localStorage.setItem("messages", JSON.stringify({
+                "msgs": []
+            }))
+            var json = JSON.parse(localStorage.getItem("messages"))
+            json.msgs.push(data)
+            localStorage.setItem("messages", JSON.stringify(json))
         }
-        else{
-          localStorage.setItem("messages",JSON.stringify({
-            "msgs":[]
-          }))
-          var json = JSON.parse(localStorage.getItem("messages"))
-          json.msgs.push(data)
-          localStorage.setItem("messages",JSON.stringify(json))
-        }
-      }
-      function ChangeUsername(){
+    }
+
+    function ChangeUsername() {
         var name = prompt("Enter your new username")
-        if(name !=null){
+        if (name != null) {
             localStorage.name = name;
             location.reload()
         }
-      }
-      const xhr = new XMLHttpRequest();
-xhr.open("GET", "https://nazarshuk.github.io/dynamic.txt");
-xhr.send();
-xhr.responseType = "text";
-xhr.onload = () => {
-  if (xhr.readyState == 4 && xhr.status == 200) {
-    document.getElementById("dynMsg").innerHTML = xhr.response;
-  } else {
-    console.log(`Error: ${xhr.status}`);
-  }
-}
-      setInterval(function(){
-        const xhr = new XMLHttpRequest();
-xhr.open("GET", "https://nazarshuk.github.io/dynamic.txt");
-xhr.send();
-xhr.responseType = "text";
-xhr.onload = () => {
-  if (xhr.readyState == 4 && xhr.status == 200) {
-    document.getElementById("dynMsg").innerHTML = xhr.response;
-  } else {
-    console.log(`Error: ${xhr.status}`);
-  }
-};
-      },300)
-      function clearAllData(){
-        if(window.confirm("Are you really SURE about this? This could be devistating, I mean, you could have sent a really important thing to your friend and you need it really bad, but BOO HOO it's GONE! ARE YOU SEUUREREERRUEE!?!?!!?!?!?!??!?!")){
-          localStorage.clear()
-          window.location.reload()
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://nazarshuk.github.io/dynamic.txt");
+    xhr.send();
+    xhr.responseType = "text";
+    xhr.onload = () => {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            document.getElementById("dynMsg").innerHTML = xhr.response;
+        } else {
+            console.log(`Error: ${xhr.status}`);
         }
-      }
-    </script>
-  </body>
+    }
+    setInterval(function () {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://nazarshuk.github.io/dynamic.txt");
+        xhr.send();
+        xhr.responseType = "text";
+        xhr.onload = () => {
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                document.getElementById("dynMsg").innerHTML = xhr.response;
+            } else {
+                console.log(`Error: ${xhr.status}`);
+            }
+        };
+    }, 300)
+
+    function clearAllData() {
+        if (window.confirm("Are you really SURE about this? This could be devistating, I mean, you could have sent a really important thing to your friend and you need it really bad, but BOO HOO it's GONE! ARE YOU SEUUREREERRUEE!?!?!!?!?!?!??!?!")) {
+            localStorage.clear()
+            window.location.reload()
+        }
+    }
+</script>
+</body>
 </html>

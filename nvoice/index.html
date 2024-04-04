@@ -41,6 +41,9 @@
 
 
 }
+        if(localStorage.account){
+            localStorage.name = JSON.parse(localStorage.account).name
+        }
 //start
 
 var peer = new Peer(localStorage.name, {
