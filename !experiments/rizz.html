@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../other/styles.css">
+    <title>Rizz app</title>
+</head>
+
+<body style="text-align: center">
+<h1>Rizz app</h1>
+<p>Makes rizz lines just for you</p>
+<hr>
+<input type="text" placeholder="Name" id="theirName">
+<input type="text" placeholder="Age" id="theirAge">
+<input type="text" placeholder="Interests" id="theirInterests">
+<hr>
+<input type="text" placeholder="Your name" id="yourName">
+<br>
+<br>
+<button style="font-size: 48px; " id="daBtn">Generate</button>
+<h2 id="theLine"></h2>
+<script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://esm.run/@google/generative-ai"
+      }
+    }
+</script>
+<script type="module">
+    import { GoogleGenerativeAI } from "@google/generative-ai";
+    // Fetch your API_KEY
+    const API_KEY = "AIzaSyBydRfQwF9K3wDUt5Dg-Th55Yxzj69B590";
+    // Access your API key (see "Set up your API key" above)
+    const genAI = new GoogleGenerativeAI(API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+    const chat = model.startChat({
+        history: [],
+        generationConfig: {
+            maxOutputTokens: 2048,
+        },
+    });
+    const prompt = `You have to generate a rizz line for a certain person. You will be given their name, age, and their interests. You will be also given the name of the person who will say the line. Only write the line, nothing else.
+    Now its time to generate, here is the info:`
+
+    async function run(prompt) {
+        var msg = prompt;
+        const result = await chat.sendMessage(msg);
+        const response = await result.response;
+        const text = response.text();
+        Print(text)
+    }
+    
+    
+    function genPrompt(){
+        var p = prompt
+        p+="\n"
+        p+=`Name: ${document.getElementById("theirName").value}
+        Age: ${document.getElementById("theirAge").value}
+        Interests: ${document.getElementById("theirInterests").value}
+        
+        Speaker name: ${document.getElementById("yourName").value}
+        `
+        return p
+    }
+    
+    function Print(data) {
+        var e = document.getElementById("theLine")
+        e.innerHTML = data;
+        e.style.wordWrap = "break-word"
+        e.style.alignText = "center"
+    }
+    Print("aaaaaaa")
+    function setValueOf(id,value){
+        document.getElementById(id).innerHTML = value
+    }
+    
+    document.getElementById("daBtn").addEventListener("click", async () =>{
+        await run(genPrompt())
+    })
+</script>
+</body>
+
+</html>
